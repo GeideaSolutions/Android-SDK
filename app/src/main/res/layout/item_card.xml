@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.geidea.paymentsdk.sampleapp.TokenizedCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tokenizedCardView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="8dp"
+    app:contentPadding="16dp"
+    android:overScrollMode="never"
+    />

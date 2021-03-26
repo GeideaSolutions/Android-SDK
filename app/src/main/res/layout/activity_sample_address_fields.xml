@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".sample.SampleAddressFieldsActivity"
+    >
+
+    <include
+        android:id="@+id/includeAppBar"
+        layout="@layout/include_appbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <!-- COUNTRY -->
+
+            <TextView
+                android:id="@+id/countryStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="Invalid"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/countryInputLayout"
+                style="@style/Gd.Widget.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Country"
+                app:errorEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.address.CountryAutoCompleteTextView
+                    android:id="@+id/countryAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="addressCountry"
+                    android:imeOptions="actionNext"
+                    android:inputType="none"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- STREET -->
+
+            <TextView
+                android:id="@+id/streetStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="Invalid"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/streetInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Street name and number"
+                app:errorEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.address.StreetEditText
+                    android:id="@+id/streetEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="streetAddress"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="yes"
+                    android:inputType="textCapWords"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- CITY -->
+
+            <TextView
+                android:id="@+id/cityStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="Invalid"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cityInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="City"
+                app:errorEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.address.CityEditText
+                    android:id="@+id/cityEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="addressLocality"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- POSTCODE -->
+
+            <TextView
+                android:id="@+id/postCodeStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="Invalid"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/postCodeInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Postcode"
+                app:errorEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.address.PostCodeEditText
+                    android:id="@+id/postCodeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="postalCode"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapWords"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/getAddressButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Get Address"
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".sample.SamplePaymentFormActivity"
+    >
+
+    <include
+        android:id="@+id/includeAppBar"
+        layout="@layout/include_appbar"
+        />
+
+    <ScrollView
+        android:id="@+id/paymentFormScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <net.geidea.paymentsdk.ui.widget.PaymentFormView
+                android:id="@+id/paymentFormView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/payButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+                android:layout_marginTop="@dimen/gd_default_margin"
+                android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+                android:enabled="false"
+                android:text="Pay"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

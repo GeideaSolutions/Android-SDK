@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".sample.SampleCardFieldsActivity"
+    >
+
+    <include
+        android:id="@+id/includeAppBar"
+        layout="@layout/include_appbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            >
+
+            <!-- CARD NUMBER -->
+
+            <TextView
+                android:id="@+id/cardNumberStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                tools:text="Validation status: Invalid (Invalid card number length)"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardNumberInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Card number"
+                app:errorEnabled="true"
+                app:helperText="XXXX XXXX XXXX XXXX"
+                app:helperTextEnabled="true"
+                app:endIconTint="@null"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.card.CardNumberEditText
+                    android:id="@+id/cardNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="creditCardNumber"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- EXPIRY MONTH & YEAR -->
+
+            <TextView
+                android:id="@+id/expiryStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardExpiryDateInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Expiry date"
+                app:errorEnabled="true"
+                app:helperText="MM/YY"
+                app:helperTextEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.card.CardExpiryDateEditText
+                    android:id="@+id/cardExpiryDateEditText"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:digits="@string/gd_valid_digits"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- SECURITY CODE -->
+
+            <TextView
+                android:id="@+id/cvvStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardSecurityCodeInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="CVV"
+                app:endIconDrawable="@drawable/gd_ic_cvv"
+                app:endIconMode="custom"
+                app:errorEnabled="true"
+                app:helperText="123"
+                app:helperTextEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.card.CardSecurityCodeEditText
+                    android:id="@+id/cardSecurityCodeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="creditCardSecurityCode"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- CARD HOLDER -->
+
+            <TextView
+                android:id="@+id/holderStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="12sp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardHolderInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:hint="Card holder"
+                app:errorEnabled="true"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.card.CardHolderEditText
+                    android:id="@+id/cardHolderEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionNext"
+                    android:autofillHints="name"
+                    android:importantForAutofill="yes"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/getCardButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Get Card"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
