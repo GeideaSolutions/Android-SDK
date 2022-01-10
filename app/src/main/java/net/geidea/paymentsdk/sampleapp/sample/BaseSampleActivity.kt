@@ -33,7 +33,7 @@ abstract class BaseSampleActivity<B : ViewBinding> : AppCompatActivity() {
                     setupUi(result.data)
                 }
                 else -> {
-                    showErrorMessage("Failed to load merchant configuration") { _, _ -> finish() }
+                    onConfigurationLoadingFailed()
                 }
             }
         }
@@ -42,4 +42,8 @@ abstract class BaseSampleActivity<B : ViewBinding> : AppCompatActivity() {
     abstract fun createBinding(layoutInflater: LayoutInflater): B
 
     abstract fun setupUi(merchantConfig: MerchantConfigurationResponse)
+
+    protected open fun onConfigurationLoadingFailed() {
+        showErrorMessage("Failed to load merchant configuration") { _, _ -> finish() }
+    }
 }

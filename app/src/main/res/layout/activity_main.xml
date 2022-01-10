@@ -36,6 +36,58 @@
             android:orientation="vertical"
             >
 
+            <!-- Environment selection -->
+
+            <TextView
+                android:id="@+id/environmentLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Environment"
+                android:textAppearance="?textAppearanceBody1"
+                />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/environmentToggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/devEnvButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dev"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/testEnvButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/preprodEnvButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PreProd"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/prodEnvButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prod"
+                    />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <!-- Merchant credentials -->
 
             <TextView
@@ -77,6 +129,8 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="text"
+                        android:maxLines="1"
+                        android:text="a8beecb8-e5ac-4fec-8b8b-6fea97bed02b"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -95,6 +149,8 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="textPassword"
+                        android:maxLines="1"
+                        android:text="TEST_1234567890"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -117,6 +173,44 @@
 
             </LinearLayout>
 
+            <!-- SDK Language -->
+
+            <TextView
+                android:id="@+id/languageLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="SDK Language"
+                android:textAppearance="?textAppearanceBody1"
+                />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/languageToggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:selectionRequired="true"
+                app:singleSelection="true"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/enLanguageButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="English"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/arLanguageButton"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Arabic"
+                    />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
             <!-- Payment operation -->
 
             <com.google.android.material.textfield.TextInputLayout
@@ -135,6 +229,7 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Initiated By -->
 
@@ -156,20 +251,20 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- e-Invoice Id -->
+            <!-- Payment Intent ID -->
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/eInvoiceIdTextInputLayout"
+                android:id="@+id/paymentIntentIdTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:hint="eInvoiceId"
+                android:hint="Payment Intent ID"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_outline_note_add"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/eInvoiceIdEditText"
+                    android:id="@+id/paymentIntentIdEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -210,6 +305,26 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/agreementIdEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Payment methods -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/paymentMethodsTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:hint="Payment methods"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/paymentMethodsEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -346,7 +461,7 @@
                                 android:imeOptions="actionNext"
                                 android:inputType="number"
                                 android:maxLength="2"
-                                android:text="21"
+                                android:text="23"
                                 />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -454,6 +569,15 @@
 
             </RadioGroup>
 
+            <!-- Show Receipt -->
+
+            <CheckBox
+                android:id="@+id/showReceiptCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show receipt"
+                />
+
             <!-- Order details -->
 
             <TextView
@@ -485,7 +609,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
-                        android:text="123.45"
+                        android:text="1.23"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -540,7 +664,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textUri"
-                    android:text="https://api-test.gd-azure-dev.net/external-services/api/v1/callback/test123"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -747,13 +870,20 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/payButton"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:text="Pay"
-        />
+        >
 
+        <Button
+            android:id="@+id/payButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Pay"
+            />
+
+    </LinearLayout>
 </LinearLayout>

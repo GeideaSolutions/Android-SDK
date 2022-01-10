@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="12dp"
     android:clipToPadding="false"
     >
@@ -14,17 +14,36 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/eInvoiceIdInputLayout"
+            android:id="@+id/paymentIntentIdInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:hint="eInvoiceId"
+            android:hint="Payment Intent ID"
             >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/eInvoiceIdEditText"
+                android:id="@+id/paymentIntentIdEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/statusInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Status"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/statusEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -94,6 +113,29 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/expiryDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- ACTIVATION DATE -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/activationDateInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Activation date"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activationDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -182,6 +224,241 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                >
+
+                <CheckBox
+                    android:id="@+id/eInvoiceDetailsCheckBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="eInvoice details"
+                    />
+
+                <Button
+                    android:id="@+id/addItemButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Item"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/eInvoiceDetailsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                >
+
+                <LinearLayout
+                    android:id="@+id/eInvoiceItemsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    />
+
+                <!-- Merchant Reference ID -->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Merchant Reference ID"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/merchantReferenceIdEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Sub Total"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/subTotalEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Charge Description"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/chargeDescriptionEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/extraChargesInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Extra Charges"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/extraChargesEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:inputType="numberDecimal"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Type"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/extraChargesTypeEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Amount"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- Discount -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/discountInputLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Discount"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/discountEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:inputType="numberDecimal"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Type"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/discountTypeEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Amount"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <!-- Grand Total -->
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:hint="Grand Total"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/grandTotalEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Collect billing/shipping address -->
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/collectBillingShippingAddressSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Collect billing &amp; shipping address"
+                    />
+
+                <!-- Preauthorize amount -->
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/preauthorizeAmountSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Preauthorize amount"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

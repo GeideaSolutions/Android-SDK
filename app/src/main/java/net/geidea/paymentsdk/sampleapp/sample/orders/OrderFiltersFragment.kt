@@ -17,8 +17,8 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import net.geidea.paymentsdk.model.OrderSearchRequest
 import net.geidea.paymentsdk.sampleapp.R
 import net.geidea.paymentsdk.sampleapp.databinding.DialogOrderFiltersBinding
-import net.geidea.paymentsdk.sampleapp.sample.orders.OrdersPagingSource.Companion.DATE_FORMAT_SERVER
-import net.geidea.paymentsdk.sampleapp.sample.orders.OrdersPagingSource.Companion.PAGE_SIZE
+import net.geidea.paymentsdk.sampleapp.sample.GeideaPagingSource.Companion.DATE_FORMAT_SERVER
+import net.geidea.paymentsdk.sampleapp.sample.GeideaPagingSource.Companion.PAGE_SIZE
 import java.text.SimpleDateFormat
 import java.util.*
 

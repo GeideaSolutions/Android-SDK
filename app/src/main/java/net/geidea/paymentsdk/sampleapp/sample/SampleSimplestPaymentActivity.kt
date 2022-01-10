@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultLauncher
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
-import net.geidea.paymentsdk.flow.pay.PaymentIntent
+import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.model.Order
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleSimplestPaymentBinding
@@ -14,25 +14,25 @@ import net.geidea.paymentsdk.sampleapp.snack
 
 class SampleSimplestPaymentActivity : BaseSampleActivity<ActivitySampleSimplestPaymentBinding>() {
 
-    private lateinit var paymentIntent: PaymentIntent
+    private lateinit var paymentData: PaymentData
 
     override fun createBinding(layoutInflater: LayoutInflater): ActivitySampleSimplestPaymentBinding {
         return ActivitySampleSimplestPaymentBinding.inflate(layoutInflater)
     }
 
-    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentIntent>
+    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        paymentLauncher = registerForActivityResult(PaymentContract(), ::onOrderResult)
+        paymentLauncher = registerForActivityResult(PaymentContract(), ::onPaymentResult)
 
         with(binding) {
             setSupportActionBar(includeAppBar.toolbar)
             title = "Simplest payment sample"
         }
 
-        paymentIntent = createPaymentIntent()
+        paymentData = createPaymentData()
     }
 
     @SuppressLint("SetTextI18n")
@@ -43,19 +43,19 @@ class SampleSimplestPaymentActivity : BaseSampleActivity<ActivitySampleSimplestP
         |}""".trimMargin()
 
         payButton.setOnClickListener {
-            paymentLauncher.launch(paymentIntent)
+            paymentLauncher.launch(paymentData)
         }
     }
 
-    private fun createPaymentIntent(): PaymentIntent {
-        return PaymentIntent {
+    private fun createPaymentData(): PaymentData {
+        return PaymentData {
             amount = "123.45".toBigDecimal()
             currency = "SAR"
         }
     }
 
-    private fun onOrderResult(orderResult: GeideaResult<Order>) = with (binding) {
-        when (orderResult) {
+    private fun onPaymentResult(paymentResult: GeideaResult<Order>) = with (binding) {
+        when (paymentResult) {
             is GeideaResult.Success<*> -> snack("Success")
             is GeideaResult.Error -> snack("Error")
             is GeideaResult.Cancelled -> snack("Cancelled")

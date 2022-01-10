@@ -1,5 +1,7 @@
 package net.geidea.paymentsdk.sampleapp
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -8,21 +10,23 @@ import android.content.DialogInterface
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.suspendCancellableCoroutine
-import net.geidea.paymentsdk.model.GeideaJsonObject
-import net.geidea.paymentsdk.model.Order
-import net.geidea.paymentsdk.model.OrderStatus
-import net.geidea.paymentsdk.model.TransactionStatus
+import net.geidea.paymentsdk.model.*
 import net.geidea.paymentsdk.sampleapp.sample.orders.OrderOperation
+import net.geidea.paymentsdk.sampleapp.sample.paymentintents.PaymentIntentOperation
 import java.util.*
+import java.util.Calendar.JANUARY
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -123,6 +127,55 @@ fun Context.showOrder(
     orderDialog.show()
 }
 
+fun Context.showEInvoice(
+        eInvoice: EInvoicePaymentIntent,
+        onUpdate: (paymentIntentId: String) -> Unit,
+        onDelete: (paymentIntentId: String) -> Unit,
+) {
+    val json = eInvoice.toJson(pretty = true)
+    val operations = listOf(
+            PaymentIntentOperation.UPDATE,
+            PaymentIntentOperation.DELETE
+    )
+
+    val jsonDialog = AlertDialog.Builder(this).apply {
+        setTitle("${eInvoice.status}")
+        setView(monoSpaceTextContainer(json))
+        setPositiveButton(android.R.string.ok, null)
+        if (operations.isNotEmpty()) {
+            if (operations.size == 1) {
+                setNeutralButton(operations[0].displayText, null)
+            } else {
+                setNeutralButton("Operations…", null)
+            }
+        }
+    }.create()
+
+    jsonDialog.setOnShowListener {
+        // Add click listeners after creation to prevent auto-dismiss. Instead we dismiss manually.
+        jsonDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
+            AlertDialog.Builder(this@showEInvoice).apply {
+                setTitle("e-Invoice operations")
+                val operationTexts = operations.map(PaymentIntentOperation::displayText).toTypedArray()
+                setSingleChoiceItems(operationTexts, 0, null)
+                setPositiveButton(android.R.string.ok) { operationsDialog, _ ->
+                    val listView = (operationsDialog as AlertDialog).listView
+                    val selectedOp: String = listView.getItemAtPosition(listView.checkedItemPosition) as String
+                    when (selectedOp) {
+                        PaymentIntentOperation.UPDATE.displayText -> onUpdate(eInvoice.paymentIntentId)
+                        PaymentIntentOperation.DELETE.displayText -> onDelete(eInvoice.paymentIntentId)
+                    }
+                    jsonDialog.dismiss()
+                    operationsDialog.dismiss()
+                }
+                // Simply dismiss and go back to order dialog
+                setNegativeButton("Dismiss", null)
+            }.show()
+        }
+    }
+    jsonDialog.show()
+}
+
 fun getAllowedOrderOperations(order: Order): List<OrderOperation> {
     return mutableListOf<OrderOperation>().apply {
         if (order.detailedStatus == OrderStatus.AUTHORIZED) {
@@ -181,33 +234,85 @@ suspend fun Context.inputText(title: CharSequence?, hint: CharSequence?): String
 suspend fun <T> Context.customViewDialog(
         customView: View,
         title: CharSequence?,
-        block: View.() -> T,
+        positiveButtonTitle: CharSequence? = null,
+        readInput: View.() -> T,
 ): T? {
     return suspendCancellableCoroutine { continuation ->
         val dialog = MaterialAlertDialogBuilder(this)
                 .setTitle(title)
                 .setView(customView)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    try {
-                        continuation.resume(block(customView))
-                    } catch (t: Throwable) {
-                        continuation.resumeWithException(t)
-                    }
+                .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
+                    continuation.resumeSafely { customView.readInput() }
                 }
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
                     continuation.resume(null)
                 }
                 .create()
         dialog.show()
+
         continuation.invokeOnCancellation { dialog.dismiss() }
     }
 }
+
+suspend fun Context.singleChoiceDialog(
+        title: CharSequence?,
+        choices: List<CharSequence>,
+        positiveButtonTitle: CharSequence? = null
+): Int {
+    var choice = -1
+    return suspendCancellableCoroutine { continuation ->
+        val dialog = MaterialAlertDialogBuilder(this)
+                .setTitle(title)
+                .setSingleChoiceItems(choices.toTypedArray(), -1) { _, position ->
+                    choice = position
+                }
+                .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
+                    continuation.resumeSafely { choice }
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                    continuation.resume(-1)
+                }
+                .create()
+        dialog.show()
+
+        continuation.invokeOnCancellation { dialog.dismiss() }
+    }
+}
+
+private fun <T> Continuation<T>.resumeSafely(block: () -> T) {
+    try {
+        resume(block())
+    } catch (t: Throwable) {
+        resumeWithException(t)
+    }
+}
+
+private fun getTodayCalendar(): Calendar {
+    val today = MaterialDatePicker.todayInUtcMilliseconds()
+    val calendar: Calendar = getClearedUtc()
+    calendar.timeInMillis = today
+    return calendar
+}
+
+fun validUntil(field: Int, amount: Int) = CalendarConstraints.Builder()
+        .setValidator(CompositeDateValidator.allOf(listOf(
+            DateValidatorPointForward.now(),
+            DateValidatorPointBackward.before(
+                getTodayCalendar()
+                    .apply { roll (field, amount) }
+                    .timeInMillis
+            )
+        )))
+        .build()
 
 fun getNextMonthUtc(): Long {
     val today = MaterialDatePicker.todayInUtcMilliseconds()
     val calendar: Calendar = getClearedUtc()
     calendar.timeInMillis = today
     calendar.roll(Calendar.MONTH, 1)
+    if (calendar.get(Calendar.MONTH) == JANUARY) {
+        calendar.roll(Calendar.YEAR, 1)
+    }
     return calendar.timeInMillis
 }
 
@@ -217,4 +322,65 @@ fun getClearedUtc(): Calendar =
 fun Context.copyToClipboard(text: CharSequence, label: CharSequence) {
     val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
     ClipData.newPlainText(label, text).let(clipboard::setPrimaryClip)
+}
+
+// Animation helpers
+
+fun FloatingActionButton.rotate(rotate: Boolean): Boolean {
+    animate()
+            .setDuration(200)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                }
+            })
+            .rotation(if (rotate) 135f else 0f)
+    return rotate
+}
+
+fun View.initAppearAnimation() {
+    visibility = View.GONE
+    translationY = height.toFloat()
+    alpha = 0f
+}
+
+fun View.appear() {
+    visibility = View.VISIBLE
+    alpha = 0f
+    translationY = height.toFloat()
+    animate()
+            .setDuration(200)
+            .translationY(0f)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                }
+            })
+            .alpha(1f)
+            .start()
+}
+
+fun View.disappear() {
+    visibility = View.VISIBLE
+    alpha = 1f
+    translationY = 0f
+    animate()
+            .setDuration(200)
+            .translationY(height.toFloat())
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    visibility = View.GONE
+                    super.onAnimationEnd(animation)
+                }
+            })
+            .alpha(0f)
+            .start()
+}
+
+fun hideKeyboard(view: View) {
+    val iBinder = view.windowToken
+    if (iBinder != null) {
+        val inputMethodManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(iBinder, 0)
+    }
 }

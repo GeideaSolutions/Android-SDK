@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import net.geidea.paymentsdk.model.CardPaymentMethod
+import net.geidea.paymentsdk.model.PaymentMethodInfo
 
 @Parcelize
 @Serializable
@@ -16,7 +16,7 @@ data class CardItem(
         val expiryDate: String,
         val brand: String?
 ) : Parcelable {
-    constructor(tokenId: String, card: CardPaymentMethod) : this(
+    constructor(tokenId: String, card: PaymentMethodInfo) : this(
             tokenId = tokenId,
             cardholderName = card.cardholderName!!,
             maskedCardNumber = card.maskedCardNumber!!,

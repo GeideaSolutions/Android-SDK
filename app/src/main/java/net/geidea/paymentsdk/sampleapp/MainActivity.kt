@@ -2,8 +2,10 @@ package net.geidea.paymentsdk.sampleapp
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Parcelable
+import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
@@ -24,21 +26,22 @@ import net.geidea.paymentsdk.GeideaPaymentAPI
 import net.geidea.paymentsdk.ServerEnvironment
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
-import net.geidea.paymentsdk.flow.pay.PaymentIntent
+import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivityMainBinding
 import net.geidea.paymentsdk.sampleapp.sample.*
-import net.geidea.paymentsdk.sampleapp.sample.EInvoiceDialogs.inputCreateRequest
+import net.geidea.paymentsdk.sampleapp.sample.PaymentIntentDialogs.inputCreateEInvoiceRequest
 import net.geidea.paymentsdk.sampleapp.sample.orders.SampleOrdersActivity
+import net.geidea.paymentsdk.sampleapp.sample.paymentintents.SamplePaymentIntentsActivity
 import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentIntent>
+    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentData>
 
-    private var merchantConfig: MerchantConfigurationResponse? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,57 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             setContentView(root)
             setSupportActionBar(binding.includeAppBar.toolbar)
+
+            val internalTestMode: Boolean = true    // TODO make configurable
+            environmentLabel.isVisible = internalTestMode
+            environmentToggleGroup.isVisible = internalTestMode
+            if (internalTestMode) {
+                // For internal testing
+
+                // Set the last-used server environment
+                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+                val apiBaseUrl: String? = sharedPreferences.getString(PREF_KEY_SERVER_ENVIRONMENT, null)
+                when (apiBaseUrl) {
+                    ServerEnvironment.Dev.apiBaseUrl -> {
+                        GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Dev
+                        callbackUrlEditText.setText("https://api-dev.gd-azure-dev.net/external-services/api/v1/callback/test123")
+                    }
+                    ServerEnvironment.Test.apiBaseUrl -> {
+                        GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Test
+                        callbackUrlEditText.setText("https://api-test.gd-azure-dev.net/external-services/api/v1/callback/test123")
+                    }
+                    ServerEnvironment.PreProd.apiBaseUrl -> {
+                        GeideaPaymentAPI.serverEnvironment = ServerEnvironment.PreProd
+                        callbackUrlEditText.setText("")
+                    }
+                    ServerEnvironment.Prod.apiBaseUrl -> {
+                        GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Prod
+                        callbackUrlEditText.setText("")
+                    }
+                }
+
+                environmentToggleGroup.check(when (GeideaPaymentAPI.serverEnvironment) {
+                    ServerEnvironment.Dev -> R.id.devEnvButton
+                    ServerEnvironment.Test -> R.id.testEnvButton
+                    ServerEnvironment.PreProd -> R.id.preprodEnvButton
+                    ServerEnvironment.Prod -> R.id.prodEnvButton
+                })
+                environmentToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                    if (isChecked) {
+                        when (checkedId) {
+                            R.id.devEnvButton -> GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Dev
+                            R.id.testEnvButton -> GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Test
+                            R.id.preprodEnvButton -> GeideaPaymentAPI.serverEnvironment = ServerEnvironment.PreProd
+                            R.id.prodEnvButton -> GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Prod
+                        }
+                        sharedPreferences.edit()
+                                .putString(PREF_KEY_SERVER_ENVIRONMENT, GeideaPaymentAPI.serverEnvironment.apiBaseUrl)
+                                .apply()
+                        clearMerchantLocalStateWithWarning()
+                        updateMerchantCredentialsLayout()
+                    }
+                }
+            }
 
             updateMerchantCredentialsLayout()
 
@@ -57,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     if (GeideaPaymentAPI.hasCredentials) {
                         onSuccessOf(GeideaPaymentAPI.getMerchantConfiguration()) { merchantConfig ->
+                            SampleApplication.INSTANCE.merchantConfiguration = merchantConfig
                             AlertDialog.Builder(this@MainActivity)
                                     .setTitle("Merchant configuration")
                                     .setView(monoSpaceTextContainer(merchantConfig.toJson(pretty = true)))
@@ -128,6 +183,22 @@ class MainActivity : AppCompatActivity() {
                 showCardSelectionDialog()
             }
 
+            // SDK Language
+
+            languageToggleGroup.check(when (GeideaPaymentAPI.language) {
+                null,
+                SdkLanguage.ENGLISH -> R.id.enLanguageButton
+                SdkLanguage.ARABIC -> R.id.arLanguageButton
+            })
+            languageToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (isChecked) {
+                    when (checkedId) {
+                        R.id.enLanguageButton -> GeideaPaymentAPI.language = SdkLanguage.ENGLISH
+                        R.id.arLanguageButton -> GeideaPaymentAPI.language = SdkLanguage.ARABIC
+                    }
+                }
+            }
+
             // Initiated by drop-down
 
             val initiatedByAdapter = DropDownAdapter(this@MainActivity, INITIATED_BY_ITEMS)
@@ -140,16 +211,16 @@ class MainActivity : AppCompatActivity() {
                 initiatedByAutocompleteTextView.setText(INITIATED_BY_ITEMS[0].text, false)
             }
 
-            // eInvoiceId
+            // paymentIntentId
 
-            eInvoiceIdTextInputLayout.setEndIconOnClickListener {
+            paymentIntentIdTextInputLayout.setEndIconOnClickListener {
                 lifecycleScope.launch {
-                    val result = inputCreateRequest()?.let {
+                    val result = inputCreateEInvoiceRequest()?.let {
                         GeideaPaymentAPI.createEInvoice(it)
                     }
                     when (result) {
-                        is GeideaResult.Success<EInvoiceResponse> -> {
-                            eInvoiceIdEditText.setText(result.data.eInvoice?.eInvoiceId)
+                        is GeideaResult.Success<EInvoiceOrdersResponse> -> {
+                            paymentIntentIdEditText.setText(result.data.paymentIntent?.paymentIntentId)
                             snack("e-Invoice created successfully.")
                         }
                         is GeideaResult.Error -> showErrorResult(result.toJson(pretty = true))
@@ -182,7 +253,7 @@ class MainActivity : AppCompatActivity() {
 
             // This does not handle activity configuration changes correctly for the sake of simplicity.
             // Consider using a ViewModel or Presenter.
-            paymentLauncher = registerForActivityResult(PaymentContract(), ::onOrderResult)
+            paymentLauncher = registerForActivityResult(PaymentContract(), ::onPaymentResult)
         }
     }
 
@@ -206,7 +277,7 @@ class MainActivity : AppCompatActivity() {
             R.id.item_addressinputview_sample -> SampleAddressActivity::class.java
             R.id.item_address_fields_sample -> SampleAddressFieldsActivity::class.java
             R.id.item_custom_theme_sample -> SampleThemeActivity::class.java
-            R.id.item_einvoice_sample -> SampleEInvoiceActivity::class.java
+            R.id.item_payment_intents_sample -> SamplePaymentIntentsActivity::class.java
             R.id.item_orders_sample -> SampleOrdersActivity::class.java
             else -> null
         }
@@ -219,8 +290,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loginMerchant() = with(binding) {
-        val merchantKey: String? = merchantKeyEditText.textOrNull
-        val merchantPassword: String? = merchantPasswordEditText.textOrNull
+        val merchantKey: String? = merchantKeyEditText.textOrNull?.trim()
+        val merchantPassword: String? = merchantPasswordEditText.textOrNull?.trim()
         when {
             merchantKey == null -> {
                 snack("Missing merchant key")
@@ -249,8 +320,8 @@ class MainActivity : AppCompatActivity() {
     private fun loadMerchantConfig() = with(binding) {
         lifecycleScope.launch {
             onSuccessOf(GeideaPaymentAPI.getMerchantConfiguration()) { merchantConfig ->
-                this@MainActivity.merchantConfig = merchantConfig
-                merchantTextView.text = "Merchant: ${merchantConfig.name ?: ""}"
+                SampleApplication.INSTANCE.merchantConfiguration = merchantConfig
+                merchantTextView.text = "Merchant: ${merchantConfig.merchantName ?: ""}"
                 val tokenizationEnabled = merchantConfig.isTokenizationEnabled ?: false
                 saveCardCheckbox.isVisible = withCardRadioButton.isChecked
                 showEmailCheckbox.isVisible = withCardRadioButton.isChecked && bySdkButton.isChecked
@@ -260,6 +331,11 @@ class MainActivity : AppCompatActivity() {
                 val hasCard = CardRepository.selectedCard.firstOrNull() != null
                 tokenizedCardView.isVisible = tokenizationEnabled && hasCard
                 selectCardButton.isVisible = tokenizationEnabled
+                if (!merchantConfig.currencies.isNullOrEmpty()) {
+                    currencyEditText.setText(merchantConfig.currencies!!.first())
+                }
+
+                payButton.isVisible = true
             }
         }
     }
@@ -273,7 +349,7 @@ class MainActivity : AppCompatActivity() {
                 merchantPasswordEditText.isEnabled = false
                 storeCredentialsButton.isVisible = false
                 clearCredentialsButton.isVisible = true
-                payButton.isVisible = true
+                payButton.isVisible = false
 
                 loadMerchantConfig()
 
@@ -303,7 +379,7 @@ class MainActivity : AppCompatActivity() {
             val withToken = withTokenRadioButton.isChecked
             val bySdk = cardCollectedByButtonToggleGroup.checkedButtonId == R.id.bySdkButton
             val byMerchant = cardCollectedByButtonToggleGroup.checkedButtonId == R.id.byMerchantButton
-            val tokenizationEnabled = merchantConfig?.isTokenizationEnabled == true
+            val tokenizationEnabled = SampleApplication.INSTANCE.merchantConfiguration?.isTokenizationEnabled == true
 
             agreementTypeTextInputLayout.isVisible = withCard
             cardCollectedByButtonToggleGroup.isVisible = withCard
@@ -319,10 +395,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onOrderResult(orderResult: GeideaResult<Order>) {
-        when (orderResult) {
+    private fun onPaymentResult(paymentResult: GeideaResult<Order>) {
+        when (paymentResult) {
             is GeideaResult.Success<Order> -> {
-                val order: Order = orderResult.data
+                val order: Order = paymentResult.data as Order
                 showOrder(order, ::capture, ::refund, ::cancel)
                 val tokenId = order.tokenId
                 if (tokenId != null) {
@@ -333,12 +409,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             is GeideaResult.Error -> {
-                showErrorResult(orderResult.toJson(pretty = true))
+                showErrorResult(paymentResult.toJson(pretty = true))
             }
             is GeideaResult.Cancelled -> {
                 // The payment flow was intentionally cancelled by the user (or timed out)
-                if (orderResult.orderId != null) {
-                    showCancellationMessage(orderResult)
+                if (paymentResult.orderId != null) {
+                    showCancellationMessage(paymentResult)
                 } else {
                     snack("Cancelled")
                 }
@@ -366,7 +442,7 @@ class MainActivity : AppCompatActivity() {
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.captureOrder(request))
+            onPaymentResult(GeideaPaymentAPI.captureOrder(request))
         }
     }
 
@@ -377,7 +453,7 @@ class MainActivity : AppCompatActivity() {
         }
         GeideaPaymentAPI.captureOrder(request) { orderResult ->
             check(Thread.currentThread().name == "main")
-            onOrderResult(orderResult)
+            onPaymentResult(orderResult)
         }
     }
 
@@ -387,7 +463,7 @@ class MainActivity : AppCompatActivity() {
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.refundOrder(request))
+            onPaymentResult(GeideaPaymentAPI.refundOrder(request))
         }
     }
 
@@ -424,10 +500,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*
-     * Constructs your customer's payment intent object used as an input to the payment flow.
+     * Constructs your customer's payment data object used as an input to the payment flow.
      */
-    private fun createPaymentIntent(): PaymentIntent = with(binding) {
-        PaymentIntent {
+    private fun createPaymentData(): PaymentData = with(binding) {
+        PaymentData {
             paymentOperation = PAYMENT_OPERATION_ITEMS.findValueByText(payOpAutocompleteTextView.textOrNull)
             amount = amountEditText.textOrNull?.let(::BigDecimal)
             currency = currencyEditText.textOrNull
@@ -448,6 +524,7 @@ class MainActivity : AppCompatActivity() {
                     postCode = shippingPostCodeEditText.textOrNull
             )
             showAddress = showAddressCheckbox.isChecked
+            showReceipt = showReceiptCheckbox.isChecked
 
             if (cardCollectedByButtonToggleGroup.checkedButtonId == R.id.byMerchantButton) {
                 // Merchant handles the card details input, not Geidea SDK. The SDK will skip
@@ -474,9 +551,13 @@ class MainActivity : AppCompatActivity() {
             cardOnFile = saveCardCheckbox.isVisible && saveCardCheckbox.isEnabled && saveCardCheckbox.isChecked
 
             initiatedBy = INITIATED_BY_ITEMS.findValueByText(initiatedByAutocompleteTextView.textOrNull)
-            eInvoiceId = eInvoiceIdEditText.textOrNull
+            paymentIntentId = paymentIntentIdEditText.textOrNull
             agreementId = agreementIdEditText.textOrNull
             agreementType = AGREEMENT_TYPE_ITEMS.findValueByText(agreementTypeAutocompleteTextView.textOrNull)
+
+            paymentMethodsEditText.textOrNull?.let {
+                paymentMethods = it.split(" ", ",").toSet().takeIf(Set<String>::isNotEmpty)
+            }
         }
     }
 
@@ -486,6 +567,7 @@ class MainActivity : AppCompatActivity() {
             amount = amountEditText.textOrNull?.let(::BigDecimal)
             currency = currencyEditText.textOrNull
             merchantReferenceId = merchantRefIdEditText.textOrNull
+            callbackUrl = callbackUrlEditText.textOrNull
             customerEmail = customerEmailEditText.textOrNull
             billingAddress = Address(
                     countryCode = billingCountryCodeEditText.textOrNull,
@@ -501,7 +583,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             initiatedBy = INITIATED_BY_ITEMS.findValueByText(initiatedByAutocompleteTextView.textOrNull)
-            eInvoiceId = eInvoiceIdEditText.textOrNull
+            paymentIntentId = paymentIntentIdEditText.textOrNull
             agreementId = binding.agreementIdEditText.textOrNull
 
             val currentCard = requireNotNull(tokenizedCardView.card) { "Please select a tokenized card!" }
@@ -513,14 +595,14 @@ class MainActivity : AppCompatActivity() {
         try {
             when (binding.paymentOptionsRadioGroup.checkedRadioButtonId) {
                 R.id.withCardRadioButton -> {
-                    val paymentIntent = createPaymentIntent()
-                    paymentLauncher.launch(paymentIntent)
+                    val paymentData = createPaymentData()
+                    paymentLauncher.launch(paymentData)
                 }
                 R.id.withTokenRadioButton -> {
                     val tokenPayment = createTokenPayment()
                     lifecycleScope.launch {
                         val orderResult: GeideaResult<Order> = GeideaPaymentAPI.payWithToken(tokenPayment)
-                        onOrderResult(orderResult)
+                        onPaymentResult(orderResult)
                     }
                 }
             }
@@ -617,5 +699,7 @@ class MainActivity : AppCompatActivity() {
                 DropDownItem(AgreementType.INSTALLMENT),
                 DropDownItem(AgreementType.UNSCHEDULED),
         )
+
+        const val PREF_KEY_SERVER_ENVIRONMENT = "serverEnvironment"
     }
 }

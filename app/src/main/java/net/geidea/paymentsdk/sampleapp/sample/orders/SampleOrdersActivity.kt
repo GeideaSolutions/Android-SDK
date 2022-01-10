@@ -18,7 +18,7 @@ import net.geidea.paymentsdk.model.*
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleOrdersBinding
 import net.geidea.paymentsdk.sampleapp.sample.BaseSampleActivity
-import net.geidea.paymentsdk.sampleapp.sample.orders.OrdersPagingSource.Companion.PAGE_SIZE
+import net.geidea.paymentsdk.sampleapp.sample.GeideaPagingSource.Companion.PAGE_SIZE
 
 @FlowPreview
 class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), OrderFiltersFragment.Callbacks {

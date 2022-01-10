@@ -7,7 +7,7 @@ import androidx.core.os.bundleOf
 import net.geidea.paymentsdk.flow.GeideaContract
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
-import net.geidea.paymentsdk.flow.pay.PaymentIntent
+import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.InitiatingSource
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.model.Order
@@ -17,28 +17,28 @@ import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleCustomThemeBind
 class SampleThemeActivity : BaseSampleActivity<ActivitySampleCustomThemeBinding>() {
 
     private var savedInstanceState: Bundle? = null
-    private lateinit var paymentIntent: PaymentIntent
+    private lateinit var paymentData: PaymentData
 
     override fun createBinding(layoutInflater: LayoutInflater): ActivitySampleCustomThemeBinding {
         return ActivitySampleCustomThemeBinding.inflate(layoutInflater)
     }
 
-    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentIntent>
+    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         this.savedInstanceState = savedInstanceState
 
-        paymentLauncher = registerForActivityResult(PaymentContract(), ::onOrderResult)
+        paymentLauncher = registerForActivityResult(PaymentContract(), ::onPaymentResult)
 
         with(binding) {
             setSupportActionBar(includeAppBar.toolbar)
             title = "Custom theme sample"
 
             payButton.setOnClickListener {
-                paymentIntent = createPaymentIntent()
-                paymentLauncher.launch(paymentIntent)
+                paymentData = createPaymentData()
+                paymentLauncher.launch(paymentData)
             }
         }
     }
@@ -53,8 +53,8 @@ class SampleThemeActivity : BaseSampleActivity<ActivitySampleCustomThemeBinding>
         }
     }
 
-    private fun createPaymentIntent(): PaymentIntent = with(binding) {
-        return PaymentIntent {
+    private fun createPaymentData(): PaymentData = with(binding) {
+        return PaymentData {
             amount = "123.45".toBigDecimal()
             currency = "SAR"
             initiatedBy = InitiatingSource.INTERNET
@@ -67,13 +67,14 @@ class SampleThemeActivity : BaseSampleActivity<ActivitySampleCustomThemeBinding>
         }
     }
 
-    private fun onOrderResult(orderResult: GeideaResult<Order>) {
+    private fun onPaymentResult(paymentResult: GeideaResult<Order>) {
         // Not handled as the purpose of this sample is to just demonstrate theme customization
     }
 
     companion object {
         val THEMES = listOf(
                 DropDownItem(R.style.Gd_Theme_DayNight_NoActionBar, "Gd.Theme.DayNight.NoActionBar"),
+                DropDownItem(R.style.Gd_Base_Theme_SDK_DayNight_NoActionBar, "Gd.Base.Theme.SDK.DayNight.NoActionBar"),
                 DropDownItem(R.style.Theme_MaterialComponents_Light_NoActionBar, "Theme.MaterialComponents.Light.NoActionBar (test-only)"),
                 DropDownItem(R.style.Theme_MaterialComponents_DayNight_NoActionBar, "Theme.MaterialComponents.DayNight.NoActionBar (test-only)"),
                 DropDownItem(R.style.Theme_App_Rounded, "Theme.App.Rounded"),

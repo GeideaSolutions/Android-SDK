@@ -10,7 +10,7 @@ import net.geidea.paymentsdk.GeideaPaymentAPI
 import net.geidea.paymentsdk.R
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
-import net.geidea.paymentsdk.flow.pay.PaymentIntent
+import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.*
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySamplePaymentFormBinding
@@ -22,13 +22,13 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
 
     private var savedInstanceState: Bundle? = null
 
-    private var initialPaymentIntent: PaymentIntent? = null
+    private var initialPaymentData: PaymentData? = null
 
     override fun createBinding(layoutInflater: LayoutInflater): ActivitySamplePaymentFormBinding {
         return ActivitySamplePaymentFormBinding.inflate(layoutInflater)
     }
 
-    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentIntent>
+    private lateinit var paymentLauncher: ActivityResultLauncher<PaymentData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +36,10 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
         this.savedInstanceState = savedInstanceState
 
         if (savedInstanceState != null) {
-            initialPaymentIntent = savedInstanceState.getParcelable(STATE_INITIAL_PAYMENT_INTENT)
+            initialPaymentData = savedInstanceState.getParcelable(STATE_INITIAL_PAYMENT_DATA)
         }
 
-        paymentLauncher = registerForActivityResult(PaymentContract(), ::onOrderResult)
+        paymentLauncher = registerForActivityResult(PaymentContract(), ::onPaymentResult)
 
         with(binding) {
             setSupportActionBar(includeAppBar.toolbar)
@@ -50,7 +50,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putParcelable(STATE_INITIAL_PAYMENT_INTENT, initialPaymentIntent)
+        outState.putParcelable(STATE_INITIAL_PAYMENT_DATA, initialPaymentData)
     }
 
     override fun setupUi(merchantConfig: MerchantConfigurationResponse) = with(binding) {
@@ -60,16 +60,16 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
         }
 
         // Initialize only on first creation, because PaymentFormView keeps its state across screen rotation.
-        val initial = createInitialPaymentIntent()
+        val initial = createInitialPaymentData()
 
         payButton.text = formatPayButtonText(initial.amount, initial.currency)
         payButton.setOnClickListener {
-            val finalPaymentIntent: PaymentIntent = createFinalPaymentIntent(initialPaymentIntent!!)
-            paymentLauncher.launch(finalPaymentIntent)
+            val finalPaymentData: PaymentData = createFinalPaymentData(initialPaymentData!!)
+            paymentLauncher.launch(finalPaymentData)
         }
 
         if (savedInstanceState == null) {
-            this@SamplePaymentFormActivity.initialPaymentIntent = initial
+            this@SamplePaymentFormActivity.initialPaymentData = initial
             with(paymentFormView) {
                 cardNumber = initial.paymentMethod?.cardNumber ?: ""
                 cardExpiryDate = initial.paymentMethod?.expiryDate?.toDisplayString() ?: ""
@@ -104,11 +104,11 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
     }
 
     /**
-     * The payment intent defined by you. Later on this data is merged with the data from the
-     * payment form to create the final intent.
+     * The payment data defined by you. Later on this data is merged with the data from the
+     * payment form to create the final payment data.
      */
-    private fun createInitialPaymentIntent(): PaymentIntent {
-        return PaymentIntent {
+    private fun createInitialPaymentData(): PaymentData {
+        return PaymentData {
             amount = "123.45".toBigDecimal()
             currency = "SAR"
             callbackUrl = null
@@ -120,26 +120,26 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
     }
 
     /**
-     * Merges the payment intent originally created by you with the input from customer
+     * Merges the payment data originally created by you with the input from customer
      * done inside [net.geidea.paymentsdk.ui.widget.PaymentFormView].
      *
-     * @return the final payment intent that will be sent to SDK for execution.
+     * @return the final payment data that will be sent to SDK for execution.
      */
-    private fun createFinalPaymentIntent(initialPaymentIntent: PaymentIntent): PaymentIntent = with(binding) {
-        return PaymentIntent {
+    private fun createFinalPaymentData(initialPaymentData: PaymentData): PaymentData = with(binding) {
+        return PaymentData {
             // Populate the merchant-related properties...
-            paymentOperation = initialPaymentIntent.paymentOperation
-            amount = initialPaymentIntent.amount
-            currency = initialPaymentIntent.currency
-            merchantReferenceId = initialPaymentIntent.merchantReferenceId
-            callbackUrl = initialPaymentIntent.callbackUrl
-            showCustomerEmail = initialPaymentIntent.showCustomerEmail
-            showAddress = initialPaymentIntent.showAddress
-            cardOnFile = initialPaymentIntent.cardOnFile
-            initiatedBy = initialPaymentIntent.initiatedBy
-            agreementId = initialPaymentIntent.agreementId
-            agreementType = initialPaymentIntent.agreementType
-            bundle = initialPaymentIntent.bundle
+            paymentOperation = initialPaymentData.paymentOperation
+            amount = initialPaymentData.amount
+            currency = initialPaymentData.currency
+            merchantReferenceId = initialPaymentData.merchantReferenceId
+            callbackUrl = initialPaymentData.callbackUrl
+            showCustomerEmail = initialPaymentData.showCustomerEmail
+            showAddress = initialPaymentData.showAddress
+            cardOnFile = initialPaymentData.cardOnFile
+            initiatedBy = initialPaymentData.initiatedBy
+            agreementId = initialPaymentData.agreementId
+            agreementType = initialPaymentData.agreementType
+            bundle = initialPaymentData.bundle
 
             // ...then read and populate customer data from the form
 
@@ -154,13 +154,13 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
             customerEmail = if (paymentFormView.showCustomerEmail) {
                 paymentFormView.customerEmail
             } else {
-                initialPaymentIntent.customerEmail
+                initialPaymentData.customerEmail
             }
 
             billingAddress = if (paymentFormView.showAddress) {
                 paymentFormView.billingAddress
             } else {
-                initialPaymentIntent.billingAddress
+                initialPaymentData.billingAddress
             }
 
             shippingAddress = if (paymentFormView.showAddress) {
@@ -170,7 +170,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                     paymentFormView.shippingAddress
                 }
             } else {
-                initialPaymentIntent.shippingAddress
+                initialPaymentData.shippingAddress
             }
         }
     }
@@ -181,7 +181,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.captureOrder(request))
+            onPaymentResult(GeideaPaymentAPI.captureOrder(request))
         }
     }
 
@@ -191,7 +191,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.refundOrder(request))
+            onPaymentResult(GeideaPaymentAPI.refundOrder(request))
         }
     }
 
@@ -210,10 +210,10 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
         }
     }
 
-    private fun onOrderResult(orderResult: GeideaResult<Order>) = with(binding) {
-        when (orderResult) {
+    private fun onPaymentResult(paymentResult: GeideaResult<Order>) = with(binding) {
+        when (paymentResult) {
             is GeideaResult.Success<Order> -> {
-                val order: Order = orderResult.data
+                val order: Order = paymentResult.data as Order
                 showOrder(order, ::capture, ::refund, ::cancel)
                 val tokenId = order.tokenId
                 if (tokenId != null) {
@@ -224,7 +224,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 }
             }
             is GeideaResult.Error -> {
-                showErrorResult(orderResult.toJson(pretty = true))
+                showErrorResult(paymentResult.toJson(pretty = true))
             }
             is GeideaResult.Cancelled -> {
                 // The payment flow was intentionally cancelled by the user
@@ -240,6 +240,6 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
     }
 
     companion object {
-        const val STATE_INITIAL_PAYMENT_INTENT = "paymentIntent"
+        const val STATE_INITIAL_PAYMENT_DATA = "paymentData"
     }
 }

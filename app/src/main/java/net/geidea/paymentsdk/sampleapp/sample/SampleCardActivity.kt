@@ -36,7 +36,7 @@ class SampleCardActivity : BaseSampleActivity<ActivitySampleCardBinding>() {
                 snack("Card brand recognized: ${cardBrand.name}")
             }
         }
-        cardInputView.setCardInputListener(object : CardInputAdapter() {
+        cardInputView.addCardInputListener(object : CardInputAdapter() {
             override fun onFocusChange(focusField: CardFieldType) {
                 snack("Focus changed to $focusField")
             }

@@ -37,8 +37,8 @@
                 />
 
             <item
-                android:id="@+id/item_einvoice_sample"
-                android:title="e-Invoice sample"
+                android:id="@+id/item_payment_intents_sample"
+                android:title="Payment intents sample"
                 />
 
             <item
