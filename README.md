@@ -1,4 +1,4 @@
-# Geidea Payment Gateway SDK for Android
+# Module Geidea Payment SDK for Android
 
 Geidea Payment SDK for Android provides tools for quick and easy
 integration of Geidea Payment Gateway services into your Android app.
@@ -11,21 +11,31 @@ integration of Geidea Payment Gateway services into your Android app.
 
 ### Gradle setup
 
-The SDK is distributed as an archive containing Maven AAR artifact  
-and POM file. The easiest way to import it into your project is to:
+The SDK is available on GitHub Packages Maven repository.
 
-1. Unpack the SDK archive with the AAR and POM files into
-   some local folder (may not necessarily be under your project directory)
-2. Add it as a local Maven repository to your project-level build.gradle
+1. Add GitHub Packages as a Maven repository to your project-level build.gradle
 ```groovy
 allprojects {
-    repositories {
-        maven { url "<LOCAL PATH TO THE EXTRACTED AAR AND POM>" }
+    maven {
+        url = uri("https://maven.pkg.github.com/GeideaSolutions/Android-SDK")
+        credentials {
+            username = project.findProperty("gpr.user")
+            password = project.findProperty("gpr.key")
+        }
     }
 }
 ```
-E.g. if you extract the SDK package into <PROJECT_DIR>\geideasdk then
-the path to the AAR should be <PROJECT_DIR>\geideasdk\net\geidea\paymentsdk\paymentsdk\1.0.0\paymentsdk-1.0.0.aar
+
+2. Define your GitHub username (`gpr.user`) and GitHub Personal Access
+   Token (`gpr.key`) in your `gradle.properties` file (without the
+   pointy brackets):
+```
+gpr.user=<YOUR GITHUB USSERNAME>
+gpr.key=<YOUR GITHUB PERSONAL ACCCESS TOKEN>
+```
+You can see your Personal Access Token (PAT) in your
+GitHub Profile > Settings > Developer Options > Personal access tokens.
+If you do not have one yet, you can generate it as explained [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
 3. Add the SDK as a dependency in your app-level build.gradle
 
@@ -33,16 +43,14 @@ the path to the AAR should be <PROJECT_DIR>\geideasdk\net\geidea\paymentsdk\paym
 implementation 'net.geidea.paymentsdk:paymentsdk:<LATEST VERSION>'
 ```
 
-Now Geidea Payment SDK should be imported in your project.
-
 ### SDK Initialization
 
 As an initialization step the SDK expects that you provide your Merchant
-credentials with the `GeideaPaymentAPI.setCredentials()` method.
-However it is not required to set them on each start. It could be once  
-per installation of the app as the credentials are persisted securely  
-encrypted on device. You can check if there credentials already stored  
-with the `GeideaPaymentAPI.hasCredentials`. It is only important to be  
+credentials with the `GeideaPaymentAPI.setCredentials()` method. However
+it is not required to set them on each start. It could be once per
+installation of the app as the credentials are persisted securely
+encrypted on device. You can check if there credentials already stored
+with the `GeideaPaymentAPI.hasCredentials`. It is only important to be
 stored prior to using the SDK.
 ```kotlin
 if (!GeideaPaymentAPI.hasCredentials) {
@@ -52,41 +60,41 @@ if (!GeideaPaymentAPI.hasCredentials) {
     )
 }
 ```
-IMPORTANT: Do **not** hard-code your merchant password directly into your  
-APK but get it dynamically (from an endpoint of your backend or  
+IMPORTANT: Do **not** hard-code your merchant password directly into
+your APK but get it dynamically (from an endpoint of your backend or
 elsewhere) due to security reasons.
 
 ## The Flow concept
 
-The SDK employs the concept of UI flow which is a sequence of UI  
-screens, network calls and various other operations. UI flows are  
-implemented based on the typical Android Activity results where one  
-activity (or a chain of more activities) is launched with an input  
-intent, then it performs its work and finally produces some output which  
-contains the result data you are interested in. Each flow is represented  
+The SDK employs the concept of UI flow which is a sequence of UI
+screens, network calls and various other operations. UI flows are
+implemented based on the typical Android Activity results where one
+activity (or a chain of more activities) is launched with an input
+intent, then it performs its work and finally produces some output which
+contains the result data you are interested in. Each flow is represented
 and managed by an `ActivityContract` implementation.
 
 ### Using Activity result contracts
 
-Instead of relying on the traditional and now deprecated  
-`startActivityForResult()` method the SDK embraces the newer Activity  
-Result APIs which offer some benefits for you. For more info please  
+Instead of relying on the traditional and now deprecated
+`startActivityForResult()` method the SDK embraces the newer Activity
+Result APIs which offer some benefits for you. For more info please
 visit [https://developer.android.com/training/basics/intents/result]() .
 
 ### Payment flow
 
-The Payment flow expects an input of type `PaymentIntent` and returns a  
-result of type `GeideaResult<Order>`. The `PaymentContract` is used to  
+The Payment flow expects an input of type `PaymentData` and returns a
+result of type `GeideaResult<Order>`. The `PaymentContract` is used to
 manage the input/output parcelization.
 
-Declare a launcher somewhere in your code from where you wish to start  
+Declare a launcher somewhere in your code from where you wish to start
 the payment.
 
 ```kotlin
-private var paymentLauncher: ActivityResultLauncher<PaymentIntent>
+private var paymentLauncher: ActivityResultLauncher<PaymentData>
 ```
 
-…and then to register it with a `PaymentContract` instance and your  
+…and then to register it with a `PaymentContract` instance and your
 function or lambda that should accept the final result.
 
 ```kotlin
@@ -96,16 +104,16 @@ fun handleOrderResult(result: GeideaResult<Order>) {
 paymentLauncher = registerForActivityResult(PaymentContract(), ::handleOrderResult)
 ```
 
-### Building your PaymentIntent
+### Building your PaymentData
 
-`PaymentIntent` contains details about the order, customer and preferred  
-payment method. It has a few mandatory properties - `amount`, `currency`  
+`PaymentData` contains details about the order, customer and preferred
+payment method. It has a few mandatory properties - `amount`, `currency`
 and `paymentMethod`.
 
 Kotlin
 
 ```kotlin
-val paymentIntent = PaymentIntent {
+val paymentData = PaymentData {
     // Mandatory properties
     amount = 123.45
     currency = "SAR"
@@ -137,7 +145,7 @@ val paymentIntent = PaymentIntent {
 or in Java
 
 ```java
-PaymentIntent paymentIntent = new PaymentIntent.Builder()
+PaymentData paymentData = new PaymentData.Builder()
         .setAmount(123.45d)
         .setCurrency("SAR")
         .setPaymentMethod(new PaymentMethod.Builder()
@@ -167,25 +175,25 @@ PaymentIntent paymentIntent = new PaymentIntent.Builder()
 
 Validations
 
-Multiple basic validation checks are performed on construction of  
-`PaymentIntent` and `PaymentMethod`. E.g. check if the CVV is 3 or 4 digits.  
-If some validation check does not pass then an `IllegalArgumentException` with a  
-message is thrown. For a comprehensive list of validity conditions  
-please refer to the Integration guide.
-The full validation is performed server-side and `FieldValidationError`  
-is returned on bad input.
+Multiple basic validation checks are performed on construction of
+`PaymentData` and `PaymentMethod`. E.g. check if the CVV is 3 or 4
+digits. If some validation check does not pass then an
+`IllegalArgumentException` with a message is thrown. For a comprehensive
+list of validity conditions please refer to the Integration guide. The
+full validation is performed server-side and `FieldValidationError` is
+returned on bad input.
 
 
 ### Starting payment flow
 
 After registering for results a payment flow can be started
 ```kotlin
-paymentLauncher.launch(paymentIntent)
+paymentLauncher.launch(paymentData)
 ```
 
 ### Receiving the Order result
 
-The final result of the Payment flow is returned as a sealed object of  
+The final result of the Payment flow is returned as a sealed object of
 type `GeideaResult<Order>`.
 
 ```kotlin
