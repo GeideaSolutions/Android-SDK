@@ -94,7 +94,7 @@ the payment.
 private var paymentLauncher: ActivityResultLauncher<PaymentData>
 ```
 
-…and then to register it with a `PaymentContract` instance and your
+…and then register it with a `PaymentContract` instance and your
 function or lambda that should accept the final result.
 
 ```kotlin
