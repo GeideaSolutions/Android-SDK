@@ -30,7 +30,7 @@ allprojects {
    Token (`gpr.key`) in your `gradle.properties` file (without the
    pointy brackets):
 ```
-gpr.user=<YOUR GITHUB USSERNAME>
+gpr.user=<YOUR GITHUB USERNAME>
 gpr.key=<YOUR GITHUB PERSONAL ACCCESS TOKEN>
 ```
 You can see your Personal Access Token (PAT) in your
