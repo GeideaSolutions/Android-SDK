@@ -28,7 +28,7 @@ class DropDownAdapter<T>(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        return inflater.inflate(R.layout.gd_item_country, parent, false).apply {
+        return inflater.inflate(R.layout.item_single_text, parent, false).apply {
             val item = getItem(position)
 
             val textView = findViewById<TextView>(android.R.id.text1)

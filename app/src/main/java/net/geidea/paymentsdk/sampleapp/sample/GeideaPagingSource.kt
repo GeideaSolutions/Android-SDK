@@ -3,7 +3,7 @@ package net.geidea.paymentsdk.sampleapp.sample
 import android.annotation.SuppressLint
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import net.geidea.paymentsdk.model.PaginatedRequest
+import net.geidea.paymentsdk.model.common.PaginatedRequest
 import java.text.SimpleDateFormat
 import java.util.*
 

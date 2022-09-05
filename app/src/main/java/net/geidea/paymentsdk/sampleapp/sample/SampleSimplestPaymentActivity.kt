@@ -8,7 +8,7 @@ import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
 import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
-import net.geidea.paymentsdk.model.Order
+import net.geidea.paymentsdk.model.order.Order
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleSimplestPaymentBinding
 import net.geidea.paymentsdk.sampleapp.snack
 

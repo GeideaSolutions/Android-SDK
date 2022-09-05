@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink">#AD1457</color>
+    <color name="purple">#7B1FA2</color>
+    <color name="green">#00791b</color>
+    <color name="teal">#008080</color>
+    <color name="cyan">#6b989d</color>
+    <color name="blue">#377DCB</color>
+    <color name="yellow">#FFFF8D</color>
+    <color name="mango">#ff8243</color>
+</resources>

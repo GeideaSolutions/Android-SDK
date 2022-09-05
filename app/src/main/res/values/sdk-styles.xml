@@ -1,0 +1,49 @@
+<resources>
+    <!-- Themes and styles used to customize Geidea SDK -->
+
+    <style name="Theme.Sdk.Example.Simple" parent="Gd.Theme.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorOnPrimary">@color/yellow</item>
+        <item name="colorSecondary">@color/purple</item>
+        <item name="gd_merchantLogoImageViewStyle">@style/Widget.Sdk.ImageView.Logo.Merchant</item>
+    </style>
+
+    <style name="Theme.Sdk.Example.Filled" parent="Gd.Base.Theme.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/teal</item>
+        <item name="colorSecondary">@color/green</item>
+        <item name="gd_merchantLogoImageViewStyle">@style/Widget.Sdk.ImageView.Logo.Merchant</item>
+
+        <item name="gd_textInputExposedDropdownMenuStyle">@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.FilledBox</item>
+    </style>
+
+    <style name="Theme.Sdk.Example.Outlined" parent="Gd.Base.Theme.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorOnPrimary">@color/yellow</item>
+        <item name="colorSecondary">@color/cyan</item>
+        <item name="gd_merchantLogoImageViewStyle">@style/Widget.Sdk.ImageView.Logo.Merchant</item>
+
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
+        <item name="editTextStyle">@style/Widget.Sdk.EditText</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Sdk.SmallComponent</item>
+    </style>
+
+    <!-- Styles -->
+
+    <style name="ShapeAppearance.Sdk.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="Widget.Sdk.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+    </style>
+
+    <style name="Widget.Sdk.ImageView.Logo.Merchant" parent="@style/Gd.Base.Widget.ImageView.Logo.Merchant">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:src">@drawable/ic_my_merchant_logo</item>
+    </style>
+
+</resources>

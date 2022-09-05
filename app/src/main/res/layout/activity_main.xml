@@ -211,6 +211,24 @@
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
+            <!-- Theme drop-down -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="Theme"
+                >
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/themeAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <!-- Payment operation -->
 
             <com.google.android.material.textfield.TextInputLayout
@@ -576,6 +594,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Show receipt"
+                android:checked="true"
                 />
 
             <!-- Order details -->
@@ -609,7 +628,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
-                        android:text="1.23"
+                        android:text="1100"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -867,8 +886,45 @@
 
             </LinearLayout>
 
+            <!-- Order items -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Order items (Shahry &amp; Souhoola)"
+                    android:textAppearance="?textAppearanceBody1"
+                    />
+
+                <Button
+                    android:id="@+id/addOrderItemButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Item"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/orderItemsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
+
         </LinearLayout>
     </ScrollView>
+
+    <!-- Pay button -->
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package net.geidea.paymentsdk.sampleapp.sample
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -9,7 +10,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.meezaqr.CreateMeezaPaymentIntentRequest
+import net.geidea.paymentsdk.model.paymentintent.*
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.DialogEinvoiceBinding
 import net.geidea.paymentsdk.sampleapp.databinding.DialogEinvoiceItemBinding
@@ -21,6 +23,7 @@ import java.util.*
 
 object PaymentIntentDialogs {
 
+    @SuppressLint("NewApi")
     private val DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     private val PRICE_FORMAT = DecimalFormat("#0.00")
 
@@ -56,7 +59,7 @@ object PaymentIntentDialogs {
                         customer = CustomerRequest {
                             name = customerNameEditText.textOrNull
                             email = customerEmailEditText.textOrNull
-                            phone = customerPhoneEditText.textOrNull
+                            phoneNumber = customerPhoneEditText.textOrNull
                         }
                         expiryDate = expiryDateEditText.textOrNull
                         activationDate = activationDateEditText.textOrNull
@@ -72,10 +75,14 @@ object PaymentIntentDialogs {
                                 merchantReferenceId = merchantReferenceIdEditText.textOrNull
                                 subTotal = subTotalEditText.textOrNull?.toBigDecimal()
                                 extraCharges = extraChargesEditText.textOrNull?.toBigDecimal()
-                                extraChargesType = extraChargesTypeEditText.textOrNull
+                                if (extraCharges != null) {
+                                    extraChargesType = extraChargesTypeEditText.textOrNull
+                                }
                                 chargeDescription = chargeDescriptionEditText.textOrNull
                                 invoiceDiscount = discountEditText.textOrNull?.toBigDecimal()
-                                invoiceDiscountType = discountTypeEditText.textOrNull
+                                if (invoiceDiscount != null) {
+                                    invoiceDiscountType = discountTypeEditText.textOrNull
+                                }
                                 grandTotal = grandTotalEditText.textOrNull?.toBigDecimal()
                                 collectCustomersBillingShippingAddress = collectBillingShippingAddressSwitch.isChecked
                                 preAuthorizeAmount = preauthorizeAmountSwitch.isChecked
@@ -112,9 +119,13 @@ object PaymentIntentDialogs {
                         price = priceEditText.textOrNull?.toBigDecimal()
                         quantity = quantityEditText.textOrNull?.toInt()
                         itemDiscount = discountEditText.textOrNull?.toBigDecimal()
-                        itemDiscountType = discountTypeEditText.textOrNull
+                        if (itemDiscount != null) {
+                            itemDiscountType = discountTypeEditText.textOrNull
+                        }
                         tax = taxEditText.textOrNull?.toBigDecimal()
-                        taxType = taxTypeEditText.textOrNull
+                        if (tax != null) {
+                            taxType = taxTypeEditText.textOrNull
+                        }
                         total = totalEditText.textOrNull?.toBigDecimal()
                         description = descriptionEditText.textOrNull
                     }
@@ -173,7 +184,7 @@ object PaymentIntentDialogs {
                         ?.forEach(eInvoiceItemsLinearLayout::addView)
 
                 merchantReferenceIdEditText.setText(merchantReferenceId)
-                subTotalEditText.setText(subtotal?.toString())
+                subTotalEditText.setText(subTotal?.toString())
                 chargeDescriptionEditText.setText(chargeDescription)
                 extraChargesEditText.setText(extraCharges?.toString())
                 extraChargesTypeEditText.setText(extraChargesType)
@@ -195,7 +206,7 @@ object PaymentIntentDialogs {
                         this.customer = CustomerRequest {
                             this.name = customerNameEditText.textOrNull
                             this.email = customerEmailEditText.textOrNull
-                            this.phone = customerPhoneEditText.textOrNull
+                            this.phoneNumber = customerPhoneEditText.textOrNull
                         }
                         this.expiryDate = expiryDateEditText.textOrNull
                         this.activationDate = activationDateEditText.textOrNull
@@ -211,10 +222,14 @@ object PaymentIntentDialogs {
                                 merchantReferenceId = merchantReferenceIdEditText.textOrNull
                                 subTotal = subTotalEditText.textOrNull?.toBigDecimal()
                                 extraCharges = extraChargesEditText.textOrNull?.toBigDecimal()
-                                extraChargesType = extraChargesTypeEditText.textOrNull
+                                if (extraCharges != null) {
+                                    extraChargesType = extraChargesTypeEditText.textOrNull
+                                }
                                 chargeDescription = chargeDescriptionEditText.textOrNull
                                 invoiceDiscount = discountEditText.textOrNull?.toBigDecimal()
-                                invoiceDiscountType = discountTypeEditText.textOrNull
+                                if (invoiceDiscount != null) {
+                                    invoiceDiscountType = discountTypeEditText.textOrNull
+                                }
                                 grandTotal = grandTotalEditText.textOrNull?.toBigDecimal()
                                 collectCustomersBillingShippingAddress = collectBillingShippingAddressSwitch.isChecked
                                 preAuthorizeAmount = preauthorizeAmountSwitch.isChecked
@@ -276,7 +291,7 @@ object PaymentIntentDialogs {
                         customer = CustomerRequest {
                             name = customerNameEditText.textOrNull
                             email = customerEmailEditText.textOrNull
-                            phone = customerPhoneEditText.textOrNull
+                            phoneNumber = customerPhoneEditText.textOrNull
                         }
                         expiryDate = expiryDateEditText.textOrNull
                         activationDate = activationDateEditText.textOrNull

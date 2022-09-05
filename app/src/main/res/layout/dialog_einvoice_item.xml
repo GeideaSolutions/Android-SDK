@@ -33,6 +33,27 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Description -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descriptionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Description *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!-- Price & Quantity -->
 
         <LinearLayout
@@ -49,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Price"
+                android:hint="Price *"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -66,7 +87,7 @@
                 android:id="@+id/quantityInputLayout"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:hint="Quantity"
+                android:hint="Quantity *"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -182,7 +203,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:hint="Total"
+            android:hint="Total *"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -190,27 +211,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Description -->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/descriptionLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:hint="Description"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descriptionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

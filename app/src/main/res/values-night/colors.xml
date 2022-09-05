@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night colors are slightly desaturated versions of the day colors -->
+    <color name="pink">#B5346C</color>
+    <color name="purple">#8236A3</color>
+</resources>

@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import net.geidea.paymentsdk.model.Order
+import net.geidea.paymentsdk.model.order.Order
 import net.geidea.paymentsdk.sampleapp.databinding.ItemOrderBinding
 
 class OrdersAdapter(
-        diffCallback: DiffUtil.ItemCallback<Order> = OrderItemComparator(),
-        private val onItemClick: (Order) -> Unit,
+    diffCallback: DiffUtil.ItemCallback<Order> = OrderItemComparator(),
+    private val onItemClick: (Order) -> Unit,
 ) : PagingDataAdapter<Order, OrderViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(

@@ -32,11 +32,6 @@
                 />
 
             <item
-                android:id="@+id/item_custom_theme_sample"
-                android:title="Custom theme sample"
-                />
-
-            <item
                 android:id="@+id/item_payment_intents_sample"
                 android:title="Payment intents sample"
                 />

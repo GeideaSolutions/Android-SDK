@@ -2,8 +2,8 @@ package net.geidea.paymentsdk.sampleapp.sample.orders
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
-import net.geidea.paymentsdk.model.Order
-import net.geidea.paymentsdk.model.TransactionStatus
+import net.geidea.paymentsdk.model.order.Order
+import net.geidea.paymentsdk.model.transaction.TransactionStatus
 import net.geidea.paymentsdk.sampleapp.R
 import net.geidea.paymentsdk.sampleapp.databinding.ItemOrderBinding
 

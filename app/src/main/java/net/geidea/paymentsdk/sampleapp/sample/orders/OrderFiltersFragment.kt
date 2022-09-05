@@ -14,7 +14,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import net.geidea.paymentsdk.model.OrderSearchRequest
+import net.geidea.paymentsdk.model.order.OrderSearchRequest
 import net.geidea.paymentsdk.sampleapp.R
 import net.geidea.paymentsdk.sampleapp.databinding.DialogOrderFiltersBinding
 import net.geidea.paymentsdk.sampleapp.sample.GeideaPagingSource.Companion.DATE_FORMAT_SERVER
@@ -46,9 +46,10 @@ class OrderFiltersFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         _binding = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

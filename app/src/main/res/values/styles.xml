@@ -1,9 +1,8 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
 
-        <!-- Styles used by Geidea UI components -->
+        <!-- Styles used by Geidea UI components embedded in the sample app UI -->
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="gd_textInputExposedDropdownMenuStyle">@style/Gd.Widget.TextInputLayout.OutlinedBox.ExposedDropdownMenu</item>
         <item name="materialAlertDialogTheme">@style/Theme.MaterialComponents.DayNight.Dialog.Alert</item>
@@ -14,22 +13,7 @@
         <item name="colorOnSurface">@color/gd_greyStroke</item>
         <item name="colorError">@color/gd_pink</item>
 
-        <item name="android:statusBarColor">@color/gd_orangeDark</item>
-    </style>
-
-    <style name="Theme.App.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
-    </style>
-
-    <style name="Theme.App.Filled">
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.FilledBox</item>
-        <item name="gd_textInputExposedDropdownMenuStyle">@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu</item>
-    </style>
-
-    <style name="Theme.App.Rounded">
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense</item>
-        <item name="editTextStyle">@style/Widget.App.EditText</item>
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="android:statusBarColor">?colorSecondary</item>
     </style>
 
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
@@ -39,16 +23,6 @@
     <style name="ThemeOverlay.App.Toolbar.Secondary" parent="">
         <item name="colorPrimary">?colorSecondary</item>
         <item name="colorOnPrimary">?colorOnSecondary</item>
-    </style>
-
-    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">24dp</item>
-    </style>
-
-    <style name="Widget.App.EditText" parent="Widget.AppCompat.EditText">
-        <item name="android:paddingLeft">24dp</item>
-        <item name="android:paddingRight">24dp</item>
     </style>
 
 </resources>

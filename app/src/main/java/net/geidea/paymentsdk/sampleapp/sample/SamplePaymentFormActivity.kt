@@ -6,12 +6,17 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.GeideaPaymentAPI
-import net.geidea.paymentsdk.R
+import net.geidea.paymentsdk.api.gateway.GatewayApi
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
 import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.common.InitiatingSource
+import net.geidea.paymentsdk.model.order.CancelRequest
+import net.geidea.paymentsdk.model.order.CaptureRequest
+import net.geidea.paymentsdk.model.order.Order
+import net.geidea.paymentsdk.model.order.RefundRequest
+import net.geidea.paymentsdk.model.pay.PaymentResponse
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySamplePaymentFormBinding
 import java.math.BigDecimal
@@ -181,7 +186,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onPaymentResult(GeideaPaymentAPI.captureOrder(request))
+            onPaymentResult(GatewayApi.captureOrder(request))
         }
     }
 
@@ -191,7 +196,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 orderId = order.orderId
                 callbackUrl = order.callbackUrl
             }
-            onPaymentResult(GeideaPaymentAPI.refundOrder(request))
+            onPaymentResult(GatewayApi.refundOrder(request))
         }
     }
 
@@ -201,7 +206,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
                 orderId = order.orderId
                 reason = "CancelledByUser"
             }
-            when (val result = GeideaPaymentAPI.cancelOrder(request)) {
+            when (val result = GatewayApi.cancelOrder(request)) {
                 is GeideaResult.Success<PaymentResponse> -> showObjectAsJson(result.data)
                 is GeideaResult.Error -> showObjectAsJson(result)
                 is GeideaResult.Cancelled -> showObjectAsJson(result)
@@ -236,7 +241,7 @@ class SamplePaymentFormActivity : BaseSampleActivity<ActivitySamplePaymentFormBi
     private fun formatPayButtonText(amount: BigDecimal, currency: String): CharSequence {
         val currencyFormat = DecimalFormat("#,###.## ${currency.toUpperCase(Locale.getDefault())}")
         val amountAndCurrency: String = currencyFormat.format(amount)
-        return getString(R.string.gd_button_pay_s, amountAndCurrency)
+        return "Pay $amountAndCurrency"
     }
 
     companion object {

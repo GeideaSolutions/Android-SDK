@@ -1,4 +1,4 @@
-# Geidea Payment SDK for Android
+# Module Geidea Payment SDK for Android
 
 Geidea Payment SDK for Android provides tools for quick and easy
 integration of Geidea Payment Gateway services into your Android app.
@@ -36,6 +36,7 @@ gpr.key=<YOUR GITHUB PERSONAL ACCCESS TOKEN>
 You can see your Personal Access Token (PAT) in your
 GitHub Profile > Settings > Developer Options > Personal access tokens.
 If you do not have one yet, you can generate it as explained [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+> ⚠️ When you create or modify your token make sure it has the `read:packages` scope enabled.
 
 3. Add the SDK as a dependency in your app-level build.gradle
 
@@ -46,15 +47,15 @@ implementation 'net.geidea.paymentsdk:paymentsdk:<LATEST VERSION>'
 ### SDK Initialization
 
 As an initialization step the SDK expects that you provide your Merchant
-credentials with the `GeideaPaymentAPI.setCredentials()` method. However
+credentials with the `GeideaPaymentSdk.setCredentials()` method. However
 it is not required to set them on each start. It could be once per
 installation of the app as the credentials are persisted securely
 encrypted on device. You can check if there credentials already stored
-with the `GeideaPaymentAPI.hasCredentials`. It is only important to be
+with the `GeideaPaymentSdk.hasCredentials`. It is only important to be
 stored prior to using the SDK.
 ```kotlin
-if (!GeideaPaymentAPI.hasCredentials) {
-    GeideaPaymentAPI.setCredentials(
+if (!GeideaPaymentSdk.hasCredentials) {
+    GeideaPaymentSdk.setCredentials(
             merchantKey = "<YOUR MERCHANT KEY>",
             merchantPassword = "<YOUR MERCHANT PASSWORD>"
     )
@@ -107,8 +108,7 @@ paymentLauncher = registerForActivityResult(PaymentContract(), ::handleOrderResu
 ### Building your PaymentData
 
 `PaymentData` contains details about the order, customer and preferred
-payment method. It has a few mandatory properties - `amount`, `currency`
-and `paymentMethod`.
+payment method. It has 2 mandatory properties - `amount` and `currency`.
 
 Kotlin
 
@@ -117,13 +117,13 @@ val paymentData = PaymentData {
     // Mandatory properties
     amount = 123.45
     currency = "SAR"
+    // Optional properties
     paymentMethod = PaymentMethod {
         cardHolderName = "John Doe"
         cardNumber = "5123450000000008"
         expiryDate = ExpiryDate(month = 1, year = 25)
         cvv = "123"
     }
-    // Optional properties
     callbackUrl = "https://website.hook/"
     merchantReferenceId = "1234"
     customerEmail = "email@noreply.test"
@@ -179,9 +179,7 @@ Multiple basic validation checks are performed on construction of
 `PaymentData` and `PaymentMethod`. E.g. check if the CVV is 3 or 4
 digits. If some validation check does not pass then an
 `IllegalArgumentException` with a message is thrown. For a comprehensive
-list of validity conditions please refer to the Integration guide. The
-full validation is performed server-side and `FieldValidationError` is
-returned on bad input.
+list of validity conditions please refer to the Integration guide. 
 
 
 ### Starting payment flow
@@ -204,16 +202,6 @@ fun handleOrderResult(result: GeideaResult<Order>) {
         }
         is GeideaResult.Error -> {
             when (result) {
-                is GeideaResult.FieldValidationError -> {
-                    // Client error - invalid field values (e.g. a CVV with letters)
-                    handleFieldValidationError(
-                            result.type,
-                            result.title,
-                            result.status,
-                            result.traceId,
-                            result.errors,
-                    )
-                }
                 is GeideaResult.NetworkError -> {
                     // Client or server error
                     handleNetworkError(

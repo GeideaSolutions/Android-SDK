@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import net.geidea.paymentsdk.model.PaymentMethodInfo
+import net.geidea.paymentsdk.model.transaction.PaymentMethodInfo
 
 @Parcelize
 @Serializable

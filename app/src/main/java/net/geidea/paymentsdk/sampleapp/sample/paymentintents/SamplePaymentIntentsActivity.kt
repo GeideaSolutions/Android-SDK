@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.GeideaPaymentAPI
+import net.geidea.paymentsdk.api.paymentintent.PaymentIntentApi
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.meezaqr.CreateMeezaPaymentIntentRequest
+import net.geidea.paymentsdk.model.order.Order
+import net.geidea.paymentsdk.model.paymentintent.Channel
+import net.geidea.paymentsdk.model.paymentintent.CreatePaymentIntentRequest
+import net.geidea.paymentsdk.model.paymentintent.EInvoiceOrdersResponse
+import net.geidea.paymentsdk.model.paymentintent.UpdateEInvoiceRequest
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySamplePaymentIntentsBinding
 import net.geidea.paymentsdk.sampleapp.sample.BaseSampleActivity
@@ -73,6 +77,10 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
                 paymentIntentIdInputLayout.isVisible = true
             }
 
+            sendButton.setOnClickListener {
+                paymentIntentIdInputLayout.isVisible = true
+            }
+
             goButton.setOnClickListener {
                 val paymentIntentId = paymentIntentEditText.textOrNull
                 if (paymentIntentId != null) {
@@ -81,6 +89,7 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
                         R.id.updateButton -> updatePaymentIntent(paymentIntentId)
                         R.id.getButton -> getPaymentIntent(paymentIntentId)
                         R.id.deleteButton -> deletePaymentIntent(paymentIntentId)
+                        R.id.sendButton -> sendEInvoice(paymentIntentId)
                         else -> {}
                     }
                 }
@@ -88,11 +97,12 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE_QR) {
-            when (val result = data?.getParcelableExtra<GeideaResult<Order>>("result")) {
+            when (val result = data!!.getParcelableExtra<GeideaResult<Order>>("result")!!) {
                 is GeideaResult.Success<Order> -> showObjectAsJson(result.data)
                 is GeideaResult.Error -> showObjectAsJson(result)
                 is GeideaResult.Cancelled -> showObjectAsJson(result)
@@ -117,7 +127,7 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
         lifecycleScope.launch {
             val request: CreatePaymentIntentRequest? = inputCreateEInvoiceRequest()
             if (request != null) {
-                onEInvoiceResult(GeideaPaymentAPI.createEInvoice(request))
+                onEInvoiceResult(PaymentIntentApi.createEInvoice(request))
             }
         }
     }
@@ -125,11 +135,11 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
     private fun updatePaymentIntent(paymentIntentId: String) {
         lifecycleScope.launch(Dispatchers.Main) {
             // Get the existing e-Invoice to prepopulate the input form with its data
-            val eInvoiceResult: GeideaResult<EInvoiceOrdersResponse> = GeideaPaymentAPI.getEInvoice(paymentIntentId)
+            val eInvoiceResult: GeideaResult<EInvoiceOrdersResponse> = PaymentIntentApi.getEInvoice(paymentIntentId)
             if (eInvoiceResult is GeideaResult.Success) {
                 val updateRequest: UpdateEInvoiceRequest? = inputUpdateEInvoiceRequest(eInvoiceResult.data.paymentIntent!!)
                 if (updateRequest != null) {
-                    onEInvoiceResult(GeideaPaymentAPI.updateEInvoice(updateRequest))
+                    onEInvoiceResult(PaymentIntentApi.updateEInvoice(updateRequest))
                 }
             } else {
                 onEInvoiceResult(eInvoiceResult)
@@ -139,13 +149,27 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
 
     private fun getPaymentIntent(paymentIntentId: String) {
         lifecycleScope.launch {
-            onEInvoiceResult(GeideaPaymentAPI.getEInvoice(paymentIntentId))
+            onEInvoiceResult(PaymentIntentApi.getEInvoice(paymentIntentId))
         }
     }
 
     private fun deletePaymentIntent(paymentIntentId: String) {
         lifecycleScope.launch(Dispatchers.Main) {
-            onEInvoiceResult(GeideaPaymentAPI.deletePaymentIntent(paymentIntentId))
+            onEInvoiceResult(PaymentIntentApi.deletePaymentIntent(paymentIntentId))
+        }
+    }
+
+    private fun sendEInvoice(eInvoiceId: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            val channels = Channel.ALL
+            val choice = singleChoiceDialog(
+                    title = "Channel",
+                    choices = channels
+            )
+            when (channels[choice]) {
+                Channel.SMS -> onEInvoiceResult(PaymentIntentApi.sendEInvoiceBySms(eInvoiceId))
+                Channel.EMAIL -> onEInvoiceResult(PaymentIntentApi.sendEInvoiceByEmail(eInvoiceId))
+            }
         }
     }
 
@@ -154,7 +178,7 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
             is GeideaResult.Success -> {
                 val paymentIntent = result.data.paymentIntent
                 if (paymentIntent != null) {
-                    showEInvoice(paymentIntent, ::updatePaymentIntent, ::deletePaymentIntent)
+                    showEInvoice(paymentIntent, ::updatePaymentIntent, ::deletePaymentIntent, ::sendEInvoice)
                     paymentIntentEditText.setText(paymentIntent.paymentIntentId)
                 } else {
                     showObjectAsJson(result.data)
@@ -162,7 +186,7 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
             }
             is GeideaResult.Error -> {
                 showErrorResult(result.toJson(pretty = true))
-                paymentIntentEditText.setText(null)
+                paymentIntentEditText.text = null
             }
             is GeideaResult.Cancelled -> {
                 snack("Cancelled.")

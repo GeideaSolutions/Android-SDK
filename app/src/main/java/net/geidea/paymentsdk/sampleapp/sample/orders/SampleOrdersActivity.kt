@@ -12,9 +12,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.GeideaPaymentAPI
+import net.geidea.paymentsdk.api.gateway.GatewayApi
 import net.geidea.paymentsdk.flow.GeideaResult
-import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.MerchantConfigurationResponse
+import net.geidea.paymentsdk.model.order.*
+import net.geidea.paymentsdk.model.pay.PaymentResponse
 import net.geidea.paymentsdk.sampleapp.*
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleOrdersBinding
 import net.geidea.paymentsdk.sampleapp.sample.BaseSampleActivity
@@ -98,7 +100,7 @@ class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), 
         }.flow
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_sample_orders, menu)
         return true
     }
@@ -113,7 +115,7 @@ class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), 
     private fun onOrderClicked(order: Order) {
         // Get the detailed version of the order (with all transactions)
         lifecycleScope.launch {
-            val orderResult = GeideaPaymentAPI.getOrder(order.orderId)
+            val orderResult = GatewayApi.getOrder(order.orderId)
             onOrderResult(orderResult)
         }
     }
@@ -138,7 +140,7 @@ class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), 
                 this.orderId = order.orderId
                 this.callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.captureOrder(request))
+            onOrderResult(GatewayApi.captureOrder(request))
             pagingAdapter.refresh()
         }
     }
@@ -149,7 +151,7 @@ class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), 
                 this.orderId = order.orderId
                 this.callbackUrl = order.callbackUrl
             }
-            onOrderResult(GeideaPaymentAPI.refundOrder(request))
+            onOrderResult(GatewayApi.refundOrder(request))
             pagingAdapter.refresh()
         }
     }
@@ -160,7 +162,7 @@ class SampleOrdersActivity : BaseSampleActivity<ActivitySampleOrdersBinding>(), 
                 orderId = order.orderId
                 reason = "CancelledByUser"
             }
-            when (val result = GeideaPaymentAPI.cancelOrder(request)) {
+            when (val result = GatewayApi.cancelOrder(request)) {
                 is GeideaResult.Success<PaymentResponse> -> showObjectAsJson(result.data)
                 is GeideaResult.Error -> showObjectAsJson(result)
                 is GeideaResult.Cancelled -> showObjectAsJson(result)

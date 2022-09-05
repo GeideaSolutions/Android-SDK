@@ -21,9 +21,17 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.GeideaPaymentAPI
+import net.geidea.paymentsdk.api.gateway.GatewayApi
+import net.geidea.paymentsdk.api.paymentintent.PaymentIntentApi
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.meezaqr.CreateMeezaPaymentIntentRequest
+import net.geidea.paymentsdk.model.meezaqr.MeezaPaymentRequest
+import net.geidea.paymentsdk.model.meezaqr.MeezaPaymentResponse
+import net.geidea.paymentsdk.model.meezaqr.MeezaQrImageResponse
+import net.geidea.paymentsdk.model.paymentintent.PaymentIntent
+import net.geidea.paymentsdk.model.paymentintent.PaymentIntentResponse
+import net.geidea.paymentsdk.model.paymentintent.PaymentIntentStatus
 import net.geidea.paymentsdk.sampleapp.databinding.ActivitySampleMeezaBinding
 import net.geidea.paymentsdk.sampleapp.databinding.DialogMeezaPhoneBinding
 import net.geidea.paymentsdk.sampleapp.hideKeyboard
@@ -42,13 +50,13 @@ import java.text.DecimalFormat
  * following Meeza UX guidelines described in the 'Meeza Digital - UX Guide v1.0' document:
  * 1) The QR code image view must be large enough to be well visible;
  * 2) Your [merchant name][MerchantConfigurationResponse.merchantName] must be well visible;
- * 3) The [Meeza Digital logo][R.id.gd_ic_meeza_logo] must be well visible;
+ * 3) The [Meeza Digital logo][net.geidea.paymentsdk.R.id.gd_ic_meeza_logo] must be well visible;
  * 4) A "Request Payment" button should be present that leads to a mobile phone number input UI.
  * The last is an alternative way for the user to pay in case of difficulties while scanning
  * the QR code.
  *
- * @see GeideaPaymentAPI.createMeezaPaymentQrCode
- * @see GeideaPaymentAPI.sendMeezaRequestToPay
+ * @see PaymentIntentApi.createMeezaPaymentQrCode
+ * @see PaymentIntentApi.sendMeezaRequestToPay
  */
 class SampleMeezaQrPaymentActivity : BaseSampleActivity<ActivitySampleMeezaBinding>() {
 
@@ -102,7 +110,7 @@ class SampleMeezaQrPaymentActivity : BaseSampleActivity<ActivitySampleMeezaBindi
         sCachedQrBitmapDrawable = null
         sMeezaMessage = null
         lifecycleScope.launch {
-            when (val qrResult = GeideaPaymentAPI.createMeezaPaymentQrCode(request)) {
+            when (val qrResult = PaymentIntentApi.createMeezaPaymentQrCode(request)) {
                 is GeideaResult.Success<MeezaQrImageResponse> -> {
                     sMeezaMessage = qrResult.data.message!!
                     sCachedQrBitmapDrawable = decodeQrImage(qrResult.data.image!!)
@@ -148,7 +156,7 @@ class SampleMeezaQrPaymentActivity : BaseSampleActivity<ActivitySampleMeezaBindi
         lifecycleScope.launch {
             // Do a maximum of 200 requests - once every 3 seconds
             repeat(200) {
-                when (val pollResult = GeideaPaymentAPI.getPaymentIntent(paymentIntentId)) {
+                when (val pollResult = PaymentIntentApi.getPaymentIntent(paymentIntentId)) {
                     is GeideaResult.Success<PaymentIntentResponse> -> {
                         onSuccess(pollResult.data.paymentIntent)
                     }
@@ -178,7 +186,7 @@ class SampleMeezaQrPaymentActivity : BaseSampleActivity<ActivitySampleMeezaBindi
             val orderId = paymentIntent.orders?.last()?.orderId
             if (orderId != null) {
                 lifecycleScope.launch {
-                    val order = GeideaPaymentAPI.getOrder(orderId)
+                    val order = GatewayApi.getOrder(orderId)
                     setResult(RESULT_OK, Intent().apply { putExtra("result", order)})
                     finish()
                 }
@@ -192,7 +200,7 @@ class SampleMeezaQrPaymentActivity : BaseSampleActivity<ActivitySampleMeezaBindi
                 this.receiverId = receiverId
                 this.qrCodeMessage = sMeezaMessage!!
             }
-            when (val result: GeideaResult<MeezaPaymentResponse> = GeideaPaymentAPI.sendMeezaRequestToPay(request)) {
+            when (val result: GeideaResult<MeezaPaymentResponse> = PaymentIntentApi.sendMeezaRequestToPay(request)) {
                 is GeideaResult.Success -> {
                     dialog.dismiss()
                 }

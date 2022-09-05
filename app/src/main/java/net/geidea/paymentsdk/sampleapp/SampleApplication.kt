@@ -1,7 +1,7 @@
 package net.geidea.paymentsdk.sampleapp
 
 import android.app.Application
-import net.geidea.paymentsdk.GeideaPaymentAPI
+import net.geidea.paymentsdk.GeideaPaymentSdk
 import net.geidea.paymentsdk.ServerEnvironment
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.util.LogLevel
@@ -22,10 +22,10 @@ class SampleApplication : Application() {
         super.onCreate()
 
         if (BuildConfig.DEBUG) {
-            GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Test
-            GeideaPaymentAPI.setLogLevel(LogLevel.VERBOSE)
+            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.Test
+            GeideaPaymentSdk.setLogLevel(LogLevel.VERBOSE)
         } else {
-            GeideaPaymentAPI.serverEnvironment = ServerEnvironment.Prod
+            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.Prod
         }
     }
 }

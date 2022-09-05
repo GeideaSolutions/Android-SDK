@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.geidea.paymentsdk.GeideaPaymentAPI
+import net.geidea.paymentsdk.api.gateway.GatewayApi
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.sampleapp.showErrorMessage
@@ -27,7 +27,7 @@ abstract class BaseSampleActivity<B : ViewBinding> : AppCompatActivity() {
 
     private fun initialize() = with(binding) {
         lifecycleScope.launch(Dispatchers.Main) {
-            val result: GeideaResult<MerchantConfigurationResponse> = GeideaPaymentAPI.getMerchantConfiguration()
+            val result: GeideaResult<MerchantConfigurationResponse> = GatewayApi.getMerchantConfiguration()
             when (result) {
                 is GeideaResult.Success<MerchantConfigurationResponse> -> {
                     setupUi(result.data)

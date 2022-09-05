@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:paddingTop="12dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Merchant Item Id -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/merchantItemIdInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Merchant Item Id"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/merchantItemIdEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="id"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Name -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nameInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Name *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="name"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Description -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descriptionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Description *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="description"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Price, Count & Currency -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            >
+
+            <!-- Price -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/priceInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Price *"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/priceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="numberDecimal"
+                    android:text="1100"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Count -->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/countInputLayout"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:hint="Count *"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/countEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="1"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Categories -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/categoriesInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Categories *"
+            app:helperText="Comma-separated strings"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/categoriesEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="catеgory1,category2,category3"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

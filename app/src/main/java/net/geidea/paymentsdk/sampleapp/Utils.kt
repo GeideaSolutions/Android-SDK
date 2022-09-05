@@ -21,7 +21,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.suspendCancellableCoroutine
-import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.common.GeideaJsonObject
+import net.geidea.paymentsdk.model.order.Order
+import net.geidea.paymentsdk.model.order.OrderStatus
+import net.geidea.paymentsdk.model.paymentintent.EInvoicePaymentIntent
+import net.geidea.paymentsdk.model.transaction.TransactionStatus
 import net.geidea.paymentsdk.sampleapp.sample.orders.OrderOperation
 import net.geidea.paymentsdk.sampleapp.sample.paymentintents.PaymentIntentOperation
 import java.util.*
@@ -67,10 +71,10 @@ fun <T> List<DropDownItem<T>>.findValueByText(text: String?): T? =
         first { item -> item.text == text }.value
 
 fun Context.showOrder(
-        order: Order,
-        onCapture: (order: Order) -> Unit,
-        onRefund: (order: Order) -> Unit,
-        onCancel: (order: Order) -> Unit,
+    order: Order,
+    onCapture: (order: Order) -> Unit,
+    onRefund: (order: Order) -> Unit,
+    onCancel: (order: Order) -> Unit,
 ) {
     val json = order.toJson(pretty = true)
     val operations: List<OrderOperation> = getAllowedOrderOperations(order)
@@ -128,14 +132,16 @@ fun Context.showOrder(
 }
 
 fun Context.showEInvoice(
-        eInvoice: EInvoicePaymentIntent,
-        onUpdate: (paymentIntentId: String) -> Unit,
-        onDelete: (paymentIntentId: String) -> Unit,
+    eInvoice: EInvoicePaymentIntent,
+    onUpdate: (paymentIntentId: String) -> Unit,
+    onDelete: (paymentIntentId: String) -> Unit,
+    onSend: (eInvoiceId: String) -> Unit,
 ) {
     val json = eInvoice.toJson(pretty = true)
     val operations = listOf(
             PaymentIntentOperation.UPDATE,
-            PaymentIntentOperation.DELETE
+            PaymentIntentOperation.DELETE,
+            PaymentIntentOperation.SEND
     )
 
     val jsonDialog = AlertDialog.Builder(this).apply {
@@ -164,6 +170,7 @@ fun Context.showEInvoice(
                     when (selectedOp) {
                         PaymentIntentOperation.UPDATE.displayText -> onUpdate(eInvoice.paymentIntentId)
                         PaymentIntentOperation.DELETE.displayText -> onDelete(eInvoice.paymentIntentId)
+                        PaymentIntentOperation.SEND.displayText -> onSend(eInvoice.paymentIntentId)
                     }
                     jsonDialog.dismiss()
                     operationsDialog.dismiss()

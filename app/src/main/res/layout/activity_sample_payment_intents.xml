@@ -35,6 +35,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Create"
+                android:textSize="10sp"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -44,6 +45,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Update"
+                android:textSize="10sp"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -53,6 +55,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Get"
+                android:textSize="10sp"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -62,6 +65,17 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="Delete"
+                android:textSize="10sp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendButton"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Send"
+                android:textSize="10sp"
                 />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
