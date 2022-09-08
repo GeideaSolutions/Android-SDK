@@ -1,4 +1,4 @@
-# Module Geidea Payment SDK for Android
+# Geidea Payment SDK for Android
 
 Geidea Payment SDK for Android provides tools for quick and easy
 integration of Geidea Payment Gateway services into your Android app.
