@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.coroutines.launch
+import net.geidea.paymentsdk.model.common.Source
 import net.geidea.paymentsdk.model.meezaqr.CreateMeezaPaymentIntentRequest
 import net.geidea.paymentsdk.model.paymentintent.*
 import net.geidea.paymentsdk.sampleapp.*
@@ -296,6 +297,7 @@ object PaymentIntentDialogs {
                         expiryDate = expiryDateEditText.textOrNull
                         activationDate = activationDateEditText.textOrNull
                         merchantPublicKey = merchantPublicKeyEditText.textOrNull
+                        source = Source.MOBILE_APP
                     }
                 }
             } catch (e: Exception) {
