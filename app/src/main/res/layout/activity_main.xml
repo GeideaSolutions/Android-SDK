@@ -331,26 +331,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Payment methods -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/paymentMethodsTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Payment methods"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/paymentMethodsEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <RadioGroup
                 android:id="@+id/paymentOptionsRadioGroup"
                 android:layout_width="match_parent"
@@ -706,66 +686,66 @@
 
             <!-- Billing address -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Billing address"
-                android:textAppearance="?textAppearanceBody1"
-                />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Country"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/billingCountryCodeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="3"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Street name &amp; number"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/billingStreetEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapWords"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Billing address"
+                    android:textAppearance="?textAppearanceBody1"
+                    />
+
+                <ImageButton
+                    android:id="@+id/expandBillingAddressImageButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:srcCompat="@drawable/ic_arrow_down"
+                    style="?borderlessButtonStyle"
+                    android:layout_gravity="center_vertical"
+                    android:background="?selectableItemBackgroundBorderless"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/billingAddressLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:hint="City"
+                    android:hint="Country"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/billingCityEditText"
+                        android:id="@+id/billingCountryCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="3"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:hint="Street name &amp; number"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/billingStreetEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionNext"
@@ -774,117 +754,205 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:hint="Postcode"
+                    android:orientation="horizontal"
                     >
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/billingPostCodeEditText"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        />
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:hint="City"
+                        >
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/billingCityEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:hint="Postcode"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/billingPostCodeEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <!-- Shipping address -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Shipping address"
-                android:textAppearance="?textAppearanceBody1"
-                />
-
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Country"
-                >
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/shippingCountryCodeEditText"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="3"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Shipping address"
+                    android:textAppearance="?textAppearanceBody1"
                     />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <ImageButton
+                    android:id="@+id/expandShippingAddressImageButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    app:srcCompat="@drawable/ic_arrow_down"
+                    style="?borderlessButtonStyle"
+                    android:layout_gravity="center_vertical"
+                    android:background="?selectableItemBackgroundBorderless"
+                    />
+            </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
+                android:id="@+id/shippingAddressLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Street name &amp; number"
+                android:orientation="vertical"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/shippingStreetEditText"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="textCapWords"
-                    />
+                    android:layout_marginBottom="4dp"
+                    android:hint="Country"
+                    >
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/shippingCountryCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="3"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:hint="Street name &amp; number"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/shippingStreetEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionNext"
+                        android:inputType="textCapWords"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:hint="City"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/shippingCityEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="textCapWords|textAutoComplete"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="1"
+                        android:hint="Postcode"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/shippingPostCodeEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Payment options -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:orientation="horizontal"
                 >
 
-                <com.google.android.material.textfield.TextInputLayout
+                <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
                     android:layout_weight="1"
-                    android:hint="City"
-                    >
+                    android:text="Payment options"
+                    android:textAppearance="?textAppearanceBody1"
+                    />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/shippingCityEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords|textAutoComplete"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/addOptionButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:hint="Postcode"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/shippingPostCodeEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
+                    android:text="Add Option"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/paymentOptionItemsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                />
 
             <!-- Order items -->
 

@@ -49,7 +49,6 @@ class OrderFiltersFragment : BottomSheetDialogFragment() {
         super.onDestroyView()
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 

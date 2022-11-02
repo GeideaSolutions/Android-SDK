@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingTop="12dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Label -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/labelInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="Label"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/labelEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RadioGroup
+            android:id="@+id/paymentOptionsRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <RadioButton
+                android:id="@+id/cardRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Credit / debit card"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="42dp"
+                >
+
+                <CheckBox
+                    android:id="@+id/visaCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Visa"
+                    android:tag="visa"
+                    />
+
+                <CheckBox
+                    android:id="@+id/mastercardCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mastercard"
+                    android:tag="mastercard"
+                    />
+
+                <CheckBox
+                    android:id="@+id/americanExpressCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="American Express"
+                    android:tag="amex"
+                    />
+
+                <CheckBox
+                    android:id="@+id/madaCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mada"
+                    android:tag="mada"
+                    />
+
+                <CheckBox
+                    android:id="@+id/meezaCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Meeza"
+                    android:tag="meeza"
+                    />
+
+            </LinearLayout>
+
+            <RadioButton
+                android:id="@+id/meezaQrRadioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Mobile Wallet"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buy Now Pay Later"
+                android:layout_margin="24dp"
+                android:textAppearance="?textAppearanceBody1"
+                />
+
+                <RadioButton
+                    android:id="@+id/valuRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="ValU Installments"
+                    />
+
+                <RadioButton
+                    android:id="@+id/shahryRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Shahry Installments"
+                    />
+
+                <RadioButton
+                    android:id="@+id/souhoolaRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Souhoola Installments"
+                    />
+
+        </RadioGroup>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

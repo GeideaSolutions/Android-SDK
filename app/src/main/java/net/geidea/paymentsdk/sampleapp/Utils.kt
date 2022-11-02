@@ -43,32 +43,35 @@ val Int.px: Int
 
 fun Context.showErrorResult(text: String) {
     AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setView(monoSpaceTextContainer(text))
-            .setPositiveButton(android.R.string.ok, null)
-            .show()
+        .setTitle("Error")
+        .setView(monoSpaceTextContainer(text))
+        .setPositiveButton(android.R.string.ok, null)
+        .show()
 }
 
-fun Context.showErrorMessage(message: String?, onPositive: DialogInterface.OnClickListener? = null) {
+fun Context.showErrorMessage(
+    message: String?,
+    onPositive: DialogInterface.OnClickListener? = null
+) {
     AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage(message)
-            .setPositiveButton(android.R.string.ok, onPositive)
-            .show()
+        .setTitle("Error")
+        .setMessage(message)
+        .setPositiveButton(android.R.string.ok, onPositive)
+        .show()
 }
 
 fun Context.monoSpaceTextContainer(text: String): View {
     return LayoutInflater.from(this)
-            .inflate(R.layout.dialog_json, null).apply {
-                findViewById<TextView>(R.id.textView)!!.text = text
-            }
+        .inflate(R.layout.dialog_json, null).apply {
+            findViewById<TextView>(R.id.textView)!!.text = text
+        }
 }
 
 inline val EditText.textOrNull: String?
     get() = this.text?.toString()?.takeIf(String::isNotBlank)
 
 fun <T> List<DropDownItem<T>>.findValueByText(text: String?): T? =
-        first { item -> item.text == text }.value
+    first { item -> item.text == text }.value
 
 fun Context.showOrder(
     order: Order,
@@ -99,11 +102,13 @@ fun Context.showOrder(
                 orderDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
                     AlertDialog.Builder(this@showOrder).apply {
                         setTitle("Order operation(s)")
-                        val operationTexts = operations.map(OrderOperation::displayText).toTypedArray()
+                        val operationTexts =
+                            operations.map(OrderOperation::displayText).toTypedArray()
                         setSingleChoiceItems(operationTexts, 0, null)
                         setPositiveButton(android.R.string.ok) { dialog, _ ->
                             val listView = (dialog as AlertDialog).listView
-                            val selectedOp: String = listView.getItemAtPosition(listView.checkedItemPosition) as String
+                            val selectedOp: String =
+                                listView.getItemAtPosition(listView.checkedItemPosition) as String
                             when (selectedOp) {
                                 OrderOperation.CAPTURE.displayText -> onCapture(order)
                                 OrderOperation.REFUND.displayText -> onRefund(order)
@@ -139,9 +144,9 @@ fun Context.showEInvoice(
 ) {
     val json = eInvoice.toJson(pretty = true)
     val operations = listOf(
-            PaymentIntentOperation.UPDATE,
-            PaymentIntentOperation.DELETE,
-            PaymentIntentOperation.SEND
+        PaymentIntentOperation.UPDATE,
+        PaymentIntentOperation.DELETE,
+        PaymentIntentOperation.SEND
     )
 
     val jsonDialog = AlertDialog.Builder(this).apply {
@@ -162,11 +167,13 @@ fun Context.showEInvoice(
         jsonDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
             AlertDialog.Builder(this@showEInvoice).apply {
                 setTitle("e-Invoice operations")
-                val operationTexts = operations.map(PaymentIntentOperation::displayText).toTypedArray()
+                val operationTexts =
+                    operations.map(PaymentIntentOperation::displayText).toTypedArray()
                 setSingleChoiceItems(operationTexts, 0, null)
                 setPositiveButton(android.R.string.ok) { operationsDialog, _ ->
                     val listView = (operationsDialog as AlertDialog).listView
-                    val selectedOp: String = listView.getItemAtPosition(listView.checkedItemPosition) as String
+                    val selectedOp: String =
+                        listView.getItemAtPosition(listView.checkedItemPosition) as String
                     when (selectedOp) {
                         PaymentIntentOperation.UPDATE.displayText -> onUpdate(eInvoice.paymentIntentId)
                         PaymentIntentOperation.DELETE.displayText -> onDelete(eInvoice.paymentIntentId)
@@ -223,38 +230,38 @@ suspend fun Context.inputText(title: CharSequence?, hint: CharSequence?): String
         textInputLayout.hint = hint
 
         val dialog = MaterialAlertDialogBuilder(this)
-                .setTitle(title)
-                .setView(customView)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    val text = editText.text?.toString() ?: ""
-                    continuation.resume(text)
-                }
-                .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    continuation.resume(null)
-                }
-                .create()
+            .setTitle(title)
+            .setView(customView)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val text = editText.text?.toString() ?: ""
+                continuation.resume(text)
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                continuation.resume(null)
+            }
+            .create()
         dialog.show()
         continuation.invokeOnCancellation { dialog.dismiss() }
     }
 }
 
 suspend fun <T> Context.customViewDialog(
-        customView: View,
-        title: CharSequence?,
-        positiveButtonTitle: CharSequence? = null,
-        readInput: View.() -> T,
+    customView: View,
+    title: CharSequence?,
+    positiveButtonTitle: CharSequence? = null,
+    readInput: View.() -> T,
 ): T? {
     return suspendCancellableCoroutine { continuation ->
         val dialog = MaterialAlertDialogBuilder(this)
-                .setTitle(title)
-                .setView(customView)
-                .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
-                    continuation.resumeSafely { customView.readInput() }
-                }
-                .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    continuation.resume(null)
-                }
-                .create()
+            .setTitle(title)
+            .setView(customView)
+            .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
+                continuation.resumeSafely { customView.readInput() }
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                continuation.resume(null)
+            }
+            .create()
         dialog.show()
 
         continuation.invokeOnCancellation { dialog.dismiss() }
@@ -262,24 +269,24 @@ suspend fun <T> Context.customViewDialog(
 }
 
 suspend fun Context.singleChoiceDialog(
-        title: CharSequence?,
-        choices: List<CharSequence>,
-        positiveButtonTitle: CharSequence? = null
+    title: CharSequence?,
+    choices: List<CharSequence>,
+    positiveButtonTitle: CharSequence? = null
 ): Int {
     var choice = -1
     return suspendCancellableCoroutine { continuation ->
         val dialog = MaterialAlertDialogBuilder(this)
-                .setTitle(title)
-                .setSingleChoiceItems(choices.toTypedArray(), -1) { _, position ->
-                    choice = position
-                }
-                .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
-                    continuation.resumeSafely { choice }
-                }
-                .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    continuation.resume(-1)
-                }
-                .create()
+            .setTitle(title)
+            .setSingleChoiceItems(choices.toTypedArray(), -1) { _, position ->
+                choice = position
+            }
+            .setPositiveButton(positiveButtonTitle ?: "OK") { _, _ ->
+                continuation.resumeSafely { choice }
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                continuation.resume(-1)
+            }
+            .create()
         dialog.show()
 
         continuation.invokeOnCancellation { dialog.dismiss() }
@@ -302,15 +309,15 @@ private fun getTodayCalendar(): Calendar {
 }
 
 fun validUntil(field: Int, amount: Int) = CalendarConstraints.Builder()
-        .setValidator(CompositeDateValidator.allOf(listOf(
-            DateValidatorPointForward.now(),
-            DateValidatorPointBackward.before(
-                getTodayCalendar()
-                    .apply { roll (field, amount) }
-                    .timeInMillis
-            )
-        )))
-        .build()
+    .setValidator(CompositeDateValidator.allOf(listOf(
+        DateValidatorPointForward.now(),
+        DateValidatorPointBackward.before(
+            getTodayCalendar()
+                .apply { roll(field, amount) }
+                .timeInMillis
+        )
+    )))
+    .build()
 
 fun getNextMonthUtc(): Long {
     val today = MaterialDatePicker.todayInUtcMilliseconds()
@@ -324,7 +331,7 @@ fun getNextMonthUtc(): Long {
 }
 
 fun getClearedUtc(): Calendar =
-        Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { clear() }
+    Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply { clear() }
 
 fun Context.copyToClipboard(text: CharSequence, label: CharSequence) {
     val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -335,13 +342,13 @@ fun Context.copyToClipboard(text: CharSequence, label: CharSequence) {
 
 fun FloatingActionButton.rotate(rotate: Boolean): Boolean {
     animate()
-            .setDuration(200)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                }
-            })
-            .rotation(if (rotate) 135f else 0f)
+        .setDuration(200)
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+            }
+        })
+        .rotation(if (rotate) 135f else 0f)
     return rotate
 }
 
@@ -356,15 +363,15 @@ fun View.appear() {
     alpha = 0f
     translationY = height.toFloat()
     animate()
-            .setDuration(200)
-            .translationY(0f)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    super.onAnimationEnd(animation)
-                }
-            })
-            .alpha(1f)
-            .start()
+        .setDuration(200)
+        .translationY(0f)
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+            }
+        })
+        .alpha(1f)
+        .start()
 }
 
 fun View.disappear() {
@@ -372,22 +379,23 @@ fun View.disappear() {
     alpha = 1f
     translationY = 0f
     animate()
-            .setDuration(200)
-            .translationY(height.toFloat())
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    visibility = View.GONE
-                    super.onAnimationEnd(animation)
-                }
-            })
-            .alpha(0f)
-            .start()
+        .setDuration(200)
+        .translationY(height.toFloat())
+        .setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                visibility = View.GONE
+                super.onAnimationEnd(animation)
+            }
+        })
+        .alpha(0f)
+        .start()
 }
 
 fun hideKeyboard(view: View) {
     val iBinder = view.windowToken
     if (iBinder != null) {
-        val inputMethodManager = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(iBinder, 0)
     }
 }

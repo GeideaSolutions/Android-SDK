@@ -32,6 +32,7 @@ import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.OrderItem
 import net.geidea.paymentsdk.flow.pay.PaymentContract
 import net.geidea.paymentsdk.flow.pay.PaymentData
+import net.geidea.paymentsdk.flow.pay.PaymentOptions
 import net.geidea.paymentsdk.model.*
 import net.geidea.paymentsdk.model.common.AgreementType
 import net.geidea.paymentsdk.model.common.InitiatingSource
@@ -44,11 +45,15 @@ import net.geidea.paymentsdk.model.paymentintent.EInvoiceOrdersResponse
 import net.geidea.paymentsdk.model.transaction.PaymentOperation
 import net.geidea.paymentsdk.sampleapp.databinding.ActivityMainBinding
 import net.geidea.paymentsdk.sampleapp.databinding.ItemOrderItemBinding
+import net.geidea.paymentsdk.sampleapp.databinding.ItemPaymentOptionBinding
 import net.geidea.paymentsdk.sampleapp.sample.*
 import net.geidea.paymentsdk.sampleapp.sample.OrderItemDialog.collectOrderItems
 import net.geidea.paymentsdk.sampleapp.sample.OrderItemDialog.init
 import net.geidea.paymentsdk.sampleapp.sample.OrderItemDialog.inputOrderItem
 import net.geidea.paymentsdk.sampleapp.sample.PaymentIntentDialogs.inputCreateEInvoiceRequest
+import net.geidea.paymentsdk.sampleapp.sample.PaymentOptionItemDialog.choosePaymentOption
+import net.geidea.paymentsdk.sampleapp.sample.PaymentOptionItemDialog.collectOptions
+import net.geidea.paymentsdk.sampleapp.sample.PaymentOptionItemDialog.init
 import net.geidea.paymentsdk.sampleapp.sample.orders.SampleOrdersActivity
 import net.geidea.paymentsdk.sampleapp.sample.paymentintents.SamplePaymentIntentsActivity
 import java.math.BigDecimal
@@ -69,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             setContentView(root)
             setSupportActionBar(binding.includeAppBar.toolbar)
 
-            val internalTestMode = false    // TODO make configurable
+            val internalTestMode: Boolean = true    // TODO make configurable
             environmentLabel.isVisible = internalTestMode
             environmentToggleGroup.isVisible = internalTestMode
             if (internalTestMode) {
@@ -129,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     if (GeideaPaymentSdk.hasCredentials) {
                         onSuccessOf(GatewayApi.getMerchantConfiguration()) { merchantConfig ->
-                            SampleApplication.INSTANCE.merchantConfiguration = merchantConfig
+                            this@MainActivity.merchantConfig = merchantConfig
                             AlertDialog.Builder(this@MainActivity)
                                     .setTitle("Merchant configuration")
                                     .setView(monoSpaceTextContainer(merchantConfig.toJson(pretty = true)))
@@ -255,6 +260,62 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            // Billing address
+
+            with(expandBillingAddressImageButton) {
+                setImageResource(R.drawable.ic_arrow_down)
+                billingAddressLinearLayout.isVisible = false
+
+                setOnClickListener {
+                    // Animated toggle expand/collapse
+                    TransitionManager.beginDelayedTransition(root)
+                    if (billingAddressLinearLayout.isVisible) {
+                        billingAddressLinearLayout.isVisible = false
+                        setImageResource(R.drawable.ic_arrow_down)
+                    } else {
+                        billingAddressLinearLayout.isVisible = true
+                        setImageResource(R.drawable.ic_arrow_up)
+                    }
+                }
+            }
+
+            // Shipping address
+
+            with(expandShippingAddressImageButton) {
+                setImageResource(R.drawable.ic_arrow_down)
+                shippingAddressLinearLayout.isVisible = false
+
+                setOnClickListener {
+                    // Animated toggle expand/collapse
+                    TransitionManager.beginDelayedTransition(root)
+                    if (shippingAddressLinearLayout.isVisible) {
+                        shippingAddressLinearLayout.isVisible = false
+                        setImageResource(R.drawable.ic_arrow_down)
+                    } else {
+                        shippingAddressLinearLayout.isVisible = true
+                        setImageResource(R.drawable.ic_arrow_up)
+                    }
+                }
+            }
+
+            // Payment options
+
+            addOptionButton.setOnClickListener {
+                lifecycleScope.launch {
+                    merchantConfig?.let {
+                        val newOption = choosePaymentOption(merchantConfig!!)
+                        if (newOption != null) {
+                            val itemBinding = ItemPaymentOptionBinding
+                                .inflate(layoutInflater)
+                                .init(newOption)
+
+                            TransitionManager.beginDelayedTransition(root)
+                            paymentOptionItemsLinearLayout.addView(itemBinding.root)
+                        }
+                    }
+                }
+            }
+
             // Order items (required for Shahry and Souhoola Installments)
 
             addOrderItemButton.setOnClickListener {
@@ -265,6 +326,7 @@ class MainActivity : AppCompatActivity() {
                                 .inflate(layoutInflater)
                                 .init(this@MainActivity, newItem)
 
+                        TransitionManager.beginDelayedTransition(root)
                         orderItemsLinearLayout.addView(itemBinding.root)
                     }
                 }
@@ -360,7 +422,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadMerchantConfig() = with(binding) {
         lifecycleScope.launch {
             onSuccessOf(GatewayApi.getMerchantConfiguration()) { merchantConfig ->
-                SampleApplication.INSTANCE.merchantConfiguration = merchantConfig
+                this@MainActivity.merchantConfig = merchantConfig
                 merchantTextView.text = "Merchant: ${merchantConfig.merchantName ?: ""}"
                 val tokenizationEnabled = merchantConfig.isTokenizationEnabled ?: false
                 saveCardCheckbox.isVisible = withCardRadioButton.isChecked
@@ -387,6 +449,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private var merchantConfig: MerchantConfigurationResponse?
+        get() = SampleApplication.INSTANCE.merchantConfiguration
+        set(newValue) { SampleApplication.INSTANCE.merchantConfiguration = newValue }
 
     private fun updateMerchantCredentialsLayout() {
         with(binding) {
@@ -427,7 +493,7 @@ class MainActivity : AppCompatActivity() {
             val withToken = withTokenRadioButton.isChecked
             val bySdk = cardCollectedByButtonToggleGroup.checkedButtonId == R.id.bySdkButton
             val byMerchant = cardCollectedByButtonToggleGroup.checkedButtonId == R.id.byMerchantButton
-            val tokenizationEnabled = SampleApplication.INSTANCE.merchantConfiguration?.isTokenizationEnabled == true
+            val tokenizationEnabled = merchantConfig?.isTokenizationEnabled == true
 
             agreementTypeTextInputLayout.isVisible = withCard
             cardCollectedByButtonToggleGroup.isVisible = withCard
@@ -610,8 +676,18 @@ class MainActivity : AppCompatActivity() {
             agreementId = agreementIdEditText.textOrNull
             agreementType = AGREEMENT_TYPE_ITEMS.findValueByText(agreementTypeAutocompleteTextView.textOrNull)
 
-            paymentMethodsEditText.textOrNull?.let {
-                paymentMethods = it.split(" ", ",").toSet().takeIf(Set<String>::isNotEmpty)
+            val optionItems = collectOptions(paymentOptionItemsLinearLayout)
+            if (optionItems.isNotEmpty()) {
+                paymentOptions = PaymentOptions.Builder()
+                    .apply {
+                        optionItems.forEach { optionItem ->
+                            option(
+                                label = optionItem.label,
+                                paymentMethod = optionItem.paymentMethod
+                            )
+                        }
+                    }
+                    .build()
             }
 
             orderItems = collectOrderItems(orderItemsLinearLayout).takeIf(List<OrderItem>::isNotEmpty)

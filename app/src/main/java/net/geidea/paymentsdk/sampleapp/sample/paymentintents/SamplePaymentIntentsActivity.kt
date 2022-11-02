@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.geidea.paymentsdk.api.paymentintent.PaymentIntentApi
 import net.geidea.paymentsdk.flow.GeideaResult
-import net.geidea.paymentsdk.model.*
+import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.model.meezaqr.CreateMeezaPaymentIntentRequest
 import net.geidea.paymentsdk.model.order.Order
 import net.geidea.paymentsdk.model.paymentintent.Channel
@@ -97,7 +97,6 @@ class SamplePaymentIntentsActivity : BaseSampleActivity<ActivitySamplePaymentInt
         }
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
