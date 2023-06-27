@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:defaultFocusHighlightEnabled="false"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".flow.pay.PaymentActivity"
+    tools:targetApi="O"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:labelFor="@+id/cardInputView"
+            android:text="@string/gd_label_card_details"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <LinearLayout
+            android:id="@+id/cardBrandLogosLinearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal"
+            />
+
+    </LinearLayout>
+
+    <net.geidea.paymentsdk.ui.widget.card.CardInputView
+        android:id="@+id/cardInputView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+        android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/customerEmailInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+        android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+        android:hint="@string/gd_hint_email"
+        android:visibility="gone"
+        app:errorEnabled="true"
+        >
+
+        <net.geidea.paymentsdk.ui.widget.email.EmailEditText
+            android:id="@+id/customerEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/addressesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/billingAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+            android:layout_marginBottom="8dp"
+            android:labelFor="@id/billingAddressInputView"
+            android:text="@string/gd_label_billing_address"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+        <net.geidea.paymentsdk.ui.widget.address.AddressInputView
+            android:id="@+id/billingAddressInputView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+            android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+            />
+
+        <CheckBox
+            android:id="@+id/sameAddressCheckbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+            android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+            android:text="@string/gd_checkbox_same_address"
+            />
+
+        <TextView
+            android:id="@+id/shippingAddressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+            android:layout_marginBottom="8dp"
+            android:labelFor="@id/shippingAddressInputView"
+            android:text="@string/gd_label_shipping_address"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+        <net.geidea.paymentsdk.ui.widget.address.AddressInputView
+            android:id="@+id/shippingAddressInputView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+            android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

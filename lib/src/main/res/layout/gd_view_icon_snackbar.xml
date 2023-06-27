@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:layout_height="wrap_content"
+    tools:layout_width="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/iconImageView"
+            style="?shapeAppearanceMediumComponent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="@string/gd_content_exclamation_icon"
+            tools:srcCompat="@drawable/gd_ic_snackbar_info"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textFontWeight="600"
+                android:textAlignment="viewStart"
+                tools:text="300"
+                />
+
+            <TextView
+                android:id="@+id/messageTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
+                tools:text="Message text\nLine 2\nLine 3\nLine 4"
+                />
+
+            <TextView
+                android:id="@+id/referenceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewStart"
+                android:paddingTop="4dp"
+                android:alpha="0.75"
+                android:visibility="gone"
+                android:textSize="11sp"
+                tools:visibility="visible"
+                tools:text="Reference ID 123456"
+                />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionButton"
+            style="?attr/snackbarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:minWidth="48dp"
+            android:visibility="gone"
+            />
+
+    </LinearLayout>
+</merge>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payUpfrontLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/gd_view_valu_installment_plan"
+    >
+
+    <TextView
+        android:id="@+id/payUpfrontLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:text="@string/gd_bnpl_pay_upfront"
+        android:textFontWeight="600"
+        android:textSize="16sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/adminFeesLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:labelFor="@+id/adminFeesTextView"
+            android:text="@string/gd_bnpl_purchase_fees"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/adminFeesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/downPaymentLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:labelFor="@+id/downPaymentTextView"
+            android:text="@string/gd_bnpl_down_payment"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/downPaymentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/totalAmountLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_weight="1"
+            android:labelFor="@+id/totalUpfrontTextView"
+            android:text="@string/gd_bnpl_total_amount_upfront"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/totalUpfrontTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/coordinatorLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".flow.pay.PaymentActivity"
+    >
+
+    <include
+        android:id="@+id/appBarWithStepper"
+        layout="@layout/gd_include_appbar_with_stepper"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"
+                android:hint="@string/gd_bnpl_phone_number"
+                app:hintEnabled="true"
+                app:errorEnabled="true"
+                app:prefixText="+20"
+                app:startIconDrawable="@drawable/gd_ic_egypt_flag"
+                app:startIconTint="@null"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.phone.PhoneNumberEditText
+                    android:id="@+id/phoneNumberEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="phoneNumber"
+                    android:digits="0123456789"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:imeOptions="actionNext"
+                    android:textAlignment="viewStart"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gd_default_margin"
+                >
+
+                <Button
+                    android:id="@+id/nextButton"
+                    style="?gd_primaryButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/gd_default_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                    android:enabled="false"
+                    android:text="@string/gd_btn_next"
+                    tools:enabled="false"
+                    />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/nextButtonProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="24dp"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorSize="24dp"
+                    app:trackThickness="2dp"
+                    tools:visibility="visible"
+                    />
+
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/cancelButton"
+                style="?gd_secondaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                android:layout_marginBottom="@dimen/gd_default_margin"
+                android:text="@string/gd_button_cancel"
+                />
+
+            <include layout="@layout/gd_include_valu_logo" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="96dp"
+                android:layout_marginBottom="48dp"
+                android:contentDescription="@string/gd_content_desc_geidea_logo"
+                app:srcCompat="@drawable/gd_ic_geidea"
+                app:tint="@color/gd_orange"
+                />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

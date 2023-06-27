@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".flow.pay.PaymentActivity"
+    >
+
+    <include
+        android:id="@+id/appBarWithStepper"
+        layout="@layout/gd_include_appbar_with_stepper"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/paymentFormScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include
+                android:id="@+id/alternativeMethodSelector"
+                layout="@layout/gd_include_alternative_pm_selector"
+                />
+
+            <LinearLayout
+                android:id="@+id/payWithCardLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+                android:orientation="horizontal"
+                >
+
+                <ImageButton
+                    android:id="@+id/backButton"
+                    style="?borderlessButtonStyle"
+                    android:layout_width="48dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/gd_ic_back_arrow"
+                    app:tint="?colorOnSurface"
+                    tools:visibility="gone"
+                    />
+
+                <TextView
+                    android:id="@+id/payWithCardLabelTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:text="@string/gd_pay_with_card"
+                    android:textSize="17sp"
+                    android:textFontWeight="700"
+                    />
+            </LinearLayout>
+
+            <net.geidea.paymentsdk.ui.widget.PaymentFormView
+                android:id="@+id/paymentFormView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+            <Button
+                android:id="@+id/payButton"
+                style="?gd_primaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+                android:layout_marginTop="@dimen/gd_default_margin"
+                android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+                android:enabled="false"
+                android:text="@string/gd_button_pay"
+                android:textStyle="bold"
+                tools:text="Pay $123.45"
+                />
+
+            <Button
+                android:id="@+id/cancelButton"
+                style="?gd_secondaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/gd_default_margin_horizontal"
+                android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+                android:layout_marginBottom="@dimen/gd_default_margin"
+                android:text="@string/gd_button_cancel"
+                />
+
+            <ImageView
+                android:id="@+id/bnplLogoImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/gd_default_margin"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/gd_default_margin"
+                android:contentDescription="@string/gd_content_desc_geidea_logo"
+                app:srcCompat="@drawable/gd_ic_geidea"
+                app:tint="@color/gd_orange"
+                />
+
+            <WebView
+                android:id="@+id/initAuthWebView"
+                android:layout_width="1px"
+                android:layout_height="1px"
+                tools:ignore="WebViewLayout"
+                />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

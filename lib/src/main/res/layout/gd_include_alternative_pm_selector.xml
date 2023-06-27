@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/gd_fragment_card_input"
+    >
+
+    <TextView
+        android:id="@+id/alternativeMethodSelectorTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginVertical="@dimen/gd_default_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/gd_try_different_pm"
+        app:layout_constraintBottom_toTopOf="@+id/showAllMethodsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/alternativeMethodButton"
+        style="?gd_secondaryButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginTop="16dp"
+        app:iconGravity="textTop"
+        app:iconTint="@null"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/showAllMethodsButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alternativeMethodSelectorTitle"
+        app:layout_constraintWidth_max="wrap"
+        app:layout_constraintWidth_min="140dp"
+        android:textSize="10sp"
+        android:textColor="?colorOnSurface"
+        android:letterSpacing="0.02"
+        tools:icon="@drawable/gd_ic_shahry_logo"
+        tools:text="Buy Now Pay Later"
+        app:iconPadding="8dp"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/showAllMethodsButton"
+        style="?gd_secondaryButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/gd_default_margin_horizontal"
+        android:text="@string/gd_btn_show_all"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/alternativeMethodButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alternativeMethodButton"
+        app:layout_constraintTop_toTopOf="@+id/alternativeMethodButton"
+        app:layout_constraintWidth_min="140dp"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:alpha="0.14"
+        android:background="?colorOnSurface"
+        app:layout_constraintBottom_toBottomOf="@+id/alternativeMethodDividerTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/alternativeMethodDividerTextView"
+        />
+
+    <TextView
+        android:id="@+id/alternativeMethodDividerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="?android:colorBackground"
+        android:padding="8dp"
+        android:text="@string/gd_or_pay_with_s"
+        android:textSize="16sp"
+        android:textFontWeight="600"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alternativeMethodButton"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

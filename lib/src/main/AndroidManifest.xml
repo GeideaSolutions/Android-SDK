@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge"
+            >
+            <meta-data
+                android:name="net.geidea.paymentsdk.internal.di.SdkInitializer"
+                android:value="androidx.startup"
+                />
+        </provider>
+
+        <activity
+            android:name=".flow.pay.PaymentActivity"
+            android:hardwareAccelerated="true"
+            android:label="@string/gd_activity_payment"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="sensorPortrait"
+            />
+    </application>
+
+</manifest>

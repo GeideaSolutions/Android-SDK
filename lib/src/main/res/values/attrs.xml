@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ResourceName"
+    >
+    <declare-styleable name="CountryAutoCompleteTextView">
+        <attr name="gd_textInputExposedDropdownMenuStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="OtpInputView">
+        <attr name="gd_expectedLength" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="Stepper">
+        <attr name="gd_text" format="string" />
+        <attr name="gd_currentStep" format="integer" />
+        <attr name="gd_stepCount" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="Buttons">
+        <attr name="gd_primaryButtonStyle" format="reference" />
+        <attr name="gd_secondaryButtonStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="AspectRatioImageView">
+        <attr name="gd_aspectRatio" format="float" />
+        <attr name="gd_aspectRatioEnabled" format="boolean" />
+        <attr name="gd_dominantMeasurement">
+            <enum name="width" value="0"/>
+            <enum name="height" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="MerchantLogoImageView">
+        <attr name="gd_merchantLogoImageViewStyle" format="reference" />
+    </declare-styleable>
+</resources>

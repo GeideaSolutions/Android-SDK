@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Card details -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardDetailsLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:hint="Card number *"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cardNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="creditCardNumber"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            tools:text="4111111111111111"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:hint="Exp. month *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/expiryMonthEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="creditCardExpirationMonth"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="2"
+                tools:text="04"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:hint="Exp. year *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/expiryYearEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="creditCardExpirationYear"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="2"
+                tools:text="23"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="CVV *"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cvvEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="creditCardSecurityCode"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLength="4"
+                tools:text="123"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:hint="Card holder *"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cardHolderEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="personName"
+            android:inputType="textPersonName"
+            tools:text="John Doe"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

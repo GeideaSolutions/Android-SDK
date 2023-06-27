@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.geidea.paymentsdk.sampleapp"
-    >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".SampleApplication"
@@ -12,7 +10,13 @@
         android:theme="@style/Theme.App"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".CardPaymentActivity"
+            android:exported="false"
+            android:label="@string/title_activity_card_payment"
+            android:theme="@style/Theme.App"
+            />
+        <activity
+            android:name=".LauncherActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -21,25 +25,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".sample.SampleSimplestPaymentActivity">
-        </activity>
-        <activity android:name=".sample.SampleAddressActivity">
-        </activity>
-        <activity android:name=".sample.SampleAddressFieldsActivity">
-        </activity>
-        <activity android:name=".sample.SampleCardFieldsActivity">
-        </activity>
-        <activity android:name=".sample.SampleCardActivity">
-        </activity>
-        <activity android:name=".sample.paymentintents.SamplePaymentIntentsActivity">
-        </activity>
-        <activity android:name=".sample.paymentintents.SampleMeezaQrPaymentActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".sample.SamplePaymentFormActivity">
-        </activity>
-        <activity android:name=".sample.orders.SampleOrdersActivity">
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            />
+        <activity android:name=".sample.SampleSimplestPaymentActivity" />
+        <activity android:name=".sample.SampleAddressActivity" />
+        <activity android:name=".sample.SampleAddressFieldsActivity" />
+        <activity android:name=".sample.SampleCardFieldsActivity" />
+        <activity android:name=".sample.SampleCardActivity" />
+        <activity android:name=".sample.paymentintents.SamplePaymentIntentsActivity" />
+        <activity
+            android:name=".sample.paymentintents.SampleMeezaQrPaymentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".sample.SamplePaymentFormActivity" />
+        <activity android:name=".sample.orders.SampleOrdersActivity" />
     </application>
 
 </manifest>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gd_orange">#FF4D00</color>
+    <color name="gd_blue">#3399FF</color>
+    <color name="gd_white">#FFFFFF</color>
+    <color name="gd_surface">#F5F5F5</color>
+    <color name="gd_pink">#FF1744</color>
+    <color name="gd_greyStroke">#000000</color>
+    <color name="gd_contrastText">#283B54</color>
+    <color name="gd_blackOrWhite">#000000</color>
+    <color name="gd_iconTint">#4B5B6C</color>
+
+    <color name="gd_snackbar_success">#33CE71</color>
+    <color name="gd_snackbar_info">#1575EA</color>
+    <color name="gd_snackbar_warning">#FFC636</color>
+    <color name="gd_snackbar_error">#EF4A3B</color>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Gd.Middle.Theme.DayNight.NoActionBar" parent="Gd.Base.Theme.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/gd_almarai</item>
+    </style>
+
+    <style name="Gd.ThemeOverlay.MaterialAlertDialog.Rounded" parent="Gd.Base.ThemeOverlay.MaterialAlertDialog.Rounded">
+        <!-- Dialog title font -->
+        <item name="fontFamily">@font/gd_almarai</item>
+    </style>
+
+    <style name="Gd.TextAppearance.MaterialComponents.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <!-- Dialog body font -->
+        <item name="fontFamily">@font/gd_almarai</item>
+    </style>
+</resources>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".flow.pay.PaymentActivity"
+    >
+
+    <include
+        android:id="@+id/appBarWithStepper"
+        layout="@layout/gd_include_appbar_with_stepper"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/gd_default_margin_horizontal"
+                android:paddingEnd="@dimen/gd_default_margin_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/totalAmountTextView"
+                    android:text="@string/gd_shahry_merchant_name"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/merchantNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="600"
+                    android:textSize="16sp"
+                    tools:text="My Company Ltd."
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/gd_default_margin_horizontal"
+                android:paddingEnd="@dimen/gd_default_margin_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/totalAmountTextView"
+                    android:text="@string/gd_bnpl_total_amount"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/totalAmountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="600"
+                    android:textSize="16sp"
+                    tools:text="13,579 EGP"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/gd_default_margin_horizontal"
+                android:paddingEnd="@dimen/gd_default_margin_horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:labelFor="@+id/totalAmountTextView"
+                    android:text="@string/gd_shahry_id"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/shahryIdTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    tools:text="1234567890"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorOnSurface"
+                android:layout_marginBottom="24dp"
+                android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                android:alpha="0.2"
+                />
+
+            <TextView
+                android:id="@+id/hintTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gd_shahry_open_app"
+                android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                android:gravity="center_horizontal"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/order_token_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/gd_shahry_order_token"
+                app:hintEnabled="true"
+                app:errorEnabled="true"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/order_token_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:maxLength="255"
+                    android:maxLines="1"
+                    android:inputType="textNoSuggestions"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/termsTextView"
+                tools:text="@string/gd_shahry_terms_s"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                android:gravity="center_horizontal"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                />
+
+            <include
+                android:id="@+id/payUpfront"
+                layout="@layout/gd_include_pay_upfront"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                />
+
+            <include
+                android:id="@+id/downPaymentOptions"
+                layout="@layout/gd_include_down_payment_options"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/gd_default_margin"
+                android:layout_marginBottom="24dp"
+                >
+
+                <Button
+                    android:id="@+id/confirmButton"
+                    style="?gd_primaryButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/gd_default_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+                    android:text="@string/gd_shahry_btn_confirm"
+                    />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/confirmButtonProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="24dp"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorSize="24dp"
+                    app:trackThickness="2dp"
+                    tools:visibility="visible"
+                    />
+
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/gd_default_margin"
+                android:contentDescription="@string/gd_content_desc_shahry_logo_and_name"
+                app:srcCompat="@drawable/gd_ic_shahry_logo_and_name"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="48dp"
+                android:contentDescription="@string/gd_content_desc_geidea_logo"
+                app:srcCompat="@drawable/gd_ic_geidea"
+                app:tint="@color/gd_orange"
+                />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

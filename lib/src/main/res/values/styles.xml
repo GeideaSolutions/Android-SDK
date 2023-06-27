@@ -1,0 +1,190 @@
+<resources>
+
+    <!-- SDK baseline (white-label) themes -->
+
+    <style name="Gd.Base.Theme.DayNight.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="gd_merchantLogoImageViewStyle">@style/Gd.Base.Widget.ImageView.Logo.Merchant</item>
+        <item name="gd_primaryButtonStyle">?materialButtonStyle</item>
+        <item name="gd_secondaryButtonStyle">?materialButtonOutlinedStyle</item>
+        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
+
+        <item name="android:statusBarColor">?colorSecondary</item>
+        <item name="android:textColorLink">?colorPrimary</item>
+    </style>
+
+    <style name="Gd.Base.Theme.Light.NoActionBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="gd_merchantLogoImageViewStyle">@style/Gd.Base.Widget.ImageView.Logo.Merchant</item>
+        <item name="gd_primaryButtonStyle">?materialButtonStyle</item>
+        <item name="gd_secondaryButtonStyle">?materialButtonOutlinedStyle</item>
+        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
+
+        <item name="android:statusBarColor">?colorSecondary</item>
+        <item name="android:textColorLink">?colorPrimary</item>
+    </style>
+
+    <style name="Gd.Base.Theme.NoActionBar" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="gd_merchantLogoImageViewStyle">@style/Gd.Base.Widget.ImageView.Logo.Merchant</item>
+        <item name="gd_primaryButtonStyle">?materialButtonStyle</item>
+        <item name="gd_secondaryButtonStyle">?materialButtonOutlinedStyle</item>
+        <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.MaterialComponents.Button.OutlinedButton</item>
+
+        <item name="android:statusBarColor">?colorSecondary</item>
+        <item name="android:textColorLink">?colorPrimary</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+    </style>
+
+    <!-- Geidea-branded SDK theme (default)  -->
+
+    <style name="Gd.Theme.DayNight.NoActionBar" parent="Gd.Middle.Theme.DayNight.NoActionBar">
+        <item name="textInputStyle">@style/Gd.Widget.TextInputLayout.FilledBox</item>
+        <item name="gd_textInputExposedDropdownMenuStyle">@style/Gd.Widget.TextInputLayout.FilledBox.ExposedDropdownMenu</item>
+        <item name="toolbarStyle">@style/Gd.Widget.Toolbar</item>
+        <item name="materialButtonStyle">@style/Gd.Widget.Button.UnelevatedButton</item>
+        <item name="materialButtonOutlinedStyle">@style/Gd.Widget.Button.OutlinedButton</item>
+        <item name="shapeAppearanceMediumComponent">@style/Gd.Base.ShapeAppearance.RoundedWithSharperCorner</item>
+        <item name="snackbarStyle">@style/Gd.Widget.Snackbar.FullWidth.Surface</item>
+        <item name="snackbarButtonStyle">@style/Gd.Widget.Button.TextButton.Icon</item>
+        <item name="borderlessButtonStyle">@style/Gd.Widget.Button.TextButton</item>
+        <item name="materialAlertDialogTheme">@style/Gd.ThemeOverlay.MaterialAlertDialog.Rounded</item>
+
+        <item name="colorPrimary">@color/gd_blue</item>
+        <item name="colorSecondary">@color/gd_orange</item>
+        <item name="colorOnSecondary">@color/gd_white</item>
+        <item name="colorOnSurface">@color/gd_greyStroke</item>
+        <item name="colorSurface">@color/gd_surface</item>
+        <item name="colorError">@color/gd_pink</item>
+
+        <item name="android:textColor">@color/gd_contrastText</item>
+    </style>
+
+    <!-- An internal Geidea base theme with custom font and special arabic font for AR locale -->
+
+    <style name="Gd.Middle.Theme.DayNight.NoActionBar" parent="Gd.Base.Theme.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/gd_montserrat</item>
+    </style>
+
+    <style name="Gd.Base.Widget.ImageView.Logo.Merchant" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="gd_aspectRatioEnabled">true</item>
+        <item name="gd_dominantMeasurement">height</item>
+    </style>
+
+    <style name="Gd.Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/Gd.ThemeOverlay.Toolbar.Secondary</item>
+    </style>
+    
+    <style name="Gd.Widget.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxStrokeColor">@color/gd_selector_outlined_stroke_color</item>
+        <item name="endIconTint">@color/gd_selector_outlined_icon_tint</item>
+    </style>
+
+    <style name="Gd.Widget.TextInputLayout.OutlinedBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxStrokeColor">@color/gd_selector_outlined_stroke_color</item>
+    </style>
+
+    <style name="Gd.Widget.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/gd_default_radius_large</item>
+        <item name="endIconTint">@color/gd_selector_outlined_icon_tint</item>
+    </style>
+
+    <style name="Gd.Widget.TextInputLayout.FilledBox.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="boxCornerRadiusTopStart">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/gd_default_radius_large</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/gd_default_radius_large</item>
+        <item name="boxStrokeColor">@color/gd_selector_outlined_stroke_color</item>
+    </style>
+
+    <style name="Gd.ThemeOverlay.Toolbar.Secondary" parent="">
+        <item name="colorPrimary">?colorSecondary</item>
+        <item name="colorOnPrimary">?colorOnSecondary</item>
+    </style>
+
+    <style name="Gd.Widget.Snackbar.FullWidth.Surface" parent="Widget.MaterialComponents.Snackbar.FullWidth">
+        <item name="animationMode">slide</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:layout_marginStart">@dimen/gd_default_margin_horizontal</item>
+        <item name="android:layout_marginEnd">@dimen/gd_default_margin_horizontal</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <style name="Gd.Widget.Snackbar.TextView.Surface" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
+    <style name="Gd.Widget.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textAppearance">@style/Gd.TextAppearance.App.Button</item>
+    </style>
+
+    <style name="Gd.Widget.Button.TextButton.Icon" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+    </style>
+
+    <style name="Gd.Widget.Button.UnelevatedButton" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/gd_default_button_height</item>
+        <item name="android:textAppearance">@style/Gd.TextAppearance.App.Button</item>
+        <item name="cornerRadius">18dp</item>
+    </style>
+
+    <style name="Gd.Widget.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/gd_default_button_height</item>
+        <item name="android:textAppearance">@style/Gd.TextAppearance.App.Button</item>
+        <item name="cornerRadius">18dp</item>
+    </style>
+
+    <style name="Gd.Base.ShapeAppearance.RoundedWithSharperCorner" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSizeTopLeft">@dimen/gd_default_radius_large</item>
+        <item name="cornerSizeTopRight">@dimen/gd_default_radius_small</item>
+        <item name="cornerSizeBottomLeft">@dimen/gd_default_radius_large</item>
+        <item name="cornerSizeBottomRight">@dimen/gd_default_radius_large</item>
+    </style>
+
+    <style name="Gd.TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!-- MaterialAlertDialog -->
+
+    <style name="Gd.Base.ThemeOverlay.MaterialAlertDialog.Rounded" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/Gd.MaterialAlertDialog.Rounded</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Gd.MaterialAlertDialog.Body.Text</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Gd.Widget.Button.UnelevatedButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Gd.Widget.Button.TextButton</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Gd.Widget.Button.TextButton</item>
+        <!-- Dialog title font -->
+        <item name="fontFamily">@font/gd_montserrat</item>
+    </style>
+
+    <style name="Gd.ThemeOverlay.MaterialAlertDialog.Rounded" parent="Gd.Base.ThemeOverlay.MaterialAlertDialog.Rounded">
+    </style>
+
+    <style name="Gd.MaterialAlertDialog.Rounded" parent="MaterialAlertDialog.MaterialComponents">
+        <item name="shapeAppearanceOverlay">?shapeAppearanceMediumComponent</item>
+    </style>
+
+    <style name="Gd.MaterialAlertDialog.Body.Text" parent="MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textAppearance">@style/Gd.TextAppearance.MaterialComponents.Body1</item>
+    </style>
+
+    <style name="Gd.TextAppearance.MaterialComponents.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <!-- Dialog body font -->
+        <item name="fontFamily">@font/gd_montserrat</item>
+    </style>
+
+</resources>

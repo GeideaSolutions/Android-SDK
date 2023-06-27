@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme attributes -->
+
+    <public name="gd_merchantLogoImageViewStyle" type="attr" />
+    <public name="gd_primaryButtonStyle" type="attr" />
+    <public name="gd_secondaryButtonStyle" type="attr" />
+    <public name="gd_textInputExposedDropdownMenuStyle" type="attr" />
+
+    <!-- Themes -->
+
+    <public name="Gd.Base.Theme.DayNight.NoActionBar" type="style" />
+    <public name="Gd.Base.Theme.NoActionBar" type="style" />
+    <public name="Gd.Base.Theme.Light.NoActionBar" type="style" />
+    <public name="Gd.Theme.DayNight.NoActionBar" type="style" />
+
+    <!-- Styles -->
+
+    <public name="Gd.Base.Widget.ImageView.Logo.Merchant" type="style" />
+
+    <!-- Drawables -->
+
+    <public name="gd_ic_meeza_logo" type="drawable" />
+</resources>

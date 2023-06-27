@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.geidea.paymentsdk.internal.ui.widget.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/gd_selector_outline_rounded2"
+    android:layoutDirection="inherit"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/headerLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?selectableItemBackground"
+        android:paddingStart="12dp"
+        android:paddingEnd="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/expandCollapseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/gd_ic_arrow_down"
+            app:tint="?colorOnSurface"
+            />
+
+        <TextView
+            android:id="@+id/groupLabelTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAlignment="viewStart"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            tools:text="Buy Now Pay Later"
+            />
+
+        <net.geidea.paymentsdk.internal.ui.widget.AspectRatioImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginVertical="14dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/gd_content_desc_payment_method_logo"
+            app:gd_aspectRatioEnabled="true"
+            app:gd_dominantMeasurement="height"
+            tools:src="@drawable/gd_ic_valu_logo"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contentLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!-- Child RadioButtons to be inserted here -->
+
+    </LinearLayout>
+
+</net.geidea.paymentsdk.internal.ui.widget.CheckableLinearLayout>

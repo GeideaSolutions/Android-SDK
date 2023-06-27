@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/gd_default_margin_horizontal"
+        android:clipToPadding="false"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="16dp"
+            app:shapeAppearanceOverlay="?shapeAppearanceMediumComponent"
+            android:layout_gravity="center"
+            app:cardBackgroundColor="?colorBackgroundFloating"
+            >
+
+            <LinearLayout
+                android:id="@+id/cvvInputLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="64dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/gd_enter_cvv"
+                android:textSize="18sp"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="16dp"
+                android:outlineSpotShadowColor="#44000000"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="16dp"
+                tools:targetApi="p"
+                >
+
+                <LinearLayout
+                    android:id="@+id/cardLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="12dp"
+                        android:alpha="0.5"
+                        android:rotation="180"
+                        android:scaleX="0.25"
+                        android:scaleY="0.25"
+                        android:src="@drawable/gd_ic_back_arrow"
+                        app:tint="?colorOnSurface"
+                        />
+
+                    <ImageView
+                        android:id="@+id/schemeLogoImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="8dp"
+                        android:contentDescription="@string/gd_content_desc_payment_method_logo"
+                        tools:src="@drawable/gd_ic_card_visa"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/maskedCardNumberTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:textAllCaps="true"
+                            android:textSize="14sp"
+                            tools:text="VISA •••• 1111"
+                            />
+
+                        <TextView
+                            android:id="@+id/expiryDateTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textFontWeight="400"
+                            android:textSize="12sp"
+                            tools:text="Expires Nov 2023"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    app:trackThickness="3dp"
+                    app:indicatorSize="24dp"
+                    tools:progress="66"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="16dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/gd_label_enter_cvv_below"
+                    android:textFontWeight="600"
+                    />
+
+                <ImageView
+                    android:id="@+id/infoIconImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:padding="12dp"
+                    app:srcCompat="@drawable/gd_ic_info"
+                    app:tint="?colorOnSurface"
+                    />
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cvvInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/gd_hint_security_code"
+                app:endIconDrawable="@drawable/gd_ic_cvv"
+                app:endIconMode="custom"
+                >
+
+                <net.geidea.paymentsdk.ui.widget.card.CardSecurityCodeEditText
+                    android:id="@+id/cvvEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="creditCardSecurityCode"
+                    android:imeOptions="actionNext"
+                    android:inputType="number|textNoSuggestions"
+                    android:textAlignment="viewStart"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="32dp"
+                android:alpha="0.2"
+                android:background="?colorOnSurface"
+                />
+
+            <Button
+                android:id="@+id/nextButton"
+                style="?gd_primaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="@dimen/gd_default_margin"
+                android:text="@string/gd_btn_next"
+                />
+
+            <Button
+                android:id="@+id/cancelButton"
+                style="?gd_secondaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="@dimen/gd_default_margin"
+                android:text="@string/gd_button_cancel"
+                />
+        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+</androidx.core.widget.NestedScrollView>

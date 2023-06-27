@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="gd_default_margin">16dp</dimen>
+    <dimen name="gd_default_margin_half">8dp</dimen>
+    <dimen name="gd_default_margin_horizontal">16dp</dimen>
+    <dimen name="gd_header_oval_height">84dp</dimen>
+    <dimen name="gd_default_button_height">56dp</dimen>
+    <dimen name="gd_default_radius_large">28dp</dimen>
+    <dimen name="gd_default_radius_small">8dp</dimen>
+</resources>

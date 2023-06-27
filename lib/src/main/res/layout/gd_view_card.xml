@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/gd_view_payment_form"
+    >
+
+    <!-- CARD NUMBER -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardNumberInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_hint_card_number"
+        app:errorEnabled="true"
+        app:helperText="@string/gd_help_card_number"
+        app:helperTextEnabled="true"
+        >
+
+        <net.geidea.paymentsdk.ui.widget.card.CardNumberEditText
+            android:id="@+id/cardNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="creditCardNumber"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:orientation="horizontal"
+        >
+
+        <!-- EXPIRY MONTH & YEAR -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cardExpiryDateInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gd_default_margin"
+            android:layout_weight="1"
+            android:hint="@string/gd_hint_expiry_date"
+            app:errorEnabled="true"
+            app:helperText="@string/gd_help_expiry_date"
+            app:helperTextEnabled="true"
+            >
+
+            <net.geidea.paymentsdk.ui.widget.card.CardExpiryDateEditText
+                android:id="@+id/cardExpiryDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="@string/gd_valid_digits"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="5"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- SECURITY CODE -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cardSecurityCodeInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_half"
+            android:layout_weight="1"
+            android:hint="@string/gd_hint_security_code"
+            app:endIconDrawable="@drawable/gd_ic_cvv"
+            app:endIconMode="custom"
+            app:errorEnabled="true"
+            app:helperText="@string/gd_help_cvv"
+            app:helperTextEnabled="true"
+            >
+
+            <net.geidea.paymentsdk.ui.widget.card.CardSecurityCodeEditText
+                android:id="@+id/cardSecurityCodeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="creditCardSecurityCode"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <!-- CARD HOLDER -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cardHolderInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_hint_card_holder"
+        app:errorEnabled="true"
+        >
+
+        <net.geidea.paymentsdk.ui.widget.card.CardHolderEditText
+            android:id="@+id/cardHolderEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:autofillHints="personName"
+            android:importantForAutofill="yes"
+            android:textAlignment="viewStart"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</merge>

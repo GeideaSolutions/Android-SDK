@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.geidea.paymentsdk.internal.ui.widget.AspectRatioImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/merchantLogoImageView"
+    style="?gd_merchantLogoImageViewStyle"
+    android:layout_gravity="center"
+    app:gd_aspectRatioEnabled="true"
+    app:gd_dominantMeasurement="height"
+    tools:showIn="@layout/gd_fragment_receipt"
+    />

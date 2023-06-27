@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="@dimen/gd_default_margin"
+    android:contentDescription="@string/gd_content_desc_souhoola_logo"
+    android:scaleType="fitCenter"
+    app:srcCompat="@drawable/gd_ic_souhoola_logo"
+    />

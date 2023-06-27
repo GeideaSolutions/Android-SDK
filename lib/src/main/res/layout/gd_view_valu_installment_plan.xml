@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".flow.pay.PaymentActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@+id/totalAmountTextView"
+            android:text="@string/gd_bnpl_total_amount"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/totalAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@+id/financedAmountTextView"
+            android:text="@string/gd_bnpl_financed_amount"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/financedAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/downPaymentAmountInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_bnpl_down_payment"
+        app:errorEnabled="true"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/downPaymentAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:textAlignment="viewStart"
+            android:textDirection="ltr"
+            tools:text="123"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/giftCardAmountInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_valu_to_u_balance"
+        app:errorEnabled="true"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/giftCardAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:textAlignment="viewStart"
+            android:textDirection="ltr"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/campaignAmountInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_valu_cashback_amount"
+        app:errorEnabled="true"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/campaignAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            android:textAlignment="viewStart"
+            android:textDirection="ltr"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:labelFor="@+id/installmentPlanGridLayout"
+        android:text="@string/gd_bnpl_installment_plans"
+        android:textFontWeight="600"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:textColor="?colorError"
+        android:textFontWeight="700"
+        android:textSize="12sp"
+        tools:text="Error text"
+        />
+
+    <GridLayout
+        android:id="@+id/installmentPlanGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:columnCount="3"
+        android:useDefaultMargins="true"
+        />
+
+    <include
+        android:id="@+id/payUpfront"
+        layout="@layout/gd_include_pay_upfront"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        />
+
+</LinearLayout>

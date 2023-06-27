@@ -1,8 +1,10 @@
 package net.geidea.paymentsdk.sampleapp
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
-import androidx.datastore.preferences.createDataStore
+import android.content.Context
+import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -15,7 +17,9 @@ import kotlinx.serialization.json.Json
  */
 object CardRepository {
 
-    private val dataStore: DataStore<Preferences> by lazy { SampleApplication.INSTANCE.createDataStore(name = "dataStore") }
+    private val Context.dataStore by preferencesDataStore("dataStore")
+//
+//    lazy { SampleApplication.INSTANCE.createDataStore(name = "dataStore") }
 
     private val _selectedCard = MutableStateFlow<CardItem?>(null)
     val selectedCard: Flow<CardItem?> = _selectedCard
@@ -24,19 +28,21 @@ object CardRepository {
      * Flow of currently stored tokenized cards.
      */
     val tokenizedCards: Flow<Map<String, CardItem>>
-        get() = dataStore.data
-                .map { prefs ->
-                    prefs.asMap()
-                            .mapKeys { (key, _) -> key.name }
-                            .mapValues { (_, value) -> CardItem.fromJson(value as String) }
-                }
+        get() = SampleApplication.INSTANCE.dataStore.data
+            .map { prefs ->
+                prefs.asMap()
+                    .mapKeys { (key, _) -> key.name }
+                    .mapValues { (_, value) -> CardItem.fromJson(value as String) }
+            }
 
     /**
      * Add a tokenized card. If the card with the same tokenId is already existing then it will be
      * replaced with [cardItem].
      */
     suspend fun saveCard(cardItem: CardItem) {
-        dataStore.edit { prefs -> prefs[preferencesKey(cardItem.tokenId)] = Json.encodeToString(cardItem) }
+        SampleApplication.INSTANCE.dataStore.edit { prefs ->
+            prefs[stringPreferencesKey(cardItem.tokenId)] = Json.encodeToString(cardItem)
+        }
     }
 
     /**
@@ -48,7 +54,7 @@ object CardRepository {
      * Clears locally stored tokenized cards relevant only for the current merchant and environment.
      */
     suspend fun clear() {
-        dataStore.edit(MutablePreferences::clear)
+        SampleApplication.INSTANCE.dataStore.edit(MutablePreferences::clear)
         _selectedCard.value = null
     }
 

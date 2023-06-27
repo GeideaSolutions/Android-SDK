@@ -1,174 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity"
-    tools:targetApi="o"
+<LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+              xmlns:app = "http://schemas.android.com/apk/res-auto"
+              xmlns:tools = "http://schemas.android.com/tools"
+              android:layout_width = "match_parent"
+              android:layout_height = "match_parent"
+              android:orientation = "vertical"
+              tools:context = ".MainActivity"
+              tools:targetApi = "o"
     >
 
     <include
-        android:id="@+id/includeAppBar"
-        layout="@layout/include_appbar"
+        android:id = "@+id/includeAppBar"
+        layout = "@layout/include_appbar"
         />
 
     <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fadeScrollbars="false"
-        android:fillViewport="true"
-        android:scrollbarSize="2dp"
-        android:scrollbars="horizontal|vertical"
+        android:id = "@+id/scrollView"
+        android:layout_width = "match_parent"
+        android:layout_height = "0dp"
+        android:layout_weight = "1"
+        android:fadeScrollbars = "false"
+        android:fillViewport = "true"
+        android:scrollbarSize = "2dp"
+        android:scrollbars = "horizontal|vertical"
         >
 
         <LinearLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
-            android:orientation="vertical"
+            android:id = "@+id/container"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "8dp"
+            android:layout_marginTop = "4dp"
+            android:layout_marginEnd = "8dp"
+            android:layout_marginBottom = "4dp"
+            android:orientation = "vertical"
             >
 
             <!-- Environment selection -->
 
             <TextView
-                android:id="@+id/environmentLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Environment"
-                android:textAppearance="?textAppearanceBody1"
+                android:id = "@+id/environmentLabel"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "8dp"
+                android:text = "Environment"
+                android:textAppearance = "?textAppearanceBody1"
                 />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/environmentToggleGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:selectionRequired="true"
-                app:singleSelection="true"
+                android:id = "@+id/environmentToggleGroup"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                app:selectionRequired = "true"
+                app:singleSelection = "true"
                 >
 
+
+
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/devEnvButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dev"
+                    android:id = "@+id/preprodEnvButton"
+                    style = "?attr/materialButtonOutlinedStyle"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text = "PreProd"
                     />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/testEnvButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Test"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/preprodEnvButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PreProd"
-                    />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/prodEnvButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Prod"
+                    android:id = "@+id/prodEnvButton"
+                    style = "?attr/materialButtonOutlinedStyle"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text = "Prod"
                     />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <!-- Merchant credentials -->
 
             <TextView
-                android:id="@+id/merchantTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="8dp"
-                android:clickable="true"
-                android:drawableEnd="@drawable/ic_outline_info"
-                android:drawablePadding="4dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Merchant credentials"
-                android:textAppearance="?textAppearanceBody1"
-                tools:text="Merchant: My Company Ltd."
+                android:id = "@+id/merchantTextView"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_gravity = "center_horizontal"
+                android:layout_margin = "8dp"
+                android:clickable = "true"
+                android:drawableEnd = "@drawable/ic_outline_info"
+                android:drawablePadding = "4dp"
+                android:ellipsize = "end"
+                android:maxLines = "1"
+                android:text = "Merchant credentials"
+                android:textAppearance = "?textAppearanceBody1"
+                tools:text = "Merchant: My Company Ltd."
                 />
 
             <LinearLayout
-                android:id="@+id/merchantCredentialsLayout"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical"
+                android:id = "@+id/merchantCredentialsLayout"
+                android:layout_width = "220dp"
+                android:layout_height = "wrap_content"
+                android:layout_gravity = "center_horizontal"
+                android:layout_marginBottom = "16dp"
+                android:orientation = "vertical"
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Merchant key"
+                    style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Merchant key"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/merchantKeyEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:text="a8beecb8-e5ac-4fec-8b8b-6fea97bed02b"
+                        android:id = "@+id/merchantKeyEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "text"
+                        android:maxLines = "1"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Merchant password"
+                    style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Merchant password"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/merchantPasswordEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:text="TEST_1234567890"
+                        android:id = "@+id/merchantPasswordEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "textPassword"
+                        android:maxLines = "1"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/storeCredentialsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Store"
+                    android:id = "@+id/storeCredentialsButton"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "bottom"
+                    android:text = "Store"
                     />
 
                 <Button
-                    android:id="@+id/clearCredentialsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="Clear"
+                    android:id = "@+id/clearCredentialsButton"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "bottom"
+                    android:text = "Clear"
                     />
 
             </LinearLayout>
@@ -176,510 +160,221 @@
             <!-- SDK Language -->
 
             <TextView
-                android:id="@+id/languageLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="SDK Language"
-                android:textAppearance="?textAppearanceBody1"
+                android:id = "@+id/languageLabel"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "8dp"
+                android:text = "SDK Language"
+                android:textAppearance = "?textAppearanceBody1"
                 />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/languageToggleGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                app:selectionRequired="true"
-                app:singleSelection="true"
+                android:id = "@+id/languageToggleGroup"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "8dp"
+                app:selectionRequired = "true"
+                app:singleSelection = "true"
                 >
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/enLanguageButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="English"
+                    android:id = "@+id/enLanguageButton"
+                    style = "?attr/materialButtonOutlinedStyle"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text = "English"
                     />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/arLanguageButton"
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Arabic"
+                    android:id = "@+id/arLanguageButton"
+                    style = "?attr/materialButtonOutlinedStyle"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:text = "Arabic"
                     />
 
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
-            <!-- Theme drop-down -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:hint="Theme"
-                >
-
-                <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/themeAutoCompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Payment operation -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Payment operation"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/payOpAutocompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <!-- Initiated By -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/initiatedByTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Initiated by"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/initiatedByAutocompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Payment Intent ID -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/paymentIntentIdTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Payment Intent ID"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_outline_note_add"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/paymentIntentIdEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Agreement type -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/agreementTypeTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Agreement type"
-                >
-
-                <AutoCompleteTextView
-                    android:id="@+id/agreementTypeAutocompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Agreement Id -->
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/agreementIdTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Agreement ID"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/agreementIdEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/paymentOptionsRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <RadioButton
-                    android:id="@+id/withCardRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:checked="true"
-                    android:text="With card details"
-                    />
-
-                <TextView
-                    android:id="@+id/labelCollectedBy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:text="Collected by"
-                    />
-
-                <!-- Collected by -->
-
-                <com.google.android.material.button.MaterialButtonToggleGroup
-                    android:id="@+id/cardCollectedByButtonToggleGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    app:selectionRequired="true"
-                    app:singleSelection="true"
-                    >
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/bySdkButton"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SDK"
-                        />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/byMerchantButton"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="Merchant"
-                        />
-
-                </com.google.android.material.button.MaterialButtonToggleGroup>
-
-                <!-- Card details -->
-
-                <LinearLayout
-                    android:id="@+id/cardDetailsLinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:hint="Card number *"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/cardNumberEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="creditCardNumber"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:text="4111111111111111"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:orientation="horizontal"
-                        >
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:hint="Exp. month *"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/expiryMonthEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="creditCardExpirationMonth"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:text="04"
-                                />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            android:hint="Exp. year *"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/expiryYearEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="creditCardExpirationYear"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLength="2"
-                                android:text="23"
-                                />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="CVV *"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/cvvEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="creditCardSecurityCode"
-                                android:imeOptions="actionDone"
-                                android:inputType="number"
-                                android:maxLength="4"
-                                android:text="123"
-                                />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:hint="Card holder *"
-                        >
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/cardHolderEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="personName"
-                            android:inputType="textPersonName"
-                            android:text="John Doe"
-                            />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <!-- Save card -->
-
-                    <CheckBox
-                        android:id="@+id/saveCardCheckbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="Save card"
-                        />
-
-                    <!-- Save e-mail -->
-
-                    <CheckBox
-                        android:id="@+id/showEmailCheckbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Show email"
-                        />
-
-                    <!-- Show Address -->
-
-                    <CheckBox
-                        android:id="@+id/showAddressCheckbox"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Show address"
-                        />
-                </LinearLayout>
-
-                <RadioButton
-                    android:id="@+id/withTokenRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="With card token ID"
-                    />
-
-                <net.geidea.paymentsdk.sampleapp.TokenizedCardView
-                    android:id="@+id/tokenizedCardView"
-                    android:layout_width="280dp"
-                    android:layout_height="170dp"
-                    android:layout_marginStart="32dp"
-                    android:overScrollMode="never"
-                    app:cardCornerRadius="8dp"
-                    app:contentPadding="16dp"
-                    />
-
-                <Button
-                    android:id="@+id/selectCardButton"
-                    style="?materialButtonOutlinedStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:text="Select card"
-                    />
-
-            </RadioGroup>
-
-            <!-- Show Receipt -->
-
-            <CheckBox
-                android:id="@+id/showReceiptCheckbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show receipt"
-                android:checked="true"
-                />
-
-            <!-- Order details -->
-
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="Order details"
-                android:textAppearance="?textAppearanceBody1"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity = "center_horizontal"
+                android:text = "Payment Details"
+                android:textAppearance = "?textAppearanceBody1"
                 />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop = "8dp"
+                android:orientation = "horizontal"
                 >
 
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="3"
-                    android:hint="Amount *"
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:layout_weight = "1"
+                    android:hint = "Currency *"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/amountEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="numberDecimal"
-                        android:text="1100"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_weight="1"
-                    android:hint="Currency *"
-                    >
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/currencyEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="3"
-                        android:text="SAR"
+                        android:id = "@+id/currencyEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:inputType = "textCapCharacters"
+                        android:maxLength = "3"
+                        android:text = "SAR"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
+
+            <TextView
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity = "center_horizontal"
+                android:text = "Endpoints"
+                android:textAppearance = "?textAppearanceBody1"
+                />
+
+
+            <LinearLayout
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop = "8dp"
+                android:orientation = "vertical"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Callback URL"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id = "@+id/callbackUrlEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:inputType = "textUri"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Return URL"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id = "@+id/returnUrlEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:inputType = "textUri"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+
+            <!-- Theme drop-down -->
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Merchant Reference ID"
+                style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "8dp"
+                android:hint = "Theme"
+                >
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id = "@+id/themeAutoCompleteTextView"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:inputType = "none"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Payment options 2 -->
+
+            <TextView
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:gravity = "center_horizontal"
+                android:text = "Payment options"
+                android:textAppearance = "?textAppearanceBody1"
+                />
+
+            <include android:id="@+id/paymentOptions" layout = "@layout/layout_payment_options" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "4dp"
+                android:hint = "Merchant Reference ID"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/merchantRefIdEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text=""
+                    android:id = "@+id/merchantRefIdEditText"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:inputType = "text"
+                    android:text = ""
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Initiated By -->
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Callback URL"
+                android:id = "@+id/initiatedByTextInputLayout"
+                style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "4dp"
+                android:hint = "Initiated by"
                 >
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/callbackUrlEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textUri"
+                <AutoCompleteTextView
+                    android:id = "@+id/initiatedByAutocompleteTextView"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:inputType = "none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <!-- Customer details -->
+
+            <TextView
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "8dp"
+                android:text = "Customer details (Checkout Screen)"
+                android:textAppearance = "?textAppearanceBody1"
+                />
+
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:hint="Customer email"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "4dp"
+                android:hint = "Customer email"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/customerEmailEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="emailAddress"
-                    android:inputType="textEmailAddress|textAutoComplete"
+                    android:id = "@+id/customerEmailEditText"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:autofillHints = "emailAddress"
+                    android:inputType = "textEmailAddress|textAutoComplete"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -687,117 +382,118 @@
             <!-- Billing address -->
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Billing address"
-                    android:textAppearance="?textAppearanceBody1"
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "center_vertical"
+                    android:layout_margin = "8dp"
+                    android:layout_weight = "1"
+                    android:text = "Billing address"
+                    android:textAppearance = "?textAppearanceBody1"
                     />
 
                 <ImageButton
-                    android:id="@+id/expandBillingAddressImageButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    app:srcCompat="@drawable/ic_arrow_down"
-                    style="?borderlessButtonStyle"
-                    android:layout_gravity="center_vertical"
-                    android:background="?selectableItemBackgroundBorderless"
+                    android:id = "@+id/expandBillingAddressImageButton"
+                    style = "?borderlessButtonStyle"
+                    android:layout_width = "48dp"
+                    android:layout_height = "48dp"
+                    android:layout_gravity = "center_vertical"
+                    android:background = "?selectableItemBackgroundBorderless"
+                    app:srcCompat = "@drawable/ic_arrow_down"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/billingAddressLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:id = "@+id/billingAddressLinearLayout"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Country"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Street name &amp; number"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/billingCountryCodeEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="3"
+                        android:id = "@+id/billingStreetEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "textCapWords"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Street name &amp; number"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "City"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/billingStreetEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords"
+                        android:id = "@+id/billingCityEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "textCapWords"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:orientation = "horizontal"
                     >
 
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="1"
-                        android:hint="City"
+                        android:layout_width = "0dp"
+                        android:layout_height = "wrap_content"
+                        android:layout_marginEnd = "4dp"
+                        android:layout_marginBottom = "4dp"
+                        android:layout_weight = "2"
+                        android:hint = "Postcode"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/billingCityEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="textCapWords"
+                            android:id = "@+id/billingPostCodeEditText"
+                            android:layout_width = "match_parent"
+                            android:layout_height = "wrap_content"
+                            android:imeOptions = "actionNext"
+                            android:inputType = "text"
+                            android:maxLines = "1"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="1"
-                        android:hint="Postcode"
+                        android:layout_width = "0dp"
+                        android:layout_height = "wrap_content"
+                        android:layout_marginBottom = "4dp"
+                        android:layout_weight = "1"
+                        android:hint = "Country"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/billingPostCodeEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:maxLines="1"
+                            android:id = "@+id/billingCountryCodeEditText"
+                            android:layout_width = "match_parent"
+                            android:layout_height = "wrap_content"
+                            android:imeOptions = "actionNext"
+                            android:inputType = "textCapCharacters"
+                            android:maxLength = "3"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
                 </LinearLayout>
 
             </LinearLayout>
@@ -805,113 +501,126 @@
             <!-- Shipping address -->
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                >
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="Shipping address"
-                    android:textAppearance="?textAppearanceBody1"
+                    android:layout_width = "0dp"
+                    android:layout_height = "wrap_content"
+                    android:layout_gravity = "center_vertical"
+                    android:layout_margin = "8dp"
+                    android:layout_weight = "1"
+                    android:text = "Shipping address"
+                    android:textAppearance = "?textAppearanceBody1"
                     />
 
                 <ImageButton
-                    android:id="@+id/expandShippingAddressImageButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    app:srcCompat="@drawable/ic_arrow_down"
-                    style="?borderlessButtonStyle"
-                    android:layout_gravity="center_vertical"
-                    android:background="?selectableItemBackgroundBorderless"
+                    android:id = "@+id/expandShippingAddressImageButton"
+                    style = "?borderlessButtonStyle"
+                    android:layout_width = "48dp"
+                    android:layout_height = "48dp"
+                    android:layout_gravity = "center_vertical"
+                    android:background = "?selectableItemBackgroundBorderless"
+                    app:srcCompat = "@drawable/ic_arrow_down"
                     />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/shippingAddressLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:id = "@+id/shippingAddressLinearLayout"
+                android:layout_width = "match_parent"
+                android:layout_height = "wrap_content"
+                android:layout_marginBottom = "8dp"
+                android:orientation = "vertical"
                 >
 
+                <CheckBox
+                    android:id="@+id/matchShippingAddressCheckbox"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:padding = "8dp"
+                    android:text = "Shipping Address same as Billing Address"
+                    />
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Country"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginTop = "4dp"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "Street name &amp; number"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/shippingCountryCodeEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapCharacters"
-                        android:maxLength="3"
+                        android:id = "@+id/shippingStreetEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "textCapWords"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:hint="Street name &amp; number"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:layout_marginBottom = "4dp"
+                    android:hint = "City"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/shippingStreetEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:imeOptions="actionNext"
-                        android:inputType="textCapWords"
+                        android:id = "@+id/shippingCityEditText"
+                        android:layout_width = "match_parent"
+                        android:layout_height = "wrap_content"
+                        android:imeOptions = "actionNext"
+                        android:inputType = "textCapWords|textAutoComplete"
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:orientation = "horizontal"
                     >
 
+
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="1"
-                        android:hint="City"
+                        android:layout_width = "0dp"
+                        android:layout_height = "wrap_content"
+                        android:layout_marginEnd = "4dp"
+                        android:layout_marginBottom = "4dp"
+                        android:layout_weight = "2"
+                        android:hint = "Postcode"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/shippingCityEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="textCapWords|textAutoComplete"
+                            android:id = "@+id/shippingPostCodeEditText"
+                            android:layout_width = "match_parent"
+                            android:layout_height = "wrap_content"
+                            android:imeOptions = "actionNext"
+                            android:inputType = "text"
+                            android:maxLines = "1"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_weight="1"
-                        android:hint="Postcode"
+                        android:layout_width = "0dp"
+                        android:layout_height = "wrap_content"
+                        android:layout_marginBottom = "4dp"
+                        android:layout_weight = "1"
+                        android:hint = "Country"
                         >
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/shippingPostCodeEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:maxLines="1"
+                            android:id = "@+id/shippingCountryCodeEditText"
+                            android:layout_width = "match_parent"
+                            android:layout_height = "wrap_content"
+                            android:imeOptions = "actionNext"
+                            android:textAllCaps="true"
+                            android:inputType = "textCapCharacters"
+                            android:maxLength = "3"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -920,93 +629,26 @@
 
             </LinearLayout>
 
-            <!-- Payment options -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Payment options"
-                    android:textAppearance="?textAppearanceBody1"
-                    />
-
-                <Button
-                    android:id="@+id/addOptionButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Option"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/paymentOptionItemsLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                />
-
-            <!-- Order items -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Order items (Shahry &amp; Souhoola)"
-                    android:textAppearance="?textAppearanceBody1"
-                    />
-
-                <Button
-                    android:id="@+id/addOrderItemButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Item"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/orderItemsLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                />
-
         </LinearLayout>
     </ScrollView>
 
     <!-- Pay button -->
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_gravity = "center_horizontal"
+        android:layout_marginTop = "8dp"
+        android:layout_marginBottom = "8dp"
+        android:orientation = "horizontal"
         >
 
         <Button
-            android:id="@+id/payButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Pay"
+            android:id = "@+id/saveButton"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "8dp"
+            android:text = "Save"
             />
 
     </LinearLayout>

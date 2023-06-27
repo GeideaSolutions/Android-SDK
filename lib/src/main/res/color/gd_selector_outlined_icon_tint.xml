@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- from https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/textfield/res/color/mtrl_outlined_icon_tint.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/colorPrimary" android:state_activated="true"/>
+    <item android:alpha="0.38" android:color="@color/gd_iconTint" android:state_enabled="false"/>
+    <item android:alpha="0.6" android:color="@color/gd_iconTint"/>
+</selector>

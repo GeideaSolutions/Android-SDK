@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- from https://github.com/material-components/material-components-android/blob/master/lib/java/com/google/android/material/textfield/res/color/mtrl_outlined_stroke_color.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/colorPrimary" android:state_focused="true"/>
+    <item android:alpha="0.87" android:color="?attr/colorOnSurface" android:state_hovered="true"/>
+    <item android:alpha="0.2" android:color="?attr/colorOnSurface" android:state_enabled="false"/>
+    <item android:alpha="0.5" android:color="?attr/colorOnSurface"/>
+</selector>

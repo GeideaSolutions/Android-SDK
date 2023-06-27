@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <ImageButton
+            android:id="@+id/backImageButton"
+            style="?borderlessButtonStyle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical"
+            android:background="?selectableItemBackgroundBorderless"
+            android:src="@drawable/gd_ic_back_arrow"
+            app:tint="?colorOnSurface"
+            />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="72dp"
+            android:layout_weight="1"
+            android:maxLines="2"
+            tools:text="Choose your preferred installment plan"
+            android:textSize="17sp"
+            android:textFontWeight="600"
+            />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            >
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/circularProgressIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:progress="66"
+                app:indicatorSize="56dp"
+                app:trackThickness="3dp"
+                android:background="@drawable/gd_oval_control_highlight"
+                />
+
+            <TextView
+                android:id="@+id/progressTextView"
+                tools:text="2 / 3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textFontWeight="600"
+                />
+        </FrameLayout>
+
+    </LinearLayout>
+</merge>

@@ -7,7 +7,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.content.res.Resources
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -15,7 +17,11 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.datepicker.*
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.CompositeDateValidator
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.DateValidatorPointForward
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -28,8 +34,11 @@ import net.geidea.paymentsdk.model.paymentintent.EInvoicePaymentIntent
 import net.geidea.paymentsdk.model.transaction.TransactionStatus
 import net.geidea.paymentsdk.sampleapp.sample.orders.OrderOperation
 import net.geidea.paymentsdk.sampleapp.sample.paymentintents.PaymentIntentOperation
-import java.util.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.util.Calendar
 import java.util.Calendar.JANUARY
+import java.util.TimeZone
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -121,6 +130,7 @@ fun Context.showOrder(
                     }.show()
                 }
             }
+
             operations.size == 1 -> {
                 orderDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener {
                     when (operations[0]) {
@@ -398,4 +408,33 @@ fun hideKeyboard(view: View) {
             view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(iBinder, 0)
     }
+}
+
+fun Bundle.toJSONString(): String? {
+    val json = JSONObject()
+    val keys: Set<String> = keySet()
+    for (key in keys) {
+        try {
+            json.put(key, JSONObject.wrap(get(key)))
+        } catch (e: JSONException) {
+            return null;
+        }
+    }
+    return json.toString()
+}
+
+fun String.toBundle(): Bundle {
+    val jsonObject = JSONObject(this)
+    val bundle = Bundle()
+    val iterator: Iterator<*> = jsonObject.keys()
+    while (iterator.hasNext()) {
+        val key = iterator.next() as String
+        val value: Int = jsonObject.getInt(key)
+        bundle.putInt(key, value)
+    }
+    return bundle
+}
+
+fun SharedPreferences.getStringOrNull(key: String): String? {
+    return getString(key, null)
 }

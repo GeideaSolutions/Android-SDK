@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        android:id="@+id/appBarWithStepper"
+        layout="@layout/gd_include_appbar_with_stepper"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:paddingBottom="24dp"
+            >
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:text="@string/gd_meezaqr_scan_and_pay"
+                android:textFontWeight="600"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/currencyTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/amountIntegerPartTextView"
+                app:layout_constraintRight_toLeftOf="@+id/amountIntegerPartTextView"
+                tools:text="EGP"
+                />
+
+            <TextView
+                android:id="@+id/amountIntegerPartTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textDirection="ltr"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+                tools:text="2450"
+                />
+
+            <TextView
+                android:id="@+id/amountFractionPartTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textDirection="ltr"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@+id/amountIntegerPartTextView"
+                app:layout_constraintLeft_toRightOf="@+id/amountIntegerPartTextView"
+                tools:text=".00"
+                />
+
+            <LinearLayout
+                android:id="@+id/idleStateLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/amountIntegerPartTextView"
+                >
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp"
+                    android:indeterminate="true"
+                    app:indicatorSize="24dp"
+                    app:trackCornerRadius="2dp"
+                    app:trackColor="?colorButtonNormal"
+                    />
+
+                <TextView
+                    android:id="@+id/waitingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gd_meezaqr_waiting"
+                    android:textFontWeight="700"
+                    />
+
+                <TextView
+                    android:id="@+id/walletAppHintTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gd_meezaqr_wallet_app_hint"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/dontRefreshTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gd_meezaqr_dont_refresh"
+                    android:textFontWeight="600"
+                    android:textSize="12sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/qrCodeImageView"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:id="@+id/noNotificationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gd_meezaqr_no_notification"
+                    android:textSize="12sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/errorStateLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/amountIntegerPartTextView"
+                >
+
+                <include layout="@layout/gd_include_alternative_pm_selector" />
+
+                <TextView
+                    android:id="@+id/sendPaymentNotificationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/gd_meezaqr_send_notification"
+                    android:textFontWeight="600"
+                    />
+
+                <Button
+                    android:id="@+id/requestToPayButton"
+                    style="?gd_primaryButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/gd_default_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/gd_meezaqr_btn_request_to_pay"
+                    />
+
+            </LinearLayout>
+
+            <!-- Delimits the upper content from the bottom, so that toggle toggling
+                 between idle and error states can offset the Cancel button downwards -->
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/contentBottomBarrier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="idleStateLinearLayout,errorStateLinearLayout"
+                />
+
+            <Button
+                android:id="@+id/cancelButton"
+                style="?gd_secondaryButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/gd_default_button_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="24dp"
+                android:text="@string/gd_button_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contentBottomBarrier"
+                />
+
+            <TextView
+                android:id="@+id/merchantNameLabelTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/gd_meezaqr_merchant_name"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/meezaLogoImageView"
+                app:layout_constraintStart_toStartOf="@+id/cancelButton"
+                app:layout_constraintTop_toBottomOf="@+id/cancelButton"
+                />
+
+            <TextView
+                android:id="@+id/merchantNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/meezaLogoImageView"
+                app:layout_constraintStart_toStartOf="@+id/cancelButton"
+                app:layout_constraintTop_toBottomOf="@+id/merchantNameLabelTextView"
+                tools:text="Hunger Station City Center"
+                />
+
+            <ImageView
+                android:id="@+id/meezaLogoImageView"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:gd_aspectRatioEnabled="true"
+                app:gd_dominantMeasurement="height"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cancelButton"
+                app:srcCompat="@drawable/gd_ic_meeza_logo"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

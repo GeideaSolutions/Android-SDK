@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".flow.pay.PaymentActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@+id/totalAmountTextView"
+            android:text="@string/gd_bnpl_total_amount"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/totalAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:labelFor="@+id/installmentPlanSelectionView"
+        android:text="@string/gd_bnpl_installment_plans"
+        android:textFontWeight="600"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:textColor="?colorError"
+        android:textFontWeight="700"
+        android:textSize="12sp"
+        tools:text="Error text"
+        />
+
+    <GridLayout
+        android:id="@+id/installmentPlanGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:columnCount="3"
+        android:useDefaultMargins="true"
+        />
+
+    <TextView
+        android:id="@+id/approxAmountHintTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginBottom="8dp"
+        android:text="@string/gd_souhoola_hint_approx_amount"
+        android:textSize="11sp"
+        android:padding="4dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/downPaymentAmountInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginVertical="@dimen/gd_default_margin"
+        android:hint="@string/gd_bnpl_down_payment"
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText=""
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/downPaymentAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="numberDecimal"
+            tools:text="123"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/financedAmountErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/gd_default_margin_horizontal"
+        android:layout_marginBottom="8dp"
+        android:textColor="?colorError"
+        android:textSize="13sp"
+        android:paddingHorizontal="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="* Financed amount needs to be at least 1,000 EGP in order to purchase with Souhoola in installments"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/gd_default_margin_horizontal"
+        android:paddingEnd="@dimen/gd_default_margin_horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:labelFor="@+id/financedAmountTextView"
+            android:text="@string/gd_bnpl_financed_amount"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/financedAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textFontWeight="600"
+            android:textSize="16sp"
+            tools:text="13,579 EGP"
+            />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/payUpfront"
+        layout="@layout/gd_include_pay_upfront"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

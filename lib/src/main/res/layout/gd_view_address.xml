@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/gd_view_payment_form"
+    >
+
+    <!-- COUNTRY -->
+
+    <net.geidea.paymentsdk.ui.widget.DropdownTextInputLayout
+        android:id="@+id/countryInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_hint_country"
+        app:errorEnabled="true"
+        >
+
+        <net.geidea.paymentsdk.ui.widget.address.CountryAutoCompleteTextView
+            android:id="@+id/countryAutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="addressCountry"
+            android:inputType="none"
+            />
+    </net.geidea.paymentsdk.ui.widget.DropdownTextInputLayout>
+
+    <!-- STREET NAME AND NUMBER -->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/streetInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gd_default_margin_half"
+        android:hint="@string/gd_hint_street"
+        app:errorEnabled="true"
+        >
+
+        <net.geidea.paymentsdk.ui.widget.address.StreetEditText
+            android:id="@+id/streetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="streetAddress"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="yes"
+            android:inputType="textCapWords"
+            android:textAlignment="viewStart"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <!-- CITY -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cityInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/gd_default_margin"
+            android:layout_weight="1"
+            android:hint="@string/gd_hint_city"
+            app:errorEnabled="true"
+            >
+
+            <net.geidea.paymentsdk.ui.widget.address.CityEditText
+                android:id="@+id/cityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="addressLocality"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textAlignment="viewStart"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- POSTCODE -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/postCodeInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gd_default_margin_half"
+            android:layout_weight="1"
+            android:hint="@string/gd_hint_postcode"
+            app:errorEnabled="true"
+            >
+
+            <net.geidea.paymentsdk.ui.widget.address.PostCodeEditText
+                android:id="@+id/postCodeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="postalCode"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textAlignment="viewStart"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</merge>

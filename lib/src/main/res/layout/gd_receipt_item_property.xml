@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    >
+
+    <TextView
+        android:id="@+id/propertyLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        tools:text="@string/gd_label_date_time"
+        />
+
+    <TextView
+        android:id="@+id/propertyValueTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:gravity="end"
+        android:ellipsize="none"
+        android:textDirection="ltr"
+        android:textAlignment="viewEnd"
+        android:textIsSelectable="true"
+        android:textSize="12sp"
+        tools:text="56df608d"
+        />
+
+</LinearLayout>

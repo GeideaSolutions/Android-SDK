@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gd_orange">#FF6943</color>
+    <color name="gd_blue">#5c9aff</color>
+    <color name="gd_surface">#121212</color>
+    <color name="gd_greyStroke">#FFFFFF</color>
+    <color name="gd_contrastText">#DDFFFFFF</color>
+    <color name="gd_blackOrWhite">#FFFFFF</color>
+</resources>

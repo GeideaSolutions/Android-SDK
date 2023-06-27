@@ -1,0 +1,112 @@
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven-publish'
+
+ext {
+    GROUP_ID = "net.geidea.paymentsdk"
+    ARTIFACT_ID = "paymentsdk"
+    ARTIFACT_VERSION = "4.0.2"
+}
+
+dokkaHtml.configure {
+    dokkaSourceSets {
+        named("main") {
+            moduleName.set("Geidea Payment SDK for Android")
+            noAndroidSdkLink.set(false)
+            includes.from("../README.md")
+
+            perPackageOption {
+                matchingRegex.set(".*\\.internal.*")
+                suppress.set(true)
+            }
+        }
+    }
+}
+
+dokkaJavadoc.configure {
+    dokkaSourceSets {
+        named("main") {
+            moduleName.set("Geidea Payment SDK for Android")
+            moduleDisplayName.set("Geidea Payment Gateway SDK for Android")
+            includes.from("../README.md")
+
+            perPackageOption {
+                matchingRegex.set(".*\\.internal.*")
+                suppress.set(true)
+            }
+        }
+    }
+}
+
+task dokkaHtmlJar(type: Jar) {
+    dependsOn(dokkaHtml)
+    from(dokkaHtml.outputDirectory)
+    archiveClassifier.set("html-doc")
+}
+
+task dokkaJavadocJar(type: Jar) {
+    dependsOn(dokkaJavadoc)
+    from(dokkaJavadoc.outputDirectory)
+    archiveClassifier.set("javadoc")
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'https://maven.pkg.github.com/GeideaSolutions/Android-SDK'
+            name 'GithubMaven'
+            credentials(PasswordCredentials)
+        }
+        maven {
+            name = 'MyLocalMaven'
+            url = "file://${buildDir}/mylocalmavenrepo"
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                groupId = GROUP_ID
+                artifactId = ARTIFACT_ID
+                version = ARTIFACT_VERSION
+
+                artifact dokkaHtmlJar
+                artifact dokkaJavadocJar
+
+                pom {
+                    name = 'Geidea Payment SDK for Android'
+                    description = 'Tools for quick and easy integration of Geidea payment services into Android apps'
+                    url = 'https://github.com/GeideaSolutions/Android-SDK'
+
+                    // TODO add main license and fonts licenses
+                    /*licenses {
+                        license {
+                            name.set("MIT")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }*/
+                }
+            }
+            // Creates a Maven publication called “debug”.
+            /*debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'net.geidea.paymentsdk'
+                artifactId = 'paymentsdk'
+                version = "$artifactVersion"
+
+                pom {
+                    name = 'Geidea Payment SDK for Android'
+                    description = 'Tools for quick and easy integration of Geidea payment services into Android apps'
+                    url = 'https://github.com/GeideaSolutions/Android-SDK'
+                }
+            }*/
+        }
+    }
+}

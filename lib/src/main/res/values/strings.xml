@@ -1,0 +1,248 @@
+<resources>
+    <string name="gd_activity_payment">Pay</string>
+    <string name="gd_processing">Processing payment…</string>
+
+    <!-- Payment form -->
+
+    <string name="gd_payment_for_s">Payment for %1$s</string>
+
+    <string name="gd_button_pay">Pay</string>
+    <string name="gd_button_pay_s">Pay %1$s</string>
+    <string name="gd_button_cancel">Cancel</string>
+    <string name="gd_button_dismiss">Dismiss</string>
+
+    <string name="gd_label_pay_with_cc">Pay with card</string>
+    <string name="gd_label_card_details">Card details</string>
+
+    <string name="gd_hint_card_number">Card number</string>
+    <string name="gd_valid_digits">0123456789</string>
+    <string name="gd_hint_security_code">CVV</string>
+    <string name="gd_help_cvv" translatable="false">123</string>
+    <string name="gd_help_cvv_4digits" translatable="false">1234</string>
+    <string name="gd_dlg_title_cvv_help">CVV</string>
+    <string name="gd_dlg_msg_cvv_help">Turn your card over and look at the signature box. This 3-digit code is your CVV number / Card Security Code.</string>
+    <string name="gd_help_card_number" translatable="false">1234 1234 1234 1234</string>
+    <string name="gd_hint_expiry_date">Expiry date</string>
+    <string name="gd_help_expiry_date">MM/YY</string>
+    <string name="gd_hint_card_holder">Name on card</string>
+
+    <string name="gd_invalid_card_number">Invalid card number</string>
+    <string name="gd_invalid_card_number_length">Wrong card number length</string>
+    <string name="gd_unrecognized_card_brand">Unsupported card brand</string>
+    <string name="gd_unaccepted_card_brand">Unsupported card brand</string>
+    <string name="gd_expired_card">Expired card</string>
+    <string name="gd_invalid_card_expiry_date">Invalid expiry date</string>
+    <string name="gd_invalid_card_security_code">Invalid CVV</string>
+    <string name="gd_invalid_cvv_length">Wrong CVV length</string>
+    <string name="gd_invalid_cvv_characters">Invalid CVV characters</string>
+    <string name="gd_invalid_card_holder">Invalid card holder</string>
+    <string name="gd_invalid_card_holder_characters">Invalid card holder</string>
+    <string name="gd_invalid_card_holder_length">Wrong card holder length</string>
+    <string name="gd_invalid_currency">Invalid currency</string>
+    <string name="gd_invalid_email">Invalid e-mail</string>
+
+    <string name="gd_invalid_phone_number">Phone number is invalid</string>
+    <string name="gd_invalid_pin">Invalid PIN</string>
+
+    <string name="gd_hint_email">Email</string>
+    <string name="gd_hint_country">Country</string>
+    <string name="gd_hint_street">Street name and number</string>
+    <string name="gd_hint_city">City</string>
+    <string name="gd_hint_postcode">Postcode</string>
+
+    <string name="gd_label_billing_address">Billing address</string>
+    <string name="gd_label_shipping_address">Shipping address</string>
+    <string name="gd_checkbox_same_address">Shipping address is same as Billing address</string>
+
+    <string name="gd_countries_not_loaded">Unsupported country</string>
+    <string name="gd_invalid_address_country">Unsupported country</string>
+    <string name="gd_invalid_address_street">Wrong street name and number length</string>
+    <string name="gd_invalid_address_city">Wrong city length</string>
+    <string name="gd_invalid_address_postcode">Wrong postcode length</string>
+
+    <string name="gd_reference_id_s">Reference ID: %1$s</string>>
+
+    <!-- Cancel confirmation dialog -->
+
+    <string name="gd_dlg_msg_cancel_confirm">Are you sure you want to cancel the payment?</string>
+    <string name="gd_yes">Yes</string>
+    <string name="gd_no">No</string>
+
+    <!-- Card brand names -->
+
+    <string name="gd_card_brand_unknown">Credit card</string>
+    <string name="gd_card_brand_visa">VISA</string>
+    <string name="gd_card_brand_amex">American Express</string>
+    <string name="gd_card_brand_mastercard">Mastercard</string>
+    <string name="gd_card_brand_mada">MADA</string>
+    <string name="gd_card_brand_meeza">Meeza</string>
+
+    <!-- Miscellaneous -->
+
+    <string name="gd_cancelled">Cancelled</string>
+    <string name="gd_cancelled_by_user">Cancelled by user</string>
+    <string name="gd_dash" translatable="false">—</string>
+
+    <!-- Content descriptions - used to describe images to blind people through text-to-speech -->
+
+    <string name="gd_content_desc_geidea_logo">Geidea logo</string>
+    <string name="gd_content_desc_card_brand_logo">%1$s logo</string>
+    <string name="gd_content_desc_payment_method_logo">Payment method logo</string>
+    <string name="gd_content_exclamation_icon">Exclamation/warning icon</string>
+    <string name="gd_content_desc_valu_logo">ValU logo</string>
+    <string name="gd_content_desc_shahry_logo">Shahry logo</string>
+    <string name="gd_content_desc_shahry_logo_and_name">Shahry logo and company name</string>
+    <string name="gd_content_desc_souhoola_logo">Souhoola logo</string>
+
+    <string name="gd_err_msg_payment_timed_out">Your payment has timed out</string>
+    <string name="gd_err_msg_no_internet_connection">No Internet connection</string>
+    <string name="gd_err_msg_unknown_error">Unknown error</string>
+    <string name="gd_err_msg_invalid_input_error">Invalid input error</string>
+    <string name="gd_err_msg_sdk_error">SDK error</string>
+
+    <!-- Payment options screen -->
+
+    <string name="gd_pm_card">Credit / Debit card</string>
+    <string name="gd_pm_meeza_qr">Mobile Wallet</string>
+    <string name="gd_pm_valu">ValU Installments</string>
+    <string name="gd_pm_valu_short" translatable="false">ValU</string>
+    <string name="gd_pm_shahry">Shahry Installments</string>
+    <string name="gd_pm_shahry_short">Shahry</string>
+    <string name="gd_pm_souhoola">Souhoola Installments</string>
+    <string name="gd_pm_souhoola_short">Souhoola</string>
+    <string name="gd_pm_group_bnpl">Buy Now Pay Later</string>
+    <string name="gd_btn_next">Next</string>
+    <string name="gd_lets_find_your_pm">Let’s find out your payment method</string>
+    <string name="gd_min_amount_required_s_s">%1$s require minimal amount of %2$s</string>
+    <string name="gd_invalid_payment_options">Invalid payment options</string>
+    <string name="gd_no_down_payment_methods">Merchant account does not have any payment methods configured</string>
+
+    <!-- Meeza QR -->
+
+    <string name="gd_meezaqr_error_creating_qr">Error creating QR code!</string>
+    <string name="gd_meezaqr_processing_transaction">Processing transaction…</string>
+    <string name="gd_meezaqr_scan_and_pay">Mobile Wallet Payment</string>
+    <string name="gd_meezaqr_merchant_name">Merchant name</string>
+    <string name="gd_meezaqr_cant_scan_qr">Can’t scan QR code?\nSend payment request to customer’s mobile number.</string>
+    <string name="gd_meezaqr_err_msg_payment_incomplete">Your QR payment has failed. Please try again</string>
+    <string name="gd_meezaqr_err_msg_payment_expired">Your QR code has expired</string>
+    <string name="gd_meezaqr_btn_request_to_pay">Request to pay</string>
+    <string name="gd_meezaqr_waiting">We are waiting for you</string>
+    <string name="gd_meezaqr_wallet_app_hint">Open the notification from your wallet application and follow the instructions in order to finalize the payment.</string>
+    <string name="gd_meezaqr_dont_refresh">Do not refresh or close this page</string>
+    <string name="gd_meezaqr_no_notification">Didn\'t receive a notification?\n\nScan the QR code using your wallet application to initiate the payment</string>
+    <string name="gd_meezaqr_send_notification">Or send new payment notification</string>
+    <string name="gd_meezaqr_err_expired">Your payment notification has expired</string>
+    <string name="gd_meezaqr_err_incomplete">Your payment was not successful</string>
+    <string name="gd_meezaqr_r2p_mobile_number">MeezaDigital ID / Mobile number</string>
+    <string name="gd_meezaqr_r2p_send">Send</string>
+    <string name="gd_meezaqr_r2p_sending">Sending…</string>
+    <string name="gd_meezaqr_r2p_payment_request_sent">Payment request sent successfully.</string>
+
+    <!-- Receipt screen -->
+
+    <string name="gd_transation_approved">Transaction approved</string>
+    <string name="gd_transation_failed">Transaction failed</string>
+    <string name="gd_btn_return">Go to Merchant App</string>
+    <string name="gd_label_total">Total</string>
+
+    <string name="gd_label_date_time">Date/Time</string>
+    <string name="gd_label_operation">Operation</string>
+    <string name="gd_label_mobile_or_digital_id">Mobile No./Merchant ID</string>
+    <string name="gd_label_username">Username</string>
+    <string name="gd_label_geidea_order_id">Geidea Order ID</string>
+    <string name="gd_label_merchant_ref_id">Merchant Reference ID</string>
+    <string name="gd_label_meeza_transaction_id">Meeza transaction ID</string>
+    <string name="gd_label_failure_reason">Failure reason</string>
+    <string name="gd_redirect_message">You will be redirected automatically to merchant app after 15 sec</string>
+
+    <string name="gd_receipt_try_again">Try Again</string>
+    <string name="gd_receipt_load_failed">Failed to load transaction receipt!</string>
+
+    <!-- BNPL -->
+
+    <string name="gd_bnpl_phone_number">Phone number</string>
+    <string name="gd_bnpl_purchase_with_s_confirmed">Your purchase with %1$s has been confirmed</string>
+    <string name="gd_bnpl_total_amount">Total Amount</string>
+    <string name="gd_bnpl_financed_amount">Financed Amount</string>
+    <string name="gd_bnpl_installment_amount">Installment Amount</string>
+    <string name="gd_bnpl_amount_vary_s">%1$s/<![CDATA[month<br><small>(may slightly vary)</small>]]></string>
+    <string name="gd_bnpl_tenure">Tenure</string>
+    <string name="gd_bnpl_down_payment">Down Payment</string>
+    <string name="gd_bnpl_otp_sent">Your One Time Password has been sent to the registered phone number. Please enter the number below and tap on Finalize purchase button.</string>
+    <string name="gd_bnpl_didnt_get_otp">Didn\'t get the OTP?</string>
+    <string name="gd_bnpl_resend_otp">Resend Code</string>
+    <string name="gd_bnpl_choose_installment_plan">Choose your preferred installment plan</string>
+    <string name="gd_bnpl_fill_otp">Fill in the One-Time Password</string>
+    <string name="gd_bnpl_n_months">%1$d Months</string>
+    <string name="gd_bnpl_amount_per_month">%1$d/month</string>
+    <string name="gd_bnpl_process_down_payment">Process Down Payment</string>
+    <string name="gd_bnpl_installment_plans">Installment Plans</string>
+    <string name="gd_bnpl_pay_upfront">Pay upfront</string>
+    <string name="gd_bnpl_purchase_fees">Purchase Fees</string>
+    <string name="gd_bnpl_provider_transaction_id_s">%1$s order ID</string>
+    <string name="gd_bnpl_total_amount_upfront">Total amount to be paid upfront</string>
+    <string name="gd_bnpl_finalize_purchase">Finalize purchase</string>
+    <string name="gd_bnpl_down_payment_options">Choose how you want to pay for the down payment and purchase fees</string>
+    <string name="gd_bnpl_pay_now"><![CDATA[Pay <b>%1$s</b> now, online]]></string>
+    <string name="gd_bnpl_pay_on_delivery"><![CDATA[Pay <b>%1$s</b> in cash on delivery]]></string>
+    <string name="gd_bnpl_missing_order_items">Missing order items</string>
+
+    <!-- BNPL ValU -->
+
+    <string name="gd_valu_confirm_phone_number">Confirm your phone number</string>
+    <string name="gd_valu_to_u_balance">To-U Balance</string>
+    <string name="gd_valu_cashback_amount">Cashback Amount</string>
+    <string name="gd_valu_call_support">Please call 16671 for any inquiries. Thank you for using valU.</string>
+
+    <!-- BNPL Shahry -->
+
+    <string name="gd_shahry_confirm_id">Confirm your Shahry ID</string>
+    <string name="gd_shahry_id">Shahry ID</string>
+    <string name="gd_shahry_find_my_id">Where can I find my Shahry ID?</string>
+    <string name="gd_shahry_learn_more">Learn more about Shahry</string>
+    <string name="gd_shahry_open_app"><![CDATA[Open your <b>Shahry APP</b> to complete your last step by choosing an installment plan then paste/write your order taken here to complete your purchase. <a href="https://shahry.app/how-to-order-online-through-partner-website">Need help?</a>]]></string>
+    <string name="gd_shahry_order_token">Order Token</string>
+    <string name="gd_shahry_terms_s">By clicking “Confirm” I hereby accept the installment plan terms of this purchase and the refund policy provided by %1$s</string>
+    <string name="gd_shahry_confirm_purchase">Confirm purchase with Shahry</string>
+    <string name="gd_shahry_btn_confirm">Confirm</string>
+    <string name="gd_shahry_btn_proceed">Proceed</string>
+    <string name="gd_shahry_btn_proceed_to_down_payment">Proceed to Down Payment</string>
+    <string name="gd_shahry_merchant_name">Merchant name</string>
+
+    <!-- BNPL Souhoola -->
+
+    <string name="gd_souhoola_confirm_phone_number_and_pin">Confirm your phone number and PIN</string>
+    <string name="gd_souhoola_pin">PIN</string>
+    <string name="gd_souhoola_review_purchase_summary">Review Purchase Summary</string>
+    <string name="gd_souhoola_first_installment_date">First installment date</string>
+    <string name="gd_souhoola_btn_proceed">Proceed</string>
+    <string name="gd_souhoola_btn_proceed_to_down_payment">Proceed to Down Payment</string>
+    <string name="gd_souhoola_down_payment_helper_text">* Down payment needs to be between %1$s and %2$s</string>
+    <string name="gd_souhoola_time_remaining_s"><![CDATA[<b>%1$s</b>]]></string>
+    <string name="gd_souhoola_n_codes_left"><![CDATA[Attempts left: <b>%1$d</b>]]></string>
+    <string name="gd_souhoola_hint_approx_amount">* The installment amount is approximate; the actual amount will be shown in the Review Transaction screen</string>
+    <string name="gd_souhoola_review_purchase_details">Purchase details</string>
+    <string name="gd_souhoola_review_installment_plans">Installment plans</string>
+    <string name="gd_souhoola_review_total_cart_count">Total Items in Cart</string>
+    <string name="gd_souhoola_not_registered"><![CDATA[Don’t have an account? <a href="https://play.google.com/store/apps/details?id=com.cicapital.cicf.android.myapplication">Register here</a>]]></string>
+    <string name="gd_souhoola_avail_limit_below_limit">Your available purchase limit needs to be at least %1$s in order to purchase with Souhoola Installments</string>
+    <string name="gd_souhoola_financed_amount_below_limit">* Financed amount needs to be at least %1$s in order to purchase with Souhoola Installments</string>
+    <string name="gd_souhoola_review_merchant_name">Merchant name</string>
+
+    <!-- Cvv input dialog -->
+
+    <string name="gd_enter_cvv">Please enter your card verification code</string>
+    <string name="gd_label_enter_cvv_below">Enter your CVV code below</string>
+    <string name="gd_expires_month_year">Expires %1$s %2$s</string>
+
+    <!-- Alternative payment method selector -->
+
+    <string name="gd_try_different_pm">Would you like to try with a different payment method?</string>
+    <string name="gd_or_pay_with_s">Or pay with %1$s</string>
+    <string name="gd_btn_show_all">Show All</string>
+    <string name="gd_pm_alternative_card">card</string>
+    <string name="gd_pm_alternative_qr_code">QR code</string>
+    <string name="gd_pay_with_card">Pay with card</string>
+
+</resources>

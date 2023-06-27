@@ -1,7 +1,12 @@
-# Geidea Payment SDK for Android
+# Geidea Online Payments for Android Mobile Apps
 
-Geidea Payment SDK for Android provides tools for quick and easy
-integration of Geidea Payment Gateway services into your Android app.
+ - Contributors: kanti-kiran 
+ - Version: 4.0.2 
+ - Keywords: credit card, geidea, payment, payment for mobile sdk, payment for android, payment request, android
+ - License: GPLv3
+ - License URI: https://www.gnu.org/licenses/gpl-3.0.html
+
+Add the Geidea online payments SDK to your mobile app store with Low Code and start accepting online payments seamlessly with Geidea Payment Gateway. Geidea Online Payments SDK for Android provides you with the required tools for quick and easy integration of Geidea Payment Gateway services into your Android app.
 
 ## Requirements
 - Android 6.0+
@@ -13,47 +18,43 @@ integration of Geidea Payment Gateway services into your Android app.
 
 The SDK is available on GitHub Packages Maven repository.
 
-1. Add GitHub Packages as a Maven repository to your project-level build.gradle
-```groovy
+1. The SDK is available for download in a zipped file format in this repository.
+```
+Download the zip file in the home directory of your local machine
+/Users/{username}
+```
+
+ 2. Extract the SDK from the downloaded zip file with the below command:
+```
+unzip -o geidea.zip
+```
+3. Proceed to update your build.gradle files to access the local maven repository.
+buildscript {
+```
+repositories {
+	// ...
+        mavenLocal()
+    }
+}
 allprojects {
-    maven {
-        url = uri("https://maven.pkg.github.com/GeideaSolutions/Android-SDK")
-        credentials {
-            username = project.findProperty("gpr.user")
-            password = project.findProperty("gpr.key")
-        }
+    repositories {
+        // ...
+        mavenLocal()
     }
 }
 ```
-
-2. Define your GitHub username (`gpr.user`) and GitHub Personal Access
-   Token (`gpr.key`) in your `gradle.properties` file (without the
-   pointy brackets):
+4. Add the extracted SDK as a dependency in your app-level build.gradle
 ```
-gpr.user=<YOUR GITHUB USERNAME>
-gpr.key=<YOUR GITHUB PERSONAL ACCCESS TOKEN>
-```
-You can see your Personal Access Token (PAT) in your
-GitHub Profile > Settings > Developer Options > Personal access tokens.
-If you do not have one yet, you can generate it as explained [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-> ⚠️ When you create or modify your token make sure it has the `read:packages` scope enabled.
-
-3. Add the SDK as a dependency in your app-level build.gradle
-
-```groovy
 implementation 'net.geidea.paymentsdk:paymentsdk:<LATEST VERSION>'
 ```
 
 ### SDK Initialization
 
-As an initialization step the SDK expects that you provide your Merchant
-credentials with the `GeideaPaymentSdk.setCredentials()` method. However
-it is not required to set them on each start. It could be once per
-installation of the app as the credentials are persisted securely
-encrypted on device. You can check if there credentials already stored
+The integration starts by adding your merchant credentials (Merchant Public Key and API password) with the `GeideaPaymentSdk.setCredentials()`method.  You can check if there credentials already stored
 with the `GeideaPaymentSdk.hasCredentials`. It is only important to be
 stored prior to using the SDK.
-```kotlin
+```kotlin```
+```
 if (!GeideaPaymentSdk.hasCredentials) {
     GeideaPaymentSdk.setCredentials(
             merchantKey = "<YOUR MERCHANT KEY>",
@@ -61,58 +62,40 @@ if (!GeideaPaymentSdk.hasCredentials) {
     )
 }
 ```
-IMPORTANT: Do **not** hard-code your merchant password directly into
-your APK but get it dynamically (from an endpoint of your backend or
-elsewhere) due to security reasons.
+IMPORTANT: 
+1. The ```setCredentials()``` method can be used to store your credentials securely on the device by using encryption. So it is not required to set them on each app start event. You could set them once per installation of the app on the device.
+2. As a good security and coding practice, do **not** hard-code your merchant password directly into your APK file. Always get it securely and dynamically (from the secure endpoint of your backend or some secure server) where the password has been stored with encryption.
 
 ## The Flow concept
 
-The SDK employs the concept of UI flow which is a sequence of UI
-screens, network calls and various other operations. UI flows are
-implemented based on the typical Android Activity results where one
-activity (or a chain of more activities) is launched with an input
-intent, then it performs its work and finally produces some output which
-contains the result data you are interested in. Each flow is represented
-and managed by an `ActivityContract` implementation.
+The SDK employs the concept of UI flow which is a sequence of UI screens, network calls and other operations that are orchestrated in a logical manner. UI flows are implemented based on the typical Android Activity results where one activity (or a chain of more activities) is launched with an input intent, then it performs its task(s) and finally produces some output which contains the result data you are interested in. Each flow is represented and managed by an `ActivityContract` implementation.
 
 ### Using Activity result contracts
 
-Instead of relying on the traditional and now deprecated
-`startActivityForResult()` method the SDK embraces the newer Activity
-Result APIs which offer some benefits for you. For more info please
-visit [https://developer.android.com/training/basics/intents/result]() .
+The latest version of Anroid platform now supports Activity Result APIs that offer a better experience instead of the traditional and now deprecated `startActivityForResult()` method. For more info please visit [https://developer.android.com/training/basics/intents/result]() .
 
 ### Payment flow
 
-The Payment flow expects an input of type `PaymentData` and returns a
-result of type `GeideaResult<Order>`. The `PaymentContract` is used to
-manage the input/output parcelization.
+The Payment flow expects an input of type `PaymentData` and returns a result of type `GeideaResult<Order>`. The `PaymentContract` is used to manage the input/output parcelization.
 
-Declare a launcher somewhere in your code from where you wish to start
-the payment.
-
-```kotlin
+Declare a launcher in your code from where you wish to start the payment.
+```kotlin```
+```
 private var paymentLauncher: ActivityResultLauncher<PaymentData>
 ```
-
-…and then register it with a `PaymentContract` instance and your
+After declaring the launcher, register it with a `PaymentContract` instance and your
 function or lambda that should accept the final result.
-
 ```kotlin
 fun handleOrderResult(result: GeideaResult<Order>) {
     /** Handle the order response here */
 }
 paymentLauncher = registerForActivityResult(PaymentContract(), ::handleOrderResult)
 ```
-
 ### Building your PaymentData
 
-`PaymentData` contains details about the order, customer and preferred
-payment method. It has 2 mandatory properties - `amount` and `currency`.
-
-Kotlin
-
-```kotlin
+`PaymentData` contains details about the order, customer and preferred payment method. It has 2 mandatory properties - `amount` and `currency`.
+```kotlin```
+```
 val paymentData = PaymentData {
     // Mandatory properties
     amount = 123.45
@@ -141,10 +124,8 @@ val paymentData = PaymentData {
     )
 }
 ```
-
-or in Java
-
-```java
+```Java```
+```
 PaymentData paymentData = new PaymentData.Builder()
         .setAmount(123.45d)
         .setCurrency("SAR")
@@ -174,27 +155,20 @@ PaymentData paymentData = new PaymentData.Builder()
 ```
 
 Validations
-
-Multiple basic validation checks are performed on construction of
-`PaymentData` and `PaymentMethod`. E.g. check if the CVV is 3 or 4
-digits. If some validation check does not pass then an
-`IllegalArgumentException` with a message is thrown. For a comprehensive
-list of validity conditions please refer to the Integration guide. 
-
+The SDK carries out some basic validation checks on construction of the `PaymentData` and `PaymentMethod` objects. For example, whether the CVV is 3 or 4 digits. If any of the validation check does not pass then an `IllegalArgumentException` with a message is thrown. 
+For a comprehensive list of validity conditions please refer to the Integration guide.
 
 ### Starting payment flow
-
 After registering for results a payment flow can be started
-```kotlin
+```kotlin```
+```
 paymentLauncher.launch(paymentData)
 ```
-
 ### Receiving the Order result
+The final result of the Payment flow is returned as a sealed object of type `GeideaResult<Order>`.
 
-The final result of the Payment flow is returned as a sealed object of
-type `GeideaResult<Order>`.
-
-```kotlin
+```kotlin```
+```
 fun handleOrderResult(result: GeideaResult<Order>) {
     when (result) {
         is GeideaResult.Success<Order> -> {
