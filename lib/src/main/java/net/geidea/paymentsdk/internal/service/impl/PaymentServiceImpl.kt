@@ -9,7 +9,7 @@ internal class PaymentServiceImpl(private val client: HttpsClient) : PaymentServ
 
     override suspend fun postPay(paymentRequest: PaymentRequest): OrderResponse {
         return client.post<PaymentRequest, OrderResponse>(
-                path = "/pgw/api/v1/direct/pay",
+                path = "/pgw/api/v2/direct/pay",
                 body = paymentRequest,
         ).unwrapOrThrow()
     }

@@ -50,6 +50,8 @@ import java.text.DecimalFormatSymbols
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -418,4 +420,26 @@ internal fun getTimezoneOffsetFromUtc(): Int {
     val tz = TimeZone.getDefault()
     val now = Date()
     return tz.getOffset(now.time) / 1000 / 60
+}
+internal const val ENCRYPTION_ALGORITHM = "HmacSHA256"
+internal fun generateSignature(
+    publicKey: String,
+    orderAmount: BigDecimal,
+    orderCurrency: String,
+    merchantRefId: String?,
+    apiPass: String,
+    timestamp: String?
+): String {
+    val amountStr = String.format("%.2f", orderAmount)
+    val data = "$publicKey$amountStr$orderCurrency$merchantRefId$timestamp"
+    val hmacSha256 = Mac.getInstance(ENCRYPTION_ALGORITHM)
+    val secretKeySpec = SecretKeySpec(apiPass.toByteArray(), ENCRYPTION_ALGORITHM)
+    hmacSha256.init(secretKeySpec)
+    val hash = hmacSha256.doFinal(data.toByteArray())
+    return Base64.encodeToString(hash, Base64.NO_WRAP)
+}
+
+internal fun getCurrentTimestamp(): String {
+    val dateFormat = SimpleDateFormat("M/d/yyyy h:mm:ss a", Locale.getDefault())
+    return dateFormat.format(Calendar.getInstance().time)
 }

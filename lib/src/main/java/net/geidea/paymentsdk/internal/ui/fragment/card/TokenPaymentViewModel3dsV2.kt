@@ -242,7 +242,11 @@ internal class TokenPaymentViewModel3dsV2(
         }
     }
 
-    override fun handleSuccessReturnUrl(orderId: String, urlParams: ReturnUrlParams) {
+    override fun handleSuccessReturnUrl(
+        orderId: String,
+        sessionId: String?,
+        urlParams: ReturnUrlParams
+    ) {
         Logger.logi("handleSuccessReturnUrl($orderId)")
         payWithToken(cvv, orderId, threeDSecureId!!, ::handlePaySuccess, ::handleFailureResponse)
     }

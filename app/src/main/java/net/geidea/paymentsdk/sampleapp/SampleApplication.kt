@@ -22,10 +22,10 @@ class SampleApplication : Application() {
         super.onCreate()
 
         if (BuildConfig.DEBUG) {
-            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.Test
+            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PREPROD
             GeideaPaymentSdk.setLogLevel(LogLevel.VERBOSE)
         } else {
-            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.Prod
+            GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PROD
         }
     }
 }

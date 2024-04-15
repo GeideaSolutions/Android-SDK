@@ -33,7 +33,7 @@ object GeideaPaymentSdk {
      * The Geidea server environment which the SDK will connect to.
      */
     @JvmStatic
-    var serverEnvironment: ServerEnvironment = ServerEnvironment.Prod
+    var serverEnvironment: ServerEnvironment = ServerEnvironment.UAE_PROD
 
     internal lateinit var applicationContext: Context
 

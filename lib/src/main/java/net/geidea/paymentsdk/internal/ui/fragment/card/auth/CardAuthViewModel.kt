@@ -54,8 +54,9 @@ internal class CardAuthViewModel(
         return if (url.isGeideaReturnUrl()) {
             val urlParams: ReturnUrlParams = parseUrlResult(url)
             val orderId = cardPaymentViewModel.orderId
+            val sessionId = cardPaymentViewModel.sessionId
             if (urlParams.isSuccess && orderId != null) {
-                cardPaymentViewModel.handleSuccessReturnUrl(orderId, urlParams)
+                cardPaymentViewModel.handleSuccessReturnUrl(orderId, sessionId, urlParams)
             } else {
                 handleFailureReturnUrl(urlParams)
             }

@@ -3,23 +3,31 @@ package net.geidea.paymentsdk.internal.ui.fragment.card
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import net.geidea.paymentsdk.GeideaPaymentSdk
 import net.geidea.paymentsdk.flow.pay.PaymentData
 import net.geidea.paymentsdk.flow.pay.PaymentViewModel
+import net.geidea.paymentsdk.internal.di.SdkComponent
 import net.geidea.paymentsdk.internal.service.AuthenticationV1Service
-import net.geidea.paymentsdk.internal.service.AuthenticationV4Service
+import net.geidea.paymentsdk.internal.service.AuthenticationV6Service
 import net.geidea.paymentsdk.internal.service.CancellationService
 import net.geidea.paymentsdk.internal.service.PaymentService
 import net.geidea.paymentsdk.internal.ui.fragment.card.auth.DeviceInfo
 import net.geidea.paymentsdk.internal.ui.fragment.card.auth.ReturnUrlParams
 import net.geidea.paymentsdk.internal.ui.fragment.card.auth.UserAgent
 import net.geidea.paymentsdk.internal.ui.widget.Step
+import net.geidea.paymentsdk.internal.util.generateSignature
+import net.geidea.paymentsdk.internal.util.getCurrentTimestamp
 import net.geidea.paymentsdk.model.MerchantConfigurationResponse
 import net.geidea.paymentsdk.model.auth.GatewayDecision
 import net.geidea.paymentsdk.model.auth.v1.AuthenticationResponse
-import net.geidea.paymentsdk.model.auth.v4.AuthenticatePayerRequest
-import net.geidea.paymentsdk.model.auth.v4.DeviceIdentificationRequest
-import net.geidea.paymentsdk.model.auth.v4.InitiateAuthenticationRequest
-import net.geidea.paymentsdk.model.auth.v4.InitiateAuthenticationResponse
+import net.geidea.paymentsdk.model.auth.v6.AppearanceRequest
+import net.geidea.paymentsdk.model.auth.v6.AuthenticatePayerRequest
+import net.geidea.paymentsdk.model.auth.v6.CreateSessionRequest
+import net.geidea.paymentsdk.model.auth.v6.CreateSessionResponse
+import net.geidea.paymentsdk.model.auth.v6.DeviceIdentificationRequest
+import net.geidea.paymentsdk.model.auth.v6.InitiateAuthenticationRequest
+import net.geidea.paymentsdk.model.auth.v6.InitiateAuthenticationResponse
+import net.geidea.paymentsdk.model.auth.v6.StylesRequest
 import net.geidea.paymentsdk.model.common.Source
 import java.math.BigDecimal
 
@@ -28,7 +36,7 @@ internal class CardPaymentViewModel3dsV2(
     // Dependencies
     paymentViewModel: PaymentViewModel,
     authenticationV1Service: AuthenticationV1Service,
-    private val authenticationV4Service: AuthenticationV4Service,
+    private val authenticationV6Service: AuthenticationV6Service,
     paymentService: PaymentService,
     cancellationService: CancellationService,
     // Runtime arguments
@@ -46,8 +54,14 @@ internal class CardPaymentViewModel3dsV2(
 ) {
     internal var initiateAuthResponse: InitiateAuthenticationResponse? = null
         private set
+    internal var createSessionResponse: CreateSessionResponse? = null
+        private set
 
-    internal fun onCardNumberEntered(cardNumber: String, paymentData: PaymentData, userAgent: UserAgent) {
+    internal fun onCardNumberEntered(
+        cardNumber: String,
+        paymentData: PaymentData,
+        userAgent: UserAgent
+    ) {
         val scope = paymentViewModel.viewModelScope
         scope.launch {
             finishOnCatch {
@@ -66,7 +80,10 @@ internal class CardPaymentViewModel3dsV2(
         initiateAuthResponse = null
     }
 
-    override fun onPayerAuthenticationStarted(viewModelScope: CoroutineScope, userAgent: UserAgent) {
+    override fun onPayerAuthenticationStarted(
+        viewModelScope: CoroutineScope,
+        userAgent: UserAgent
+    ) {
         viewModelScope.launch {
             finishOnCatch {
                 authenticate3DSv2(userAgent)
@@ -76,23 +93,24 @@ internal class CardPaymentViewModel3dsV2(
 
     private suspend fun authenticate3DSv2(userAgent: UserAgent) {
         // If authentication is not yet initiated make sure to do it before payer auth
-        val initiateAuthResponse = if (this.initiateAuthResponse == null || this.initiateAuthResponse?.isSuccess != true) {
-            val response = initiateAuthentication3dsV2(
-                finalPaymentData.paymentMethod!!.cardNumber!!,
-                finalPaymentData,
-                userAgent,
-                showProgress = true
-            )
-            if (!response.isSuccess) {
-                handleFailureResponse(response, response.orderId)
+        val initiateAuthResponse =
+            if (this.initiateAuthResponse == null || this.initiateAuthResponse?.isSuccess != true) {
+                val response = initiateAuthentication3dsV2(
+                    finalPaymentData.paymentMethod!!.cardNumber!!,
+                    finalPaymentData,
+                    userAgent,
+                    showProgress = true
+                )
+                if (!response.isSuccess) {
+                    handleFailureResponse(response, response.orderId)
 
-                return
+                    return
+                }
+
+                response
+            } else {
+                this.initiateAuthResponse!!
             }
-
-            response
-        } else {
-            this.initiateAuthResponse!!
-        }
 
         when (initiateAuthResponse.gatewayDecision) {
             GatewayDecision.ContinueToPayer -> {
@@ -109,14 +127,17 @@ internal class CardPaymentViewModel3dsV2(
                     handleFailureResponse(authPayerResponse, initiateAuthResponse.orderId)
                 }
             }
+
             GatewayDecision.ContinueToPayWithNotEnrolledCard -> {
                 pay(
                     orderId = initiateAuthResponse.orderId!!,
                     threeDSecureId = initiateAuthResponse.threeDSecureId!!,
+                    sessionId = createSessionResponse?.session?.id,
                     ::handlePaySuccess,
                     ::handleFailureResponse,
                 )
             }
+
             GatewayDecision.Reject -> {
                 handleFailureResponse(initiateAuthResponse, initiateAuthResponse.orderId)
             }
@@ -134,30 +155,23 @@ internal class CardPaymentViewModel3dsV2(
                 paymentViewModel.processing = true
             }
 
+            createSessionResponse = createSession(paymentData)
+
             val initiateAuthenticationRequest = InitiateAuthenticationRequest {
+                this.sessionId = createSessionResponse?.session?.id
                 this.cardNumber = cardNumber
-                this.orderId = this@CardPaymentViewModel3dsV2.orderId
-                this.amount = paymentData.amount
-                this.currency = paymentData.currency
-                this.paymentOperation = paymentData.paymentOperation
-                this.merchantReferenceId = paymentData.merchantReferenceId
-                this.billingAddress = paymentData.billingAddress
-                this.shippingAddress = paymentData.shippingAddress
-                this.customerEmail = paymentData.customerEmail
-                this.callbackUrl = paymentData.callbackUrl
                 this.returnUrl = ReturnUrlParams.RETURN_URL
+
+                this.orderId = this@CardPaymentViewModel3dsV2.orderId
+                this.paymentOperation = paymentData.paymentOperation
+                this.callbackUrl = paymentData.callbackUrl
                 this.cardOnFile = paymentData.cardOnFile
-                this.initiatedBy = paymentData.initiatedBy
-                this.paymentIntentId = paymentData.paymentIntentId
-                this.agreementId = paymentData.agreementId
-                this.agreementType = paymentData.agreementType
                 this.source = Source.MOBILE_APP
-                this.device = makeDeviceIdentificationRequest(userAgent.deviceInfo)
-                this.paymentMethods = paymentViewModel.acceptedCardBrandNames
                 this.restrictPaymentMethods = paymentViewModel.acceptedCardBrandNames != null
+                this.deviceIdentificationRequest = makeDeviceIdentificationRequest(userAgent.deviceInfo)
             }
             val response: InitiateAuthenticationResponse =
-                authenticationV4Service.postInitiateAuthentication(initiateAuthenticationRequest)
+                SdkComponent.authenticationV6Service.postInitiateAuthentication(initiateAuthenticationRequest)
             initiateAuthResponse = response
             orderId = response.orderId
             threeDSecureId = response.threeDSecureId
@@ -174,37 +188,62 @@ internal class CardPaymentViewModel3dsV2(
         }
     }
 
-    internal val isInitiateAuthenticationSuccessful: Boolean get() = initiateAuthResponse?.isSuccess ?: false
+    private suspend fun createSession(paymentData: PaymentData) : CreateSessionResponse {
+        val timestamp = getCurrentTimestamp()
+        val signature = generateSignature(publicKey = GeideaPaymentSdk.merchantKey,
+            orderAmount = paymentData.amount,
+            orderCurrency = paymentData.currency,
+            merchantRefId = paymentData.merchantReferenceId,
+            apiPass = GeideaPaymentSdk.merchantPassword,
+            timestamp = timestamp)
+
+        val initiateSessionRequest = CreateSessionRequest {
+            this.amount = paymentData.amount
+            this.currency = paymentData.currency
+            this.timestamp = timestamp
+            this.merchantReferenceId = paymentData.merchantReferenceId
+            this.signature = signature
+            this.callbackUrl = paymentData.callbackUrl
+            this.paymentIntentId = paymentData.paymentIntentId
+            this.paymentOperation = paymentData.paymentOperation
+            this.cardOnFile = paymentData.cardOnFile == true
+            this.appearanceRequest = AppearanceRequest {
+                this.showEmail = paymentData.showCustomerEmail
+                this.showAddress = paymentData.showAddress
+                this.receiptPage = paymentData.showReceipt
+                this.styles = StylesRequest {
+                    this.hideGeideaLogo = false
+                }
+            }
+        }
+        val response = SdkComponent.sessionV2Service.createSession(initiateSessionRequest)
+        if(response.isSuccess){
+            sessionId = response.session?.id
+        }
+        return response
+    }
+
+    internal val isInitiateAuthenticationSuccessful: Boolean
+        get() = initiateAuthResponse?.isSuccess ?: false
 
     private suspend fun authenticatePayer(deviceInfo: DeviceInfo): AuthenticationResponse {
         return try {
             paymentViewModel.processing = true
             val authenticatePayerRequest = AuthenticatePayerRequest {
-                this.paymentMethod = finalPaymentData.paymentMethod
-                this.billingAddress = finalPaymentData.billingAddress
-                this.shippingAddress = finalPaymentData.shippingAddress
-                this.customerEmail = finalPaymentData.customerEmail
-                this.javaScriptEnabled = true
-                this.timeZone = 273
-
+                this.sessionId = createSessionResponse?.session?.id
                 this.orderId = this@CardPaymentViewModel3dsV2.orderId
-                this.amount = finalPaymentData.amount
-                this.currency = finalPaymentData.currency
-                this.paymentOperation = finalPaymentData.paymentOperation
-                this.merchantReferenceId = finalPaymentData.merchantReferenceId
                 this.callbackUrl = finalPaymentData.callbackUrl
-                this.returnUrl = ReturnUrlParams.RETURN_URL
                 this.cardOnFile = finalPaymentData.cardOnFile
-                this.initiatedBy = finalPaymentData.initiatedBy
-                this.paymentIntentId = finalPaymentData.paymentIntentId
-                this.agreementId = finalPaymentData.agreementId
-                this.agreementType = finalPaymentData.agreementType
-                this.source = Source.MOBILE_APP
-                this.device = makeDeviceIdentificationRequest(deviceInfo)
-                this.paymentMethods = paymentViewModel.acceptedCardBrandNames
+                this.paymentOperation = finalPaymentData.paymentOperation
+                this.paymentMethod = finalPaymentData.paymentMethod
+                this.deviceIdentification = makeDeviceIdentificationRequest(deviceInfo)
                 this.restrictPaymentMethods = paymentViewModel.acceptedCardBrandNames != null
+
+                this.source = Source.MOBILE_APP
+                this.timeZone = "273"
+                this.javaScriptEnabled = true
             }
-            authenticationV4Service.postAuthenticatePayer(authenticatePayerRequest)
+            authenticationV6Service.postAuthenticatePayer(authenticatePayerRequest)
         } finally {
             paymentViewModel.processing = false
         }
@@ -212,16 +251,9 @@ internal class CardPaymentViewModel3dsV2(
 
     private fun makeDeviceIdentificationRequest(deviceInfo: DeviceInfo): DeviceIdentificationRequest {
         return DeviceIdentificationRequest {
-            this.browser = deviceInfo.browser
             this.language = deviceInfo.language
-            this.colorDepth = deviceInfo.colorDepth
-            this.acceptHeaders = deviceInfo.acceptHeaders
-            this.javaEnabled = deviceInfo.javaEnabled
-            this.javaScriptEnabled = deviceInfo.javascriptEnabled
-            this.screenWidth = deviceInfo.screenWidth
-            this.screenHeight = deviceInfo.screenHeight
-            this.timezoneOffset = deviceInfo.timezoneOffset
-            this.threeDSecureChallengeWindowSize = deviceInfo.threeDSecureChallengeWindowSize
+            this.providerDeviceId = deviceInfo.providerDeviceId
+            this.userAgent = deviceInfo.browser
         }
     }
 }

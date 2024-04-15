@@ -47,32 +47,21 @@
                 android:textAppearance = "?textAppearanceBody1"
                 />
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id = "@+id/environmentToggleGroup"
+            <com.google.android.material.textfield.TextInputLayout
+                style = "@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
-                app:selectionRequired = "true"
-                app:singleSelection = "true"
+                android:layout_marginBottom = "8dp"
+                android:hint = "Environment"
                 >
 
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id = "@+id/preprodEnvButton"
-                    style = "?attr/materialButtonOutlinedStyle"
-                    android:layout_width = "wrap_content"
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id = "@+id/merchantAutoCompleteEnv"
+                    android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
-                    android:text = "PreProd"
+                    android:inputType = "none"
                     />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id = "@+id/prodEnvButton"
-                    style = "?attr/materialButtonOutlinedStyle"
-                    android:layout_width = "wrap_content"
-                    android:layout_height = "wrap_content"
-                    android:text = "Prod"
-                    />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Merchant credentials -->
 

@@ -52,6 +52,12 @@ internal abstract class BaseCardPaymentViewModel(
         }
 
         get() = paymentViewModel.orderId
+    var sessionId: String?
+        internal set(newValue) {
+            paymentViewModel.sessionId = newValue
+        }
+
+        get() = paymentViewModel.sessionId
 
     /**
      * Session ID for the 3DS authentication process.
@@ -221,5 +227,5 @@ internal abstract class BaseCardPaymentViewModel(
 
     abstract fun onPayerAuthenticationStarted(viewModelScope: CoroutineScope, userAgent: UserAgent)
 
-    abstract fun handleSuccessReturnUrl(orderId: String, urlParams: ReturnUrlParams)
+    abstract fun handleSuccessReturnUrl(orderId: String, sessionId: String?, urlParams: ReturnUrlParams)
 }

@@ -15,6 +15,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "MERCHANT_URL", "\"${System.env.GEIDEA_MERCHANT_URL}\""
         buildConfigField "String", "API_KEY", "\"${System.env.GEIDEA_API_KEY}\""
         buildConfigField "String", "API_PASS", "\"${System.env.GEIDEA_API_PASS}\""
 

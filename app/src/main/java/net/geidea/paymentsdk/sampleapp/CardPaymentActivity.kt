@@ -86,8 +86,33 @@ class CardPaymentActivity : AppCompatActivity() {
                     snack("Please enter valid amount to pay")
                     return@setOnClickListener
                 }
+                when (sharedPreferences.getString(MainActivity.PREF_KEY_SERVER_ENVIRONMENT, null)) {
 
-                GeideaPaymentSdk.serverEnvironment = ServerEnvironment.Prod
+                    ServerEnvironment.EGY_PREPROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.EGY_PREPROD
+                    }
+
+                    ServerEnvironment.EGY_PROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.EGY_PROD
+                    }
+
+                    ServerEnvironment.UAE_PREPROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PREPROD
+                    }
+
+                    ServerEnvironment.UAE_PROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PROD
+                    }
+
+                    ServerEnvironment.KSA_PREPROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.KSA_PREPROD
+                    }
+
+                    ServerEnvironment.KSA_PROD.apiBaseUrl -> {
+                        GeideaPaymentSdk.serverEnvironment = ServerEnvironment.KSA_PROD
+                    }
+                }
+
                 val paymentData = PaymentData {
                     amount = amountEditText.textOrNull?.let(::BigDecimal)
                     paymentOperation = sharedPreferences.getString("paymentOperation", null)

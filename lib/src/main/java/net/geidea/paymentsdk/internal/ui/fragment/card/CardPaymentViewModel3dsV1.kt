@@ -150,14 +150,19 @@ internal open class CardPaymentViewModel3dsV1(
         ))
     }
 
-    override fun handleSuccessReturnUrl(orderId: String, urlParams: ReturnUrlParams) {
+    override fun handleSuccessReturnUrl(
+        orderId: String,
+        sessionId: String?,
+        urlParams: ReturnUrlParams
+    ) {
         logi("handleSuccessReturnUrl($orderId)")
-        pay(orderId, this.threeDSecureId!!, ::handlePaySuccess, ::handleFailureResponse)
+        pay(orderId, this.threeDSecureId!!, sessionId, ::handlePaySuccess, ::handleFailureResponse)
     }
 
     open fun pay(
         orderId: String,
         threeDSecureId: String,
+        sessionId: String?,
         onSuccess: (OrderResponse) -> Unit,
         onFailure: (failureResponse: GeideaResponse, orderId: String?) -> Unit
     ) {
@@ -169,8 +174,7 @@ internal open class CardPaymentViewModel3dsV1(
                     val paymentRequest = PaymentRequest {
                         this.orderId = orderId
                         this.threeDSecureId = threeDSecureId
-                        amount = finalPaymentData.amount
-                        currency = finalPaymentData.currency
+                        this.sessionId =sessionId
                         paymentMethod = sdkCheckNotNull(finalPaymentData.paymentMethod, ERR_PAY_WITH_PAYMENT_METHOD_NULL)
                         source = Source.MOBILE_APP
                     }

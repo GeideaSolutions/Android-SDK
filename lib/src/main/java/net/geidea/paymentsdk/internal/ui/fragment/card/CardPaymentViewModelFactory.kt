@@ -79,7 +79,7 @@ internal class CardPaymentViewModelFactory(
                     CardPaymentViewModel3dsV2(
                         paymentViewModel = paymentViewModel,
                         authenticationV1Service = SdkComponent.authenticationV1Service,
-                        authenticationV4Service = SdkComponent.authenticationV4Service,
+                        authenticationV6Service = SdkComponent.authenticationV6Service,
                         paymentService = SdkComponent.paymentService,
                         cancellationService = SdkComponent.cancellationService,
                         merchantConfiguration = paymentViewModel.merchantConfiguration,

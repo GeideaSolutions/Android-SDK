@@ -9,17 +9,15 @@ import net.geidea.paymentsdk.internal.serialization.decodeFromJson
 import net.geidea.paymentsdk.internal.serialization.encodeToJson
 import net.geidea.paymentsdk.model.PaymentMethod
 import net.geidea.paymentsdk.model.common.LocalizableRequest
-import java.math.BigDecimal
-import java.util.*
+import java.util.Objects
 
 @Serializable
 class PaymentRequest private constructor(
     override var language: String? = null,
-    val amount: BigDecimal,
-    val currency: String? = null,
-    val paymentMethod: PaymentMethod,
-    val threeDSecureId: String? = null,
+    val sessionId: String? = null,
     val orderId: String,
+    val threeDSecureId: String? = null,
+    val paymentMethod: PaymentMethod,
     val source: String?
 ) : LocalizableRequest {
 
@@ -33,24 +31,21 @@ class PaymentRequest private constructor(
         other as PaymentRequest
 
         if (language != other.language) return false
-        if (amount != other.amount) return false
-        if (currency != other.currency) return false
+        if (sessionId != other.sessionId) return false
         if (paymentMethod != other.paymentMethod) return false
         if (threeDSecureId != other.threeDSecureId) return false
         if (orderId != other.orderId) return false
-        if (source != other.source) return false
-
-        return true
+        return source == other.source
     }
 
     // GENERATED
     override fun hashCode(): Int {
-        return Objects.hash(language, amount, currency, paymentMethod, threeDSecureId, orderId, source)
+        return Objects.hash(language, sessionId, paymentMethod, threeDSecureId, orderId, source)
     }
 
     // GENERATED
     override fun toString(): String {
-        return "PaymentRequest(language='$language', amount=$amount, currency=$currency, paymentMethod=$paymentMethod, threeDSecureId=$threeDSecureId, orderId='$orderId', source=$source)"
+        return "PaymentRequest(language='$language', sessionId=$sessionId, paymentMethod=$paymentMethod, threeDSecureId=$threeDSecureId, orderId='$orderId', source=$source)"
     }
 
     class Builder {
@@ -58,10 +53,7 @@ class PaymentRequest private constructor(
         var language: String? = null
 
         @set:JvmSynthetic // Hide 'void' setter from Java
-        var amount: BigDecimal? = null
-
-        @set:JvmSynthetic // Hide 'void' setter from Java
-        var currency: String? = null
+        var sessionId: String? = null
 
         @set:JvmSynthetic // Hide 'void' setter from Java
         var paymentMethod: PaymentMethod? = null
@@ -76,22 +68,24 @@ class PaymentRequest private constructor(
         var source: String? = null
 
         fun setLanguage(language: String?): Builder = apply { this.language = language }
-        fun setAmount(amount: BigDecimal?): Builder = apply { this.amount = amount }
-        fun setCurrency(currency: String?): Builder = apply { this.currency = currency }
-        fun setPaymentMethod(paymentMethod: PaymentMethod?): Builder = apply { this.paymentMethod = paymentMethod }
-        fun setThreeDsSecureId(threeDSecureId: String?): Builder = apply { this.threeDSecureId = threeDSecureId }
+        fun setSessionId(sessionId: String?): Builder = apply { this.sessionId = sessionId }
+        fun setPaymentMethod(paymentMethod: PaymentMethod?): Builder =
+            apply { this.paymentMethod = paymentMethod }
+
+        fun setThreeDsSecureId(threeDSecureId: String?): Builder =
+            apply { this.threeDSecureId = threeDSecureId }
+
         fun setOrderId(orderId: String?): Builder = apply { this.orderId = orderId }
         fun setSource(source: String?): Builder = apply { this.source = source }
 
         fun build(): PaymentRequest {
             return PaymentRequest(
-                    language = this.language,
-                    amount = requireNotNull(this.amount) { "Missing amount" },
-                    currency = requireNotNull(this.currency) { "Missing currency" },
-                    paymentMethod = requireNotNull(this.paymentMethod) { "Missing paymentMethod" },
-                    threeDSecureId = this.threeDSecureId,
-                    orderId = requireNotNull(this.orderId) { "Missing orderId" },
-                    source = this.source,
+                language = this.language,
+                sessionId = requireNotNull(this.sessionId) { "Missing required parameters" },
+                paymentMethod = requireNotNull(this.paymentMethod) { "Missing paymentMethod" },
+                threeDSecureId = this.threeDSecureId,
+                orderId = requireNotNull(this.orderId) { "Missing orderId" },
+                source = this.source,
             )
         }
     }

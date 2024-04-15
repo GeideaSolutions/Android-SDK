@@ -61,6 +61,12 @@ internal class PaymentViewModel(
      */
     var orderId: String? = null
 
+    /**
+     * Session ID for the current checkout process. Each payment transaction should have a unique
+     * session ID associated with it.
+     */
+    var sessionId: String? = null
+
     val acceptedCardBrandNames: Set<String>? get() =
         if (initialPaymentData.paymentOptions != null) {
             paymentMethodsFilterProvider().acceptedCardBrands.map(CardBrand::name).toSet()

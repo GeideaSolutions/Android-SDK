@@ -38,6 +38,8 @@ internal object SdkComponent {
     val authenticationV1Service: AuthenticationV1Service by lazy { AuthenticationV1ServiceImpl(httpsClient) }
     val authenticationV3Service: AuthenticationV3Service by lazy { AuthenticationV3ServiceImpl(httpsClient) }
     val authenticationV4Service: AuthenticationV4Service by lazy { AuthenticationV4ServiceImpl(httpsClient) }
+    val authenticationV6Service: AuthenticationV6Service by lazy { AuthenticationV6ServiceImpl(httpsClient) }
+    val sessionV2Service: SessionV2Service by lazy { SessionV2ServiceImpl(httpsClient) }
     val paymentService: PaymentService by lazy { PaymentServiceImpl(httpsClient) }
     val tokenService: TokenService by lazy { TokenServiceImpl(httpsClient) }
     val tokenPaymentService: TokenPaymentService by lazy { TokenPaymentServiceImpl(httpsClient) }
