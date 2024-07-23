@@ -141,7 +141,12 @@ internal class PaymentActivity : AppCompatActivity() {
 
             // Intentionally prevent restoring navController and start the flow all over.
             // Saving and restoring the payment flow is not supported.
-            navController.setGraph(R.navigation.gd_navigation)
+            if (paymentData.paymentType == PaymentType.HPP) {
+                navController.setGraph(R.navigation.gd_navigation_hpp)
+            } else {
+                navController.setGraph(R.navigation.gd_navigation)
+            }
+
 
             viewModel.navigationLiveEvent.observeEvent(this, ::handleNavigation)
             viewModel.resultLiveData.observe(this, ::setResult)
@@ -200,11 +205,13 @@ internal class PaymentActivity : AppCompatActivity() {
                     navOptions = navCommand.navOptions
                 )
             }
+
             is NavigationCommand.Back -> {
                 if (!navController.popBackStack()) {
                     finish()
                 }
             }
+
             is NavigationCommand.BackTo -> {
                 if (isDestinationInBackStack(navCommand.destinationId)) {
                     if (!navController.popBackStack(
@@ -216,6 +223,7 @@ internal class PaymentActivity : AppCompatActivity() {
                     }
                 }
             }
+
             is NavigationCommand.BackToWithResult<*> -> {
                 if (isDestinationInBackStack(navCommand.destinationId)) {
                     navController.getBackStackEntry(navCommand.destinationId)
@@ -230,6 +238,7 @@ internal class PaymentActivity : AppCompatActivity() {
                     }
                 }
             }
+
             is NavigationCommand.Cancel -> viewModel.onCancel()
             is NavigationCommand.Finish -> finish()
         }

@@ -23,6 +23,7 @@ import net.geidea.paymentsdk.flow.GeideaContract
 import net.geidea.paymentsdk.flow.GeideaResult
 import net.geidea.paymentsdk.flow.pay.PaymentContract
 import net.geidea.paymentsdk.flow.pay.PaymentData
+import net.geidea.paymentsdk.flow.pay.PaymentType
 import net.geidea.paymentsdk.model.Address
 import net.geidea.paymentsdk.model.ExpiryDate
 import net.geidea.paymentsdk.model.PaymentMethod
@@ -63,6 +64,10 @@ class CardPaymentActivity : AppCompatActivity() {
                     }
 
                     R.id.byMerchantRadioButton -> {
+                        updateViews(transition = true)
+                    }
+
+                    R.id.hpp -> {
                         updateViews(transition = true)
                     }
                 }
@@ -119,6 +124,7 @@ class CardPaymentActivity : AppCompatActivity() {
                     currency = sharedPreferences.getString("currency", null)
                     merchantReferenceId = sharedPreferences.getString("merchantReferenceId", null)
                     callbackUrl = sharedPreferences.getString("callbackUrl", null)
+                    returnUrl = sharedPreferences.getString("returnUrl", null)
                     customerEmail = sharedPreferences.getString("customerEmail", null)
 
                     billingAddress = Address(
@@ -164,6 +170,7 @@ class CardPaymentActivity : AppCompatActivity() {
                             cvv = cardDetails.cvvEditText.textOrNull
                         }
                     }
+                    paymentType = if (hpp.isChecked) PaymentType.HPP else PaymentType.SDK
                 }
                 paymentLauncher.launch(paymentData)
             }

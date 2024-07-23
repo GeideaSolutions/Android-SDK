@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/gd_navigation"
+            app:startDestination="@id/gd_hppfragment"
+    >
+
+    <fragment
+        android:id = "@+id/gd_hppfragment"
+        android:name = "net.geidea.paymentsdk.internal.ui.fragment.hpp.HppFragment"
+        android:label = "HppFragment"
+        >
+        <argument
+            android:name="finalPaymentData"
+            app:argType="net.geidea.paymentsdk.flow.pay.PaymentData"
+            />
+    </fragment>
+</navigation>

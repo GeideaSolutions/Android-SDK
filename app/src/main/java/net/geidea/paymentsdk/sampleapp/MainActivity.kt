@@ -61,36 +61,42 @@ class MainActivity : AppCompatActivity() {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.EGY_PREPROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.EGY_PREPROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
 
                     ServerEnvironment.EGY_PROD.apiBaseUrl -> {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.EGY_PROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.EGY_PROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
 
                     ServerEnvironment.UAE_PREPROD.apiBaseUrl -> {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PREPROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.UAE_PREPROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
 
                     ServerEnvironment.UAE_PROD.apiBaseUrl -> {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.UAE_PROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.UAE_PROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
 
                     ServerEnvironment.KSA_PREPROD.apiBaseUrl -> {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.KSA_PREPROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.KSA_PREPROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
 
                     ServerEnvironment.KSA_PROD.apiBaseUrl -> {
                         GeideaPaymentSdk.serverEnvironment = ServerEnvironment.KSA_PROD
                         merchantAutoCompleteEnv.setText(ServerEnvironment.KSA_PROD.title)
                         callbackUrlEditText.setText("")
+                        returnUrlEditText.setText("")
                     }
                 }
 
@@ -100,12 +106,17 @@ class MainActivity : AppCompatActivity() {
                 if (savedInstanceState == null) {
                     merchantAutoCompleteEnv.setText(environments[0].text, false)
                 }
+                var env = sharedPreferences.getString(PREF_KEY_SERVER_ENVIRONMENT, null);
+                env?.let {
+                    val position = getPos(environments, env)
+                    merchantAutoCompleteEnv.setSelection(position)
+                    merchantAutoCompleteEnv.setText(environments[position].text)
+                }
 
                 merchantAutoCompleteEnv.setOnItemClickListener { _, _, position, _ ->
                     val environment: ServerEnvironment? =
                         environmentsAdapter.getItem(position).value
                     environment?.let {
-                        Log.d("N@M@", "environment changed to $environment")
                         sharedPreferences.edit()
                             .putString(
                                 PREF_KEY_SERVER_ENVIRONMENT,
@@ -113,8 +124,7 @@ class MainActivity : AppCompatActivity() {
                             )
                             .apply()
                         GeideaPaymentSdk.serverEnvironment = it
-                        clearMerchantLocalStateWithWarning()
-                        updateMerchantCredentialsLayout()
+                        logoutMerchant()
                     }
                 }
             }
@@ -247,6 +257,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getPos(environments: List<DropDownItem<ServerEnvironment>>, env: String): Int {
+        return environments.indexOfFirst { it.value?.apiBaseUrl == env }.takeIf { it >= 0 } ?: 0
+    }
+
     override fun onStart() {
         super.onStart()
         updateViews()
@@ -287,7 +301,7 @@ class MainActivity : AppCompatActivity() {
                 snack("Missing merchant key")
             }
 
-            merchantPassword.isNullOrEmpty()-> {
+            merchantPassword.isNullOrEmpty() -> {
                 snack("Missing merchant password")
             }
 
@@ -400,6 +414,7 @@ class MainActivity : AppCompatActivity() {
             currencyEditText.setText(sharedPreferences.getStringOrNull("currency"))
             merchantRefIdEditText.setText(sharedPreferences.getStringOrNull("merchantReferenceId"))
             callbackUrlEditText.setText(sharedPreferences.getStringOrNull("callbackUrl"))
+            returnUrlEditText.setText(sharedPreferences.getStringOrNull("returnUrl"))
 
             customerEmailEditText.setText(sharedPreferences.getStringOrNull("customerEmail"))
             billingCountryCodeEditText.setText(sharedPreferences.getStringOrNull("countryCode"))
@@ -444,6 +459,7 @@ class MainActivity : AppCompatActivity() {
         val currency = currencyEditText.textOrNull
         val merchantReferenceId = merchantRefIdEditText.textOrNull
         val callbackUrl = callbackUrlEditText.textOrNull
+        val returnUrl = returnUrlEditText.textOrNull
         val customerEmail = customerEmailEditText.textOrNull
 
         val countryCode = billingCountryCodeEditText.textOrNull
@@ -472,6 +488,7 @@ class MainActivity : AppCompatActivity() {
             putString("currency", currency)
             putString("merchantReferenceId", merchantReferenceId)
             putString("callbackUrl", callbackUrl)
+            putString("returnUrl", returnUrl)
             putString("customerEmail", customerEmail)
             putString("countryCode", countryCode)
             putString("street", street)

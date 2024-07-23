@@ -17,6 +17,7 @@ class CreateSessionRequest private constructor(
     val currency: String? = null,
     val timestamp: String,
     val callbackUrl: String? = null,
+    val returnUrl: String? = null,
     val merchantReferenceId: String,
     val paymentIntentId: String? = null,
     val paymentOperation: String? = null,
@@ -37,6 +38,7 @@ class CreateSessionRequest private constructor(
         if (currency != other.currency) return false
         if (timestamp != other.timestamp) return false
         if (callbackUrl != other.callbackUrl) return false
+        if (returnUrl != other.returnUrl) return false
         if (merchantReferenceId != other.merchantReferenceId) return false
         if (paymentIntentId != other.paymentIntentId) return false
         if (paymentOperation != other.paymentOperation) return false
@@ -52,6 +54,7 @@ class CreateSessionRequest private constructor(
             currency,
             timestamp,
             callbackUrl,
+            returnUrl,
             merchantReferenceId,
             paymentIntentId,
             paymentOperation,
@@ -66,6 +69,7 @@ class CreateSessionRequest private constructor(
                 "language=$language, " +
                 "amount=$amount, currency=$currency, " +
                 "timestamp=$timestamp, callbackUrl=$callbackUrl, " +
+                "returnUrl=$returnUrl, " +
                 "merchantReferenceId=$merchantReferenceId, " +
                 "paymentIntentId=$paymentIntentId, " +
                 "paymentOperation=$paymentOperation, " +
@@ -89,6 +93,9 @@ class CreateSessionRequest private constructor(
 
         @set:JvmSynthetic // Hide 'void' setter from Java
         var callbackUrl: String? = null
+
+        @set:JvmSynthetic // Hide 'void' setter from Java
+        var returnUrl: String? = null
 
         @set:JvmSynthetic // Hide 'void' setter from Java
         var merchantReferenceId: String? = null
@@ -118,6 +125,8 @@ class CreateSessionRequest private constructor(
 
         fun setCallbackUrl(callbackUrl: String?): Builder = apply { this.callbackUrl = callbackUrl }
 
+        fun setReturnUrl(returnUrl: String?): Builder = apply { this.returnUrl = returnUrl }
+
         fun setMerchantReferenceId(merchantReferenceId: String?): Builder =
             apply { this.merchantReferenceId = merchantReferenceId }
 
@@ -141,6 +150,7 @@ class CreateSessionRequest private constructor(
                 currency = requireNotNull(currency) { "Missing currency" },
                 timestamp = requireNotNull(this.timestamp) { "Missing timestamp" },
                 callbackUrl = this.callbackUrl,
+                returnUrl = this.returnUrl,
                 merchantReferenceId = requireNotNull(this.merchantReferenceId) { "Missing Merchant Reference Id" },
                 paymentIntentId = this.paymentIntentId,
                 paymentOperation = this.paymentOperation,

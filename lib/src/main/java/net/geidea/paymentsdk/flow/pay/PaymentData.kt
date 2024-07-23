@@ -82,27 +82,29 @@ class PaymentData
 
 @GeideaSdkInternal
 internal constructor(
-        val amount: BigDecimal,
-        val currency: String,
-        val paymentOptions: PaymentOptions? = null,
-        val paymentOperation: String? = null,
-        val merchantReferenceId: String? = null,
-        val customerEmail: String? = null,
-        val showCustomerEmail: Boolean = false,
-        val billingAddress: Address? = null,
-        val shippingAddress: Address? = null,
-        val showAddress: Boolean = false,
-        val showReceipt: Boolean? = null,
-        val callbackUrl: String? = null,
-        val paymentMethod: PaymentMethod? = null,
-        val tokenId: String? = null,
-        val cardOnFile: Boolean = false,
-        val initiatedBy: String? = null,
-        val agreementId: String? = null,
-        val agreementType: String? = null,
-        val paymentIntentId: String? = null,
-        val orderItems: List<OrderItem>? = null,
-        val bundle: Bundle? = null,
+    val amount: BigDecimal,
+    val currency: String,
+    val paymentOptions: PaymentOptions? = null,
+    val paymentOperation: String? = null,
+    val merchantReferenceId: String? = null,
+    val customerEmail: String? = null,
+    val showCustomerEmail: Boolean = false,
+    val billingAddress: Address? = null,
+    val shippingAddress: Address? = null,
+    val showAddress: Boolean = false,
+    val showReceipt: Boolean? = null,
+    val callbackUrl: String? = null,
+    val paymentMethod: PaymentMethod? = null,
+    val tokenId: String? = null,
+    val cardOnFile: Boolean = false,
+    val initiatedBy: String? = null,
+    val agreementId: String? = null,
+    val agreementType: String? = null,
+    val paymentIntentId: String? = null,
+    val orderItems: List<OrderItem>? = null,
+    val bundle: Bundle? = null,
+    val paymentType: PaymentType = PaymentType.SDK,
+    val returnUrl: String? = null
 ) : Parcelable {
 
     @GeideaSdkInternal
@@ -128,28 +130,32 @@ internal constructor(
             paymentIntentId: String? = this.paymentIntentId,
             orderItems: List<OrderItem>? = this.orderItems,
             bundle: Bundle? = this.bundle,
+            paymentType: PaymentType = this.paymentType,
+            returnUrl: String? = this.returnUrl
     ) = PaymentData(
-            amount = amount,
-            currency = currency,
-            paymentOptions = paymentOptions,
-            paymentOperation = paymentOperation,
-            merchantReferenceId = merchantReferenceId,
-            customerEmail = customerEmail,
-            showCustomerEmail = showCustomerEmail,
-            billingAddress = billingAddress,
-            shippingAddress = shippingAddress,
-            showAddress = showAddress,
-            showReceipt = showReceipt,
-            callbackUrl = callbackUrl,
-            paymentMethod = paymentMethod,
-            tokenId = tokenId,
-            cardOnFile = cardOnFile,
-            initiatedBy = initiatedBy,
-            agreementId = agreementId,
-            agreementType = agreementType,
-            paymentIntentId = paymentIntentId,
-            orderItems = orderItems,
-            bundle = bundle,
+        amount = amount,
+        currency = currency,
+        paymentOptions = paymentOptions,
+        paymentOperation = paymentOperation,
+        merchantReferenceId = merchantReferenceId,
+        customerEmail = customerEmail,
+        showCustomerEmail = showCustomerEmail,
+        billingAddress = billingAddress,
+        shippingAddress = shippingAddress,
+        showAddress = showAddress,
+        showReceipt = showReceipt,
+        callbackUrl = callbackUrl,
+        paymentMethod = paymentMethod,
+        tokenId = tokenId,
+        cardOnFile = cardOnFile,
+        initiatedBy = initiatedBy,
+        agreementId = agreementId,
+        agreementType = agreementType,
+        paymentIntentId = paymentIntentId,
+        orderItems = orderItems,
+        bundle = bundle,
+        paymentType = paymentType,
+        returnUrl = returnUrl
     )
 
     // GENERATED
@@ -180,7 +186,8 @@ internal constructor(
         if (paymentIntentId != other.paymentIntentId) return false
         if (orderItems != other.orderItems) return false
         if (bundle != other.bundle) return false
-
+        if (paymentType != other.paymentType) return false
+        if (returnUrl != other.returnUrl) return false
         return true
     }
 
@@ -207,6 +214,8 @@ internal constructor(
                 paymentIntentId,
                 orderItems,
                 bundle,
+                paymentType,
+                returnUrl
         )
     }
 
@@ -234,6 +243,8 @@ internal constructor(
 |               paymentIntentId=$paymentIntentId,
 |               orderItems=$orderItems,
 |               bundle=$bundle,
+|               paymentType=$paymentType,
+|               returnUrl=$returnUrl,
 |               )""".trimMargin()
     }
 
@@ -387,6 +398,18 @@ internal constructor(
         var bundle: Bundle? = null
 
         /**
+         * Payment type - SDK or HPP (optional), default would be SDK
+         */
+        @set:JvmSynthetic // Hide 'void' setter from Java
+        var paymentType: PaymentType = PaymentType.SDK
+
+        /**
+         * Return URL which will be called with the order status (Mandatory for [PaymentType.HPP]). Must be HTTPS url.
+         */
+        @set:JvmSynthetic // Hide 'void' setter from Java
+        var returnUrl: String? = null
+
+        /**
          * Set transaction amount (mandatory). Must be a positive [BigDecimal] number.
          */
         fun setAmount(amount: BigDecimal): Builder = apply { this.amount = amount }
@@ -444,6 +467,11 @@ internal constructor(
         fun setCallbackUrl(callbackUrl: String?): Builder = apply { this.callbackUrl = callbackUrl }
 
         /**
+         * Set return URL which will be called with the order status (Mandatory for [PaymentType.HPP]}). Must be HTTPS url.
+         */
+        fun setReturnUrl(returnUrl: String?): Builder = apply { this.returnUrl = returnUrl }
+
+        /**
          * Payment card details (optional).
          *
          * If not set the SDK will display a payment form to
@@ -495,6 +523,8 @@ internal constructor(
          */
         fun setBundle(bundle: Bundle?): Builder = apply { this.bundle = bundle }
 
+        fun setPaymentType(paymentType: PaymentType): Builder = apply { this.paymentType = paymentType }
+
         /**
          * Set paymentIntentId (optional).
          */
@@ -520,27 +550,29 @@ internal constructor(
                 "paymentMethod and tokenId must not be supplied at the same time"
             }
             return PaymentData(
-                    amount = checkAmount(),
-                    currency = checkCurrency(),
-                    paymentOptions = paymentOptions,
-                    paymentOperation = paymentOperation,
-                    merchantReferenceId = merchantReferenceId,
-                    customerEmail = checkCustomerEmail(),
-                    showCustomerEmail = showCustomerEmail,
-                    billingAddress = checkBillingAddress(),
-                    shippingAddress = checkShippingAddress(),
-                    showAddress = showAddress,
-                    showReceipt = showReceipt,
-                    callbackUrl = checkCallbackUrl(),
-                    paymentMethod = paymentMethod,
-                    tokenId = tokenId,
-                    cardOnFile = cardOnFile,
-                    initiatedBy = initiatedBy,
-                    agreementId = agreementId,
-                    agreementType = agreementType,
-                    paymentIntentId = paymentIntentId,
-                    orderItems = checkOrderItems(),
-                    bundle = bundle,
+                amount = checkAmount(),
+                currency = checkCurrency(),
+                paymentOptions = paymentOptions,
+                paymentOperation = paymentOperation,
+                merchantReferenceId = merchantReferenceId,
+                customerEmail = checkCustomerEmail(),
+                showCustomerEmail = showCustomerEmail,
+                billingAddress = checkBillingAddress(),
+                shippingAddress = checkShippingAddress(),
+                showAddress = showAddress,
+                showReceipt = showReceipt,
+                callbackUrl = checkCallbackUrl(),
+                paymentMethod = paymentMethod,
+                tokenId = tokenId,
+                cardOnFile = cardOnFile,
+                initiatedBy = initiatedBy,
+                agreementId = agreementId,
+                agreementType = agreementType,
+                paymentIntentId = paymentIntentId,
+                orderItems = checkOrderItems(),
+                bundle = bundle,
+                paymentType = paymentType,
+                returnUrl = returnUrl
             )
         }
 

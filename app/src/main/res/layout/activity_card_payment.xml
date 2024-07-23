@@ -78,6 +78,13 @@
             android:text="Merchant PCI-DSS"
             />
 
+        <RadioButton
+            android:id="@+id/hpp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HPP"
+            />
+
         <FrameLayout
             android:id="@+id/cardLayout"
             android:layout_width="match_parent"
