@@ -8,13 +8,13 @@ package net.geidea.paymentsdk
  */
 sealed class ServerEnvironment(val title: String, val apiBaseUrl: String, val hppUrl: String? = null) {
     object EGY_PROD : ServerEnvironment(title= "EGY-PROD", apiBaseUrl = "https://api.merchant.geidea.net", "https://www.merchant.geidea.net/hpp/checkout/?")
-    object EGY_PREPROD : ServerEnvironment(title= "EGY-PREPROD",apiBaseUrl = "https://api-merchant.staging.geidea.net", "https://www.gd-pprod-infra.net/hpp/checkout/?")
+    object EGY_PREPROD : ServerEnvironment(title= "EGY-PREPROD",apiBaseUrl = "https://api.gd-pprod-infra.net", "https://www.gd-pprod-infra.net/hpp/checkout/?")
 
     object UAE_PROD : ServerEnvironment(title= "UAE-PROD",apiBaseUrl = "https://api.merchant.geidea.ae", "https://payments.geidea.ae/hpp/checkout/?")
-    object UAE_PREPROD : ServerEnvironment(title= "UAE-PREPROD",apiBaseUrl = "https://api-merchant.staging.geidea.ae", "https://www.staging.geidea.ae/hpp/checkout/?")
+    object UAE_PREPROD : ServerEnvironment(title= "UAE-PREPROD",apiBaseUrl = "https://api.staging.geidea.ae", "https://www.staging.geidea.ae/hpp/checkout/?")
 
     object KSA_PROD : ServerEnvironment(title= "KSA-PROD",apiBaseUrl = "https://api.ksamerchant.geidea.net", "https://www.ksamerchant.geidea.net/hpp/checkout/?")
-    object KSA_PREPROD : ServerEnvironment(title= "KSA-PREPROD",apiBaseUrl = "https://api-ksamerchant.staging.geidea.net", "https://www.gd-pprod-infra.net/hpp/checkout/?")
+    object KSA_PREPROD : ServerEnvironment(title= "KSA-PREPROD",apiBaseUrl = "https://api.gd-pprod-infra.net", "https://www.gd-pprod-infra.net/hpp/checkout/?")
 
 
     companion object {

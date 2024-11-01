@@ -1,7 +1,7 @@
 # Geidea Online Payments for Android Mobile Apps
 
  - Contributors: kanti-kiran 
- - Version: 5.0.0 
+ - Version: 5.2.0 
  - Keywords: credit card, geidea, payment, payment for mobile sdk, payment for android, payment request, android
  - License: GPLv3
  - License URI: https://www.gnu.org/licenses/gpl-3.0.html

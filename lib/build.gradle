@@ -126,5 +126,6 @@ configurations.all {
         // force certain versions of dependencies (including transitive)
         //  *append new forced modules:
         force 'org.mockito:mockito-core:3.12.3'
+        force 'com.google.guava:guava:33.3.1-android'
     }
 }
